@@ -1,0 +1,9 @@
+{
+  "name": "deutsch-trainer",
+  "version": "1.0.0",
+  "private": true,
+  "description": "德语学习站：静态站 + Netlify 发音代理函数",
+  "dependencies": {
+    "edge-tts-universal": "^1.4.0"
+  }
+}
