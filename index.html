@@ -1041,7 +1041,7 @@
    * 第三方音源（StreamElements / 有道）已全部移除；任何失败只写控制台 warn，
    * 不弹窗、不阻塞答题；onEnded 一定且只回调一次（供发音页连播串行推进）。 */
   let currentAudio = null;               /* 当前播放实例：切题 / 连点先停旧音，避免叠音 */
-  let currentAudioUrl = '';              /* 当前实例用的 objectURL：缓存淘汰时避开它 */
+  let currentAudioUrl = '';              /* 本次播放临时生成的 objectURL，播完 / 切歌立即 revoke */
   let currentUtt = null;                 /* 系统语音兜底实例 */
   let audioGen = 0;                      /* 播放代次：换题 / 连点时作废上一次未完成的请求 */
 
@@ -1052,51 +1052,35 @@
     return '/.netlify/functions/tts?text=' + encodeURIComponent(t) + '&lang=' + (isZh ? 'zh' : 'de');
   }
 
-  /* ===== 音频内存缓存 =====
-   * 同一句文本只向代理请求一次：命中直接复用 Blob 的 objectURL（无网络、无重复解码）。
-   * Map 天然保序，当 LRU 用；满 60 条淘汰最久未用的一条并 revoke 释放内存；
-   * 正在播放的那一条永不淘汰（否则声音会被掐断）。刷新页面即自动清空。 */
-  const AUDIO_CACHE_MAX = 60;
-  const audioCache = new Map();          /* key = 代理地址（已含 text + lang）→ { url } */
-  const audioInflight = new Map();       /* 同一句并发点击：合并成一次请求 */
+  /* ===== v0.6 音频缓存：key = 文本，value = Blob（不再缓存 objectURL） =====
+   * 旧实现把 objectURL 存进 Map，条目被淘汰 / 坏音频清理 / revoke 之后，
+   * 同一个词再点就必须重新走一次网络，表现为“第二次还是很慢”。
+   * 现在只缓存 Blob：Blob 永不 revoke、永不销毁；每次播放现造一个临时 URL，
+   * 播完（或切歌）只 revoke 这个临时 URL。因此同一句第二次点击必然命中、
+   * 零网络请求。刷新页面才会清空。 */
+  const audioCache = new Map();          /* text → Blob，只增不销毁 */
+  const audioInflight = new Map();       /* text → Promise<Blob>，同一句并发只请求一次 */
+  const AUDIO_CACHE_MAX = 300;           /* 上限：超出后淘汰最早写入的条目（不影响正在播放的） */
 
-  function cacheDrop(key) {
-    const hit = audioCache.get(key);
-    if (!hit) return;
-    audioCache.delete(key);
-    try { if (typeof URL !== 'undefined' && URL.revokeObjectURL) URL.revokeObjectURL(hit.url); } catch (e) {}
-  }
-  function cacheGet(key) {               /* 命中即刷新 LRU 位置 */
-    const hit = audioCache.get(key);
-    if (!hit) return null;
-    audioCache.delete(key);
-    audioCache.set(key, hit);
-    return hit.url;
-  }
-  function cacheSet(key, url) {
-    let guard = 0;
-    while (audioCache.size >= AUDIO_CACHE_MAX && guard++ < 500) {
-      const first = audioCache.keys().next();
-      if (first.done) break;
-      const oldestKey = first.value;
-      const oldest = audioCache.get(oldestKey);
-      if (oldest && oldest.url === currentAudioUrl) {   /* 正在播：挪到队尾，别掐断声音 */
-        audioCache.delete(oldestKey);
-        audioCache.set(oldestKey, oldest);
-        continue;
-      }
-      cacheDrop(oldestKey);
+  function cachePut(text, blob) {
+    audioCache.delete(text);             /* 先删后插，保持 Map 插入顺序 = 最近使用顺序 */
+    audioCache.set(text, blob);
+    while (audioCache.size > AUDIO_CACHE_MAX) {
+      const oldest = audioCache.keys().next();
+      if (oldest.done) break;
+      audioCache.delete(oldest.value);   /* 只丢 Map 引用，已生成的临时 URL 不受影响 */
     }
-    audioCache.set(key, { url: url });
   }
-  /* 取音频地址：缓存优先；未命中则请求代理并写缓存（相同 key 并发只发一次） */
-  function getAudioUrl(text) {
-    const key = audioUrl(text);
-    const hit = cacheGet(key);
-    if (hit) return Promise.resolve(hit);
-    const running = audioInflight.get(key);
+
+  /* 取音频 Blob：命中缓存直接返回（不发请求）；未命中才 fetch，成功后才写缓存。 */
+  function getAudioBlob(text) {
+    if (audioCache.has(text)) {
+      console.log('[缓存命中] 0延迟播放:', text);
+      return Promise.resolve(audioCache.get(text));
+    }
+    const running = audioInflight.get(text);
     if (running) return running;
-    const p = fetch(key)
+    const p = fetch(audioUrl(text))
       .then(function(res) {
         if (!res || !res.ok) throw new Error('HTTP ' + (res ? res.status : '无响应'));
         const ct = (res.headers && typeof res.headers.get === 'function' && res.headers.get('content-type')) || '';
@@ -1107,20 +1091,28 @@
       })
       .then(function(blob) {
         if (!blob || !blob.size) throw new Error('空音频');
-        const objUrl = URL.createObjectURL(blob);
-        cacheSet(key, objUrl);
-        return objUrl;
+        cachePut(text, blob);            /* 只有真正合法的音频 Blob 才进缓存 */
+        return blob;
       });
     /* 成功 / 失败都要清 inflight，否则一次失败会把 rejected promise 永久复用 */
-    p.then(function() { audioInflight.delete(key); }, function() { audioInflight.delete(key); });
-    audioInflight.set(key, p);
+    const clear = function() { audioInflight.delete(text); };
+    p.then(clear, clear);
+    audioInflight.set(text, p);
     return p;
   }
   function stopAudio() {
     const a = currentAudio;
     currentAudio = null;
+    const oldUrl = currentAudioUrl;
     currentAudioUrl = '';
-    if (a) { try { a.pause(); a.currentTime = 0; } catch (e) {} }
+    if (a) {
+      try {
+        a.onplaying = null; a.onended = null; a.onerror = null;
+        a.pause(); a.currentTime = 0;
+      } catch (e) {}
+    }
+    /* 只释放本次播放的临时 URL；audioCache 里的 Blob 绝不动 */
+    if (oldUrl) { try { URL.revokeObjectURL(oldUrl); } catch (e) {} }
     const u = currentUtt;
     currentUtt = null;
     audioGen++;
@@ -1243,29 +1235,37 @@
       return true;
     }
 
-    getAudioUrl(t)
-      .then(function(objUrl) {
+    getAudioBlob(t)
+      .then(function(blob) {
         if (myGen !== audioGen || ended) { clearBusy(); return; }  /* 已被新一次播放作废 */
+        const objUrl = URL.createObjectURL(blob);                 /* 每次播放现造临时 URL */
         let a;
         try { a = new Audio(objUrl); }
-        catch (e) { throw e; }
+        catch (e) { try { URL.revokeObjectURL(objUrl); } catch (e2) {} throw e; }
         currentAudio = a;
         currentAudioUrl = objUrl;
         a.onplaying = clearBusy;          /* 真的出声了才收掉 spinner */
+        const release = function() {      /* 本次临时 URL 用完即 revoke，Map 里的 Blob 保持不动 */
+          if (currentAudioUrl === objUrl) currentAudioUrl = '';
+          try { URL.revokeObjectURL(objUrl); } catch (e) {}
+        };
         a.onended = function() {
-          if (currentAudio === a) { currentAudio = null; currentAudioUrl = ''; }
+          if (currentAudio === a) currentAudio = null;
+          release();
           finish();
         };
         a.onerror = function() {
-          if (currentAudio === a) { currentAudio = null; currentAudioUrl = ''; }
-          cacheDrop(audioUrl(t));         /* 坏音频：剔出缓存，下次重新请求 */
+          if (currentAudio === a) currentAudio = null;
+          release();
+          audioCache.delete(t);           /* 坏音频：删掉 Blob，下次重新请求 */
           console.warn('[发音] 音频解码失败（' + (tag || '') + '），降级系统语音');
           degrade();
         };
         const p = a.play();
         if (p && typeof p.catch === 'function') {
           p.catch(function(err) {
-            if (currentAudio === a) { currentAudio = null; currentAudioUrl = ''; }
+            if (currentAudio === a) currentAudio = null;
+            release();
             console.warn('[发音] 播放被拦截（' + (tag || '') + '）：', err && err.message);
             degrade();
           });
