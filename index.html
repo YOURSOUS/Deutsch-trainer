@@ -658,19 +658,6 @@
   :root { color-scheme: light; }
   html[data-theme="dark"] { color-scheme: dark; }
   /* ===== 背景主题化修复 区块 结束 ===== */
-
-  /* ===== v0.5 发音按钮 loading 态（纯新增选择器，不改动上面任何既有样式） =====
-     代理首次请求要等网络，用图标位的转圈替代「点了没反应」的错觉；
-     spinner 与原图标同尺寸，按钮宽高不变，不会引起布局跳动。 */
-  .tts-loading { cursor: progress; }
-  .tts-loading > .ico { display: none; }
-  .tts-spin {
-    display: inline-block; width: 1em; height: 1em; flex: 0 0 auto;
-    border: 2px solid currentColor; border-top-color: transparent; border-radius: 50%;
-    vertical-align: -.12em; animation: tts-spin .8s linear infinite;
-  }
-  @keyframes tts-spin { to { transform: rotate(360deg); } }
-  @media (prefers-reduced-motion: reduce) { .tts-spin { animation-duration: 2.4s; } }
 </style>
 </head>
 <body>
@@ -1034,289 +1021,16 @@
     if (SP_DE_HINT.test(text.toLowerCase())) return 'de-DE';
     return C ? 'zh-CN' : 'de-DE';
   }
-  /* ===== v0.5 发音引擎：自有 Netlify 代理优先，浏览器系统语音兜底 =====
-   * 线上（http/https）：请求 /.netlify/functions/tts 取回音频流，转 Blob 播放；
-   * 本地双击 file:// 打开、代理未部署 / 网络错误 / 非 200 / 解码失败：自动降级
-   * 到浏览器内置 speechSynthesis（德语 de-DE，中文 zh-CN）。
-   * 第三方音源（StreamElements / 有道）已全部移除；任何失败只写控制台 warn，
-   * 不弹窗、不阻塞答题；onEnded 一定且只回调一次（供发音页连播串行推进）。 */
+  /* ===== v0.8 极简发音：百度翻译公共 TTS 直连 =====
+   * 不走 Netlify 云函数，不 fetch、不 IndexedDB、不做缓存 / 预取 / 超时重试。
+   * <audio> 直接播放跨域音频（媒体元素不受 CORS 限制），国内线路通常一秒出声。
+   * 任何失败（网络 / 解码 / 自动播放被拦截 / 6 秒无响应）→ speakLocal 兜底。 */
   let currentAudio = null;               /* 当前播放实例：切题 / 连点先停旧音，避免叠音 */
-  let currentAudioUrl = '';              /* 本次播放临时生成的 objectURL，播完 / 切歌立即 revoke */
   let currentUtt = null;                 /* 系统语音兜底实例 */
-  let audioGen = 0;                      /* 播放代次：换题 / 连点时作废上一次未完成的请求 */
 
-  /* 代理接口地址：复用 SP_CJK 判定，含中文 → lang=zh，其余 → lang=de */
-  function audioUrl(text) {
-    const t = String(text == null ? '' : text).trim();
-    const isZh = SP_CJK.test(t);
-    return '/.netlify/functions/tts?text=' + encodeURIComponent(t) + '&lang=' + (isZh ? 'zh' : 'de');
-  }
-
-  /* ===== v0.6 音频缓存：key = 文本，value = Blob（不再缓存 objectURL） =====
-   * 旧实现把 objectURL 存进 Map，条目被淘汰 / 坏音频清理 / revoke 之后，
-   * 同一个词再点就必须重新走一次网络，表现为“第二次还是很慢”。
-   * 现在只缓存 Blob：Blob 永不 revoke、永不销毁；每次播放现造一个临时 URL，
-   * 播完（或切歌）只 revoke 这个临时 URL。因此同一句第二次点击必然命中、
-   * 零网络请求。刷新页面才会清空。 */
-  const audioCache = new Map();          /* text → Blob，只增不销毁 */
-  const audioInflight = new Map();       /* text → Promise<Blob>，同一句并发只请求一次 */
-  const prefetchInflight = new Map();    /* text → Promise<Blob|null>，后台预取去重 / 供播放复用 */
-  const AUDIO_CACHE_MAX = 300;           /* 上限：超出后淘汰最早写入的条目（不影响正在播放的） */
-
-  function cachePut(text, blob) {
-    audioCache.delete(text);             /* 先删后插，保持 Map 插入顺序 = 最近使用顺序 */
-    audioCache.set(text, blob);
-    while (audioCache.size > AUDIO_CACHE_MAX) {
-      const oldest = audioCache.keys().next();
-      if (oldest.done) break;
-      audioCache.delete(oldest.value);   /* 只丢 Map 引用，已生成的临时 URL 不受影响 */
-    }
-  }
-
-  /* ===== v0.7 音频持久缓存（IndexedDB，二级缓存） =====
-   * 一级是上面的内存 Map，二级是 IndexedDB：只有用户点击触发的播放链路会写它，
-   * 不做任何后台 Audio 预播放。无痕模式 / 老机型 / 配额满时 IndexedDB 可能直接
-   * 不可用，这里所有入口都兜住异常：读不到、写不进都只是退回网络 fetch，不影响出声。 */
-  const TTS_DB = 'de-tts-audio';
-  const TTS_STORE = 'clips';
-  const TTS_IDB_TIMEOUT = 800;           /* 读超时当作未命中，慢 IDB 不能拖住首次出声 */
-  let ttsDbPromise = null;
-  let ttsDbBroken = false;               /* 本次会话 IDB 已判定不可用：不再反复尝试 */
-
-  function ttsDbOpen() {
-    if (ttsDbBroken) return Promise.reject(new Error('idb-disabled'));
-    if (ttsDbPromise) return ttsDbPromise;
-    const p = new Promise(function(resolve, reject) {
-      if (typeof indexedDB === 'undefined' || !indexedDB) { reject(new Error('no-idb')); return; }
-      let done = false;
-      let rq;
-      try { rq = indexedDB.open(TTS_DB, 1); }
-      catch (e) { reject(e); return; }
-      rq.onupgradeneeded = function() {
-        try {
-          const db = rq.result;
-          if (!db.objectStoreNames.contains(TTS_STORE)) db.createObjectStore(TTS_STORE);
-        } catch (e) { /* 建表失败会走 onerror，下面统一兜底 */ }
-      };
-      rq.onsuccess = function() {
-        if (done) { try { rq.result.close(); } catch (e) {} return; }
-        done = true;
-        resolve(rq.result);
-      };
-      rq.onerror = function() { if (!done) { done = true; reject(rq.error || new Error('idb-open')); } };
-      rq.onblocked = function() { if (!done) { done = true; reject(new Error('idb-blocked')); } };
-    });
-    ttsDbPromise = p;
-    p.catch(function() { ttsDbBroken = true; ttsDbPromise = null; });
-    return p;
-  }
-
-  /* 读：任何异常 / 超时都 resolve(null)，调用方自然退回 fetch */
-  function ttsIdbGet(text) {
-    if (ttsDbBroken) return Promise.resolve(null);
-    let timer = null;
-    const timeout = new Promise(function(resolve) {
-      timer = setTimeout(function() { resolve(null); }, TTS_IDB_TIMEOUT);
-    });
-    const read = ttsDbOpen().then(function(db) {
-      return new Promise(function(resolve) {
-        let tx;
-        try { tx = db.transaction(TTS_STORE, 'readonly'); }
-        catch (e) { resolve(null); return; }
-        let rq;
-        try { rq = tx.objectStore(TTS_STORE).get(text); }
-        catch (e) { resolve(null); return; }
-        rq.onsuccess = function() {
-          const v = rq.result;
-          resolve((v && v.blob && v.blob.size) ? v.blob : null);
-        };
-        rq.onerror = function() { resolve(null); };
-      });
-    }).catch(function() { return null; });
-    return Promise.race([read, timeout]).then(function(v) {
-      if (timer) clearTimeout(timer);
-      return v;
-    });
-  }
-
-  /* 写：整个写入过程包 try/catch，失败只返回 false，绝不抛给播放链路 */
-  function ttsIdbPut(text, blob) {
-    if (ttsDbBroken) return Promise.resolve(false);
-    return ttsDbOpen().then(function(db) {
-      return new Promise(function(resolve) {
-        let tx;
-        try { tx = db.transaction(TTS_STORE, 'readwrite'); }
-        catch (e) { resolve(false); return; }
-        try { tx.objectStore(TTS_STORE).put({ blob: blob, ts: Date.now() }, text); }
-        catch (e) { resolve(false); return; }
-        tx.oncomplete = function() { resolve(true); };
-        tx.onerror = function() { resolve(false); };
-        tx.onabort = function() { resolve(false); };
-      });
-    }).catch(function() { return false; });   /* 无痕模式 / 配额满 / 老浏览器：静默失败 */
-  }
-
-  function ttsIdbDelete(text) {
-    if (ttsDbBroken) return;
-    ttsDbOpen().then(function(db) {
-      try {
-        const tx = db.transaction(TTS_STORE, 'readwrite');
-        tx.objectStore(TTS_STORE).delete(text);
-        tx.onerror = function() {};
-      } catch (e) {}
-    }).catch(function() {});
-  }
-
-  /* 统一网络请求：校验状态码 / Content-Type / 空 Blob；预取与播放共用。 */
-  function fetchAudioBlob(text) {
-    return fetch(audioUrl(text))
-      .then(function(res) {
-        if (!res || !res.ok) throw new Error('HTTP ' + (res ? res.status : '无响应'));
-        const ct = (res.headers && typeof res.headers.get === 'function' && res.headers.get('content-type')) || '';
-        if (ct && ct.indexOf('audio') < 0 && ct.indexOf('octet-stream') < 0) {
-          throw new Error('非音频响应：' + ct);   /* 函数缺失时可能回 200 + HTML */
-        }
-        return res.blob();
-      })
-      .then(function(blob) {
-        if (!blob || !blob.size) throw new Error('空音频');
-        return blob;
-      });
-  }
-
-  /* ===== 页面静默预加载：只 fetch + 写 IndexedDB，绝不创建 Audio / 播放 =====
-   * 渲染题目时调用；命中 IDB 就跳过下载，任何失败都静默，不影响答题与播放。 */
-  function prefetchAudio(text) {
-    const t = String(text == null ? '' : text).trim();
-    if (!t) return;
-    if (audioCache.has(t) || audioInflight.has(t) || prefetchInflight.has(t)) return;
-    if (typeof fetch !== 'function') return;
-    if (typeof window !== 'undefined' && window.location && window.location.protocol === 'file:') return;
-    const p = ttsIdbGet(t)
-      .then(function(cached) {
-        if (cached) return cached;                      /* 已落盘：不再重复下载 */
-        return fetchAudioBlob(t).then(function(blob) {
-          /* 异步落盘，不阻塞预取完成；写失败也不影响稍后的点击播放 */
-          ttsIdbPut(t, blob).catch(function() {});
-          return blob;
-        });
-      })
-      .catch(function() { return null; });              /* 预取失败完全静默 */
-    prefetchInflight.set(t, p);
-    const done = function() { prefetchInflight.delete(t); };
-    p.then(done, done);
-  }
-
-  function prefetchTaskAudio(texts) {
-    const list = texts || [];
-    for (let i = 0; i < list.length; i += 1) prefetchAudio(list[i]);
-  }
-
-  /* ===== 云函数预热：只为唤醒 Netlify Function 冷启动 =====
-   * 只发一次 GET，不播放、不写内存 / IndexedDB，也不读响应体；失败静默。 */
-  function warmupTtsFunction() {
-    if (typeof fetch !== 'function') return;
-    if (typeof window !== 'undefined' && window.location && window.location.protocol === 'file:') return;
-    try {
-      fetch('/.netlify/functions/tts?text=Hallo&lang=de', { cache: 'no-store' })
-        .then(function(res) {
-          /* 只为触发函数执行，拿到响应头后直接取消响应体，不占用带宽 */
-          if (res && res.body && typeof res.body.cancel === 'function') {
-            try {
-              const c = res.body.cancel();
-              if (c && typeof c.catch === 'function') c.catch(function() {});
-            } catch (e) {}
-          }
-        })
-        .catch(function() {});         /* 预热失败完全静默 */
-    } catch (e) {}
-  }
-
-  /* 取音频 Blob：内存 → 后台预取结果 → IndexedDB → 网络 fetch。
-   * 任一存储层异常都只降级到下一层，绝不让播放失败。 */
-  function getAudioBlob(text) {
-    if (audioCache.has(text)) {
-      console.log('[缓存命中] 0延迟播放:', text);
-      return Promise.resolve(audioCache.get(text));
-    }
-    const running = audioInflight.get(text);
-    if (running) return running;
-
-    /* 渲染时已在预取：直接等它，避免同一句被播放再请求一次 */
-    const pre = prefetchInflight.get(text);
-    const p = (pre || Promise.resolve(null))
-      .then(function(prefetched) {
-        if (prefetched) {
-          console.log('[缓存命中] 0延迟播放:', text);
-          cachePut(text, prefetched);
-          return prefetched;
-        }
-        return ttsIdbGet(text).then(function(cached) {
-          if (cached) {
-            console.log('[缓存命中] 0延迟播放:', text);
-            cachePut(text, cached);        /* 回填内存层，本次会话后续命中同步出声 */
-            return cached;
-          }
-          console.log('[缓存未命中，发起网络请求]', text);
-          return fetchAudioBlob(text).then(function(blob) {
-            cachePut(text, blob);        /* 只有真正合法的音频 Blob 才进内存缓存 */
-            ttsIdbPut(text, blob).catch(function() {});  /* 异步落盘，失败不影响本次播放 */
-            return blob;
-          });
-        });
-      });
-    /* 成功 / 失败都要清 inflight，否则一次失败会把 rejected promise 永久复用 */
-    const clear = function() { audioInflight.delete(text); };
-    p.then(clear, clear);
-    audioInflight.set(text, p);
-    return p;
-  }
-  function stopAudio() {
-    const a = currentAudio;
-    currentAudio = null;
-    const oldUrl = currentAudioUrl;
-    currentAudioUrl = '';
-    if (a) {
-      try {
-        a.onplaying = null; a.onended = null; a.onerror = null;
-        a.pause(); a.currentTime = 0;
-      } catch (e) {}
-    }
-    /* 只释放本次播放的临时 URL；audioCache 里的 Blob 绝不动 */
-    if (oldUrl) { try { URL.revokeObjectURL(oldUrl); } catch (e) {} }
-    const u = currentUtt;
-    currentUtt = null;
-    audioGen++;
-    if (u && typeof speechSynthesis !== 'undefined') { try { speechSynthesis.cancel(); } catch (e) {} }
-  }
-
-  /* ===== 播放按钮 loading 态 =====
-   * 点下按钮到真正出声之间（首次请求代理时尤其明显）在图标位显示转圈；
-   * 出声 / 播完 / 失败 / 被新一次播放接管都会清掉，15s 兜底不会一直转。 */
-  const TTS_BUSY_TIMEOUT = 15000;
-  function setTtsBusy(btn, on, token) {
-    if (!btn || !btn.classList) return;
-    if (on) {
-      btn.__ttsToken = token;
-      btn.classList.add('tts-loading');
-      btn.setAttribute('aria-busy', 'true');
-      if (!btn.querySelector('.tts-spin')) {
-        const sp = document.createElement('span');
-        sp.className = 'tts-spin';
-        sp.setAttribute('aria-hidden', 'true');
-        btn.insertBefore(sp, btn.firstChild);   /* 占住图标位置，按钮尺寸不跳动 */
-      }
-      if (btn.__ttsTimer) clearTimeout(btn.__ttsTimer);
-      btn.__ttsTimer = setTimeout(function() { setTtsBusy(btn, false, token); }, TTS_BUSY_TIMEOUT);
-      return;
-    }
-    if (token != null && btn.__ttsToken !== token) return;   /* 已被更新的一次播放接管 */
-    btn.__ttsToken = 0;
-    if (btn.__ttsTimer) { clearTimeout(btn.__ttsTimer); btn.__ttsTimer = null; }
-    btn.classList.remove('tts-loading');
-    btn.removeAttribute('aria-busy');
-    const sp = btn.querySelector('.tts-spin');
-    if (sp && sp.parentNode) sp.parentNode.removeChild(sp);
+  /* 百度 lan：中文走 zh，其余走 de；要强制德语就把这里改成 return 'de'。 */
+  function ttsLang(text) {
+    return /[\u4e00-\u9fff]/.test(String(text == null ? '' : text)) ? 'zh' : 'de';
   }
 
   /* 降级方案：浏览器自带语音。德语 → de-DE，中文 → zh-CN；
@@ -1367,136 +1081,80 @@
   }
 
   /* 播放一段文本：true = 已发起播放。
-   * 代理优先（内存命中则同步出声、零请求）→ 失败降级系统语音；
-   * onEnded 在真正播完或最终失败时回调（供连播）；btn 可选，用于按钮 loading 态。
-   *
-   * ★ iOS 自动播放约束（勿改）：
-   *   1) new Audio() 只在本函数同步段创建；预加载 / 后台任务绝不碰 Audio，
-   *      更不能静默 play()。本函数由点击处理、点击发起的连播链、默写自动播放
-   *      调用；后两者若已脱离用户手势，play() 会被系统拒绝并按第 3 条兜底。
-   *   2) 内存命中时 createObjectURL + play() 全在同步栈里完成（点击链内零延迟）。
-   *   3) 首次未命中需读 IndexedDB / 网络，数据到达后才挂 src；play() 被拦截时
-   *      捕获 NotAllowedError 并降级 speakLocal，不让功能卡死。 */
-  function playAudio(text, tag, onEnded, btn) {
+   * 百度公共语音直连；播完回调 onEnded；出错静默降级系统语音。 */
+  function playAudio(text, tag, onEnded) {
     const t = String(text == null ? '' : text).trim();
-    if (!t) { if (typeof onEnded === 'function') { try { onEnded(); } catch (e) {} } return false; }
-
-    let ended = false;
+    let done = false;
     function finish() {
-      if (ended) return;
-      ended = true;
-      clearBusy();
+      if (done) return;
+      done = true;
       if (typeof onEnded === 'function') { try { onEnded(); } catch (e) {} }
     }
+    if (!t) { finish(); return false; }
 
-    stopAudio();
-    const myGen = ++audioGen;            /* 本轮代次：更晚的播放 / stopAudio 都会让它作废 */
-    function clearBusy() { setTtsBusy(btn, false, myGen); }
-    setTtsBusy(btn, true, myGen);        /* 点下即转圈，直到出声 / 失败 / 超时 */
-
-    let degraded = false;
-    function degrade() {                 /* 统一兜底入口：只降级一次 */
-      if (degraded || myGen !== audioGen || ended) { clearBusy(); return; }
-      degraded = true;
-      const ok = speakLocal(t, tag, finish);
-      clearBusy();                       /* 系统语音立即出声，不必继续转圈 */
-      return ok;
+    /* 先停掉上一句：音频 + 系统语音，避免叠音；旧句的 onEnded 不再触发 */
+    const prev = currentAudio;
+    currentAudio = null;
+    if (prev) {
+      try {
+        prev.onplaying = null; prev.onended = null; prev.onerror = null;
+        prev.pause(); prev.currentTime = 0;
+      } catch (e) {}
     }
+    if (typeof speechSynthesis !== 'undefined') { try { speechSynthesis.cancel(); } catch (e) {} }
+    currentUtt = null;
 
-    /* 前置检查：本地 file:// 打开时没有 Netlify 后端，直接走系统语音 */
-    if (typeof window !== 'undefined' && window.location && window.location.protocol === 'file:') {
-      degrade();
-      return true;
-    }
-    if (typeof fetch !== 'function' || typeof Audio === 'undefined'
-        || typeof URL === 'undefined' || typeof URL.createObjectURL !== 'function') {
-      degrade();
-      return true;
-    }
-
-    /* ★ 同步段创建播放器：随 playAudio 立即 new Audio()，不能等 fetch 回来再创建 */
     let a = null;
-    try { a = new Audio(); a.preload = 'auto'; }
-    catch (e) { a = null; }
-    if (!a) {
-      console.warn('[发音] 无法创建 Audio（' + (tag || '') + '），降级系统语音');
-      degrade();
-      return true;
+    let timer = null;
+    let fellBack = false;
+    function clearTimer() {
+      if (timer) { clearTimeout(timer); timer = null; }
     }
-
-    let objUrl = '';
-    function releaseUrl() {              /* 只释放本次临时 URL，Map / IDB 里的 Blob 不动 */
-      if (!objUrl) return;
-      const u = objUrl;
-      objUrl = '';
-      if (currentAudioUrl === u) currentAudioUrl = '';
-      try { URL.revokeObjectURL(u); } catch (e) {}
-    }
-
-    function start(blob) {
-      if (myGen !== audioGen || ended) { clearBusy(); return; }   /* 已被新一次播放作废 */
-      try { objUrl = URL.createObjectURL(blob); }
-      catch (e) { degrade(); return; }
-      currentAudio = a;
-      currentAudioUrl = objUrl;
-      a.src = objUrl;                    /* 数据就绪后才挂 src，避免空 src 触发 error */
-      a.onplaying = clearBusy;           /* 真的出声了才收掉 spinner */
-      a.onended = function() {
-        if (currentAudio === a) currentAudio = null;
-        releaseUrl();
-        finish();
-      };
-      a.onerror = function() {
-        if (ended) return;                /* 已正常播完后再冒出的 error 事件不算失败 */
-        if (currentAudio === a) currentAudio = null;
-        releaseUrl();
-        audioCache.delete(t);            /* 坏音频：两级缓存都剔掉，下次重新请求 */
-        ttsIdbDelete(t);
-        console.warn('[发音] 音频解码失败（' + (tag || '') + '），降级系统语音');
-        degrade();
-      };
-      let p = null;
-      try { p = a.play(); }
-      catch (e) {
-        releaseUrl();
-        console.warn('[发音] 播放被拦截（' + (tag || '') + '）：', e && e.message);
-        degrade();
-        return;
+    function fallback() {
+      if (done || fellBack) return;
+      if (a && currentAudio !== a) return;      /* 已被新一次播放接管 */
+      fellBack = true;
+      clearTimer();
+      if (a) {
+        try {
+          a.onplaying = null; a.onended = null; a.onerror = null;
+          a.pause(); a.currentTime = 0;
+        } catch (e) {}
       }
-      if (p && typeof p.catch === 'function') {
-        p.catch(function(err) {
-          if (currentAudio === a) currentAudio = null;
-          releaseUrl();
-          console.warn('[发音] 播放被拦截（' + (tag || '') + '）：', err && err.message);
-          degrade();
-        });
-      }
+      if (currentAudio === a) currentAudio = null;
+      try { speakLocal(t, tag, finish); }
+      catch (e) { finish(); }
     }
 
-    /* 一级缓存：内存在命中时完全同步出声（全程在点击链内，iOS 也不会拦） */
-    const memBlob = audioCache.get(t);
-    if (memBlob) {
-      console.log('[缓存命中] 0延迟播放:', t);
-      start(memBlob);
-      return true;
+    if (typeof Audio === 'undefined') { fallback(); return true; }
+
+    /* 百度翻译公共语音接口：国内直连、无需 Key、直接交给 <audio> */
+    const url = 'https://fanyi.baidu.com/gettts?lan=' + ttsLang(t) +
+      '&text=' + encodeURIComponent(t) + '&spd=3&source=web';
+
+    try { a = new Audio(url); }
+    catch (e) { fallback(); return true; }
+
+    currentAudio = a;
+    a.onplaying = clearTimer;               /* 真出声了就撤掉兜底定时器 */
+    a.onended = function() {
+      clearTimer();
+      if (currentAudio === a) currentAudio = null;
+      finish();
+    };
+    a.onerror = function() { fallback(); };
+    timer = setTimeout(fallback, 6000);     /* 接口挂死且无 error 时，6 秒后切系统语音 */
+
+    try {
+      const p = a.play();
+      if (p && typeof p.catch === 'function') p.catch(function() { fallback(); });
+    } catch (e) {
+      fallback();
     }
-
-    /* 缓存排查日志：内存没命中才走到 IndexedDB（命中 / 未命中由 getAudioBlob 继续打印） */
-    console.log('[发音] 尝试从 IndexedDB 读取:', t);
-
-    /* 二级 IndexedDB / 网络：失败或 IDB 不可用都会自动退回 fetch → 再失败才降级 */
-    getAudioBlob(t)
-      .then(start)
-      .catch(function(err) {
-        if (myGen !== audioGen || ended) { clearBusy(); return; }
-        console.warn('[发音] 代理接口不可用（' + (tag || '') + '），降级系统语音：', err && err.message);
-        degrade();
-      });
-
     return true;
   }
 
-  /* 朗读：文本清洗后交给 playAudio（代理 TTS 优先，系统语音兜底） */
+  /* 朗读：文本清洗后交给 playAudio（百度 TTS 优先，系统语音兜底） */
   function speak(text, btn) {
     try {
       if (!text) return false;
@@ -1828,8 +1486,6 @@
     if (!t) return;
     const item = bankOf(t.level)[t.index];
     if (!item) return;
-    /* ★ 静默预加载题干 / 首个答案的音频：只写 IndexedDB，不创建 Audio、不播放 */
-    prefetchTaskAudio([speakText(item.q), speakText(item.a && item.a[0])]);
     const kind = (t.kind === 'choice') ? 'choice' : 'input';   /* ★ A/B 由抽题时随机决定 */
     el.taskMeta.innerHTML = '<span class="tag">' + levelOf(t.level) + '</span>' +
       '<span class="tag">' + item.type + '</span>' +
@@ -2763,11 +2419,6 @@
     const sub = (currentDictSub === 'zh-prompt' && isZh2De) ? 'zh-prompt'
       : (currentDictSub === 'listen' ? 'listen' : decideDictSub(it));
     currentDictSub = sub;
-    /* ★ 静默预加载：听音自动播放用的德语串 + 题干 / 答案的朗读串，只写 IDB */
-    try {
-      const autoText = dictationDeText(it).replace(/\//g, '').replace(/\s+/g, ' ').trim();
-      prefetchTaskAudio([autoText, speakText(it.q), speakText(dictationAnswersOf(it)[0])]);
-    } catch (e) {}
     el.taskMeta.innerHTML = '<span class="tag">' + (sub === 'listen' ? '听音默写' : '默写') + '</span>' +
       '<span class="tag">' + String(it.type || '默写') + '</span>' +
       (state.dictationReason ? '<span class="tag reason">' + state.dictationReason + '</span>' : '') +
@@ -3985,7 +3636,6 @@
     } else if (state.currentTask && bankOf(state.currentTask.level)[state.currentTask.index]) renderTask();
     else pickTask();
     checkAppVersion();
-    warmupTtsFunction();   /* ★ 静默唤醒 Netlify 函数冷启动：不播放、不入缓存，失败忽略 */
     /* 多源恢复提示：放在最后显示，避免被"已自动保存"之类的提示覆盖 */
     try {
       const info = state.archiveInfo;
