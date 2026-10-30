@@ -751,6 +751,23 @@
     50% { top: -4px; }                    /* 轻微上下浮动，不占用 transform（留给视线追踪） */
   }
 
+  /* 头像联动 Duang：作用在 wrap 上，避免与内层 avatar 的视线追踪 transform 打架 */
+  @keyframes hina-jump {
+    0%   { transform: translateY(0) scale(1); }
+    35%  { transform: translateY(-10px) scale(1.06); }   /* 整只向上弹 */
+    60%  { transform: translateY(0) scale(1); }
+    80%  { transform: translateY(-3px) scale(1.01); }
+    100% { transform: translateY(0) scale(1); }
+  }
+  @keyframes hina-nod {
+    0%   { transform: translateY(0) scale(1); }
+    30%  { transform: translateY(4px) scale(1.04); }     /* 先微微下沉，像点头 */
+    60%  { transform: translateY(-2px) scale(.98); }
+    100% { transform: translateY(0) scale(1); }
+  }
+  #hinaAvatarWrap.hina-jump { animation: hina-jump .5s cubic-bezier(.34, 1.56, .64, 1); }
+  #hinaAvatarWrap.hina-nod  { animation: hina-nod .45s ease-in-out; }
+
   /* ===== 头像右下角：相机 + 恢复（hover 出现） ===== */
   #hinaAvatarTools {
     position: absolute;
@@ -829,7 +846,7 @@
     -webkit-backdrop-filter: blur(10px) saturate(150%);
     backdrop-filter: blur(10px) saturate(150%);
     transform-origin: bottom right;
-    animation: hina-pop .34s cubic-bezier(.34, 1.56, .64, 1);
+    animation: hina-pop .45s cubic-bezier(.34, 1.56, .64, 1);
   }
   #hinaBubble[hidden] { display: none; }
   #hinaBubble.hina-bubble-below {
@@ -838,9 +855,34 @@
     transform-origin: top right;
   }
   @keyframes hina-pop {
-    from { opacity: 0; transform: scale(.78) translateY(12px); }
-    to   { opacity: 1; transform: scale(1) translateY(0); }
+    0%   { opacity: 0; transform: scale(.6) translateY(20px); }
+    40%  { opacity: 1; transform: scale(1.1) translateY(-5px); }  /* 惯性过冲 */
+    65%  { transform: scale(.95) translateY(0); }
+    100% { transform: scale(1) translateY(0); }
   }
+
+  /* 答题自动反馈：答对轻弹跳 / 答错轻发抖（幅度刻意做小，够察觉不打扰） */
+  @keyframes hina-cheer {
+    0%   { transform: translateY(0) scale(1); }
+    26%  { transform: translateY(-7px) scale(1.025); }
+    50%  { transform: translateY(0) scale(.995); }
+    72%  { transform: translateY(-3px) scale(1.012); }
+    100% { transform: translateY(0) scale(1); }
+  }
+  @keyframes hina-shake {
+    0%, 100% { transform: translateX(0); }
+    16%  { transform: translateX(-5px); }
+    32%  { transform: translateX(4px); }
+    48%  { transform: translateX(-3px); }
+    64%  { transform: translateX(2px); }
+    82%  { transform: translateX(-1px); }
+  }
+  /* 首次出现：先播默认的 hina-pop，再接反应动画（两段不重叠，避免 transform 打架） */
+  #hinaBubble.hina-react-cheer { animation: hina-pop .45s cubic-bezier(.34, 1.56, .64, 1), hina-cheer .58s ease-out .45s; }
+  #hinaBubble.hina-react-shake { animation: hina-pop .45s cubic-bezier(.34, 1.56, .64, 1), hina-shake .5s ease-in-out .45s; }
+  /* 气泡已经展开时更新内容：只播反应动画，不再重新弹入，避免“塌下去又弹出来” */
+  #hinaBubble.hina-nopop.hina-react-cheer { animation: hina-cheer .58s ease-out; }
+  #hinaBubble.hina-nopop.hina-react-shake { animation: hina-shake .5s ease-in-out; }
 
   #hinaText, #hinaActionBtn, #hinaSettingsBtn {
     font-family: "YouYuan", "PingFang SC", "Microsoft YaHei", sans-serif;
@@ -896,21 +938,42 @@
     transform: none;
     filter: none;
   }
+  /* 按钮 Duang 手感：hover 提亮微放大，active 被“按扁”并去掉外阴影 */
+  #hinaActionBtn,
+  #hinaSettingsBtn,
+  #hinaHideBtn {
+    transition: transform .14s cubic-bezier(.34, 1.56, .64, 1), filter .15s ease,
+                box-shadow .15s ease, background .15s ease, color .15s ease, opacity .15s ease;
+  }
+  #hinaActionBtn:hover { filter: brightness(1.08); transform: scale(1.04); }
+  #hinaActionBtn:active {
+    transform: scale(.9) translateY(2px);
+    box-shadow: inset 0 1px 0 var(--hina-card-line), 0 2px 6px var(--hina-primary-a32);
+  }
+  #hinaSettingsBtn:hover { transform: scale(1.12); }   /* 叠加在原 hover 提亮之上 */
+  #hinaSettingsBtn:active {
+    transform: scale(.88);
+    box-shadow: none;
+    background: var(--hina-primary-a32);
+  }
+  #hinaHideBtn:hover { transform: scale(1.12); }
+  #hinaHideBtn:active { transform: scale(.85); box-shadow: 0 1px 3px rgba(0, 0, 0, .2); }
   #hinaBubble.hina-tone-warn {
     border-color: var(--hina-bad);
     box-shadow:
       inset 0 1px 0 var(--hina-card-line),
+      inset 0 0 26px rgba(220, 38, 38, .18),   /* 背景透出的红色光晕 */
       inset 0 0 22px var(--hina-primary-a25),
-      0 18px 40px rgba(220, 38, 38, .28),
-      0 0 26px rgba(220, 38, 38, .22);
+      0 18px 40px rgba(220, 38, 38, .34),
+      0 0 34px rgba(220, 38, 38, .42);
   }
   #hinaBubble.hina-tone-gold {
     border-color: var(--hina-gold);
     box-shadow:
       inset 0 1px 0 var(--hina-card-line),
-      inset 0 0 22px var(--hina-gold-a35),
+      inset 0 0 28px var(--hina-gold-a35),      /* 背景透出的金色光晕 */
       0 18px 40px var(--hina-gold-a35),
-      0 0 26px var(--hina-gold-a35);
+      0 0 38px rgba(232, 197, 92, .5);
   }
 
   #hinaHideBtn {
@@ -957,6 +1020,13 @@
   @media (prefers-reduced-motion: reduce) {
     #hinaAvatar { animation: none; transition: none; }
     #hinaBubble { animation: none; }
+    /* 新增的反应动画选择器优先级更高，必须在这里显式关掉，否则 reduced-motion 会失效 */
+    #hinaBubble.hina-react-cheer,
+    #hinaBubble.hina-react-shake,
+    #hinaBubble.hina-nopop.hina-react-cheer,
+    #hinaBubble.hina-nopop.hina-react-shake { animation: none; }
+    #hinaAvatarWrap.hina-jump,
+    #hinaAvatarWrap.hina-nod { animation: none; }
   }
 
   /* ======================================================================
@@ -4903,6 +4973,21 @@
   var MAX_LINES = 100;
   var ANSWER_FRESH_MS = 5000;
   var BUBBLE_TTL_MS = 8000;
+  var AUTO_FEEDBACK_MS = 4000;              /* 答题自动反馈气泡的停留时长 */
+
+  /* 自动反馈台词池：独立于日常台词，避免和随机日常台词混在一起 */
+  var PRAISE_LINES = [
+    { text: '答对了呢，老师真棒！' },
+    { text: '哼，这种程度对老师来说很简单吧？' },
+    { text: '别得意忘形，老师……不过，确实做得不错。' },
+    { text: '嗯，及格。……是很好的意思哦，别多想。' }
+  ];
+  var COMFORT_LINES = [
+    { text: '没关系，看看错在哪里吧。' },
+    { text: '真是的……下次要小心哦。' },
+    { text: '别灰心，我可是记得老师努力的样子。' },
+    { text: '这种题我也差点答错……才没有！快订正。' }
+  ];
 
   var currentAction = null;
   var lastCorrect = false;
@@ -4922,6 +5007,7 @@
   var bubbleTimer = null;
   var bubbleDeadline = 0;
   var bubbleRemaining = 0;
+  var bubbleDuration = BUBBLE_TTL_MS;      /* 记住本次倒计时的总时长，悬停恢复后才能接着数 */
   var bubblePaused = false;
   var bubbleAuto = false;
   var bubbleHover = false;
@@ -5132,19 +5218,21 @@
   }
   function armBubbleTimer(ms) {
     clearBubbleTimer();
+    bubbleDuration = ms;                 /* 记录总时长，供 hover 暂停后恢复使用 */
     bubbleDeadline = Date.now() + ms;
     bubbleTimer = setTimeout(function () {
       bubbleTimer = null;
       if (!bubblePaused && !bubble.hidden) closeBubble();
     }, ms);
   }
-  function startBubbleTimer(auto) {
+  function startBubbleTimer(auto, ms) {
     clearBubbleTimer();
     bubbleAuto = !!auto;
     bubblePaused = false;
     bubbleRemaining = 0;
     if (!bubbleAuto) return;
-    armBubbleTimer(BUBBLE_TTL_MS);
+    /* 第二个参数允许逐次指定时长（答题自动反馈用 4 秒，其余沿用 8 秒） */
+    armBubbleTimer(typeof ms === 'number' && ms > 0 ? ms : BUBBLE_TTL_MS);
   }
   function pauseBubbleTimer() {
     if (!bubbleTimer || bubblePaused) return;
@@ -5156,7 +5244,9 @@
     if (!bubblePaused || bubble.hidden || !bubbleAuto) return;
     if (bubbleHover || bubbleFocus) return;
     bubblePaused = false;
-    armBubbleTimer(bubbleRemaining > 0 ? bubbleRemaining : BUBBLE_TTL_MS);
+    /* 用本次气泡自己的总时长兜底，不能一刀切写死 BUBBLE_TTL_MS，
+       否则 4 秒的答题反馈被悬停一次就会变成 8 秒 */
+    armBubbleTimer(bubbleRemaining > 0 ? bubbleRemaining : bubbleDuration);
   }
 
   function openBubble() {
@@ -5173,6 +5263,7 @@
     bubble.hidden = false;
     wrap.setAttribute('aria-expanded', 'true');
     updateBubbleSide();
+    jumpAvatar();                             /* 气泡弹出，头像跟着向上跳一下 */
     /* 答题反馈 / 错题预警不自动关闭，其余 8 秒后收起 */
     startBubbleTimer(!(line.answerFeedback || line.tone === 'warn'));
   }
@@ -5181,11 +5272,65 @@
     bubbleAuto = false;
     bubblePaused = false;
     bubbleRemaining = 0;
+    bubbleDuration = BUBBLE_TTL_MS;
     bubbleHover = false;
     bubbleFocus = false;
+    bubble.classList.remove('hina-react-cheer', 'hina-react-shake', 'hina-nopop');
     bubble.hidden = true;
     wrap.setAttribute('aria-expanded', 'false');
     currentAction = null;
+  }
+
+  /* ===================== 答题自动反馈 =====================
+     只由 #taskMsg 的 class 变化驱动，不读不写 state，不碰判题逻辑。
+     ======================================================= */
+  function playReact(isCorrect, alreadyOpen) {
+    bubble.classList.remove('hina-react-cheer', 'hina-react-shake', 'hina-nopop');
+    if (reduceMotion) return;                 /* 系统要求减少动效时，完全不加动画类 */
+    void bubble.offsetWidth;                  /* 强制回流：连续答题时动画才会重新播放 */
+    bubble.classList.add(isCorrect ? 'hina-react-cheer' : 'hina-react-shake');
+    if (alreadyOpen) bubble.classList.add('hina-nopop');
+  }
+
+  /* 头像联动：弹跳 / 点头。作用在 wrap 上，与内层视线追踪互不干扰；
+     用 animationend 自动拆类，绝不留下游离定时器。 */
+  function jumpAvatar() {
+    if (reduceMotion || !wrap) return;
+    wrap.classList.remove('hina-jump');
+    void wrap.offsetWidth;                    /* 强制回流，连点也能重播 */
+    wrap.classList.add('hina-jump');
+  }
+  function nodAvatar() {
+    if (reduceMotion || !wrap) return;
+    wrap.classList.remove('hina-nod');
+    void wrap.offsetWidth;
+    wrap.classList.add('hina-nod');
+  }
+  wrap.addEventListener('animationend', function (e) {
+    var n = e.animationName;
+    if (n === 'hina-jump' || n === 'hina-nod') {
+      wrap.classList.remove('hina-jump', 'hina-nod');
+    }
+  });
+
+  function popupAnswerFeedback(isCorrect) {
+    if (document.hidden) return;              /* 页面在后台（切屏）→ 不打扰 */
+    if (assistant.hidden) return;             /* 助手已被用户收起 → 不冒出来 */
+
+    var item = pickOne(isCorrect ? PRAISE_LINES : COMFORT_LINES);
+    var alreadyOpen = !bubble.hidden;
+
+    textEl.textContent = item.text;
+    actionBtn.textContent = isCorrect ? '继续努力' : '我记住了';
+    currentAction = closeBubble;
+    setTone(isCorrect ? 'gold' : 'warn');
+
+    bubble.hidden = false;
+    wrap.setAttribute('aria-expanded', 'true');
+    updateBubbleSide();
+    playReact(isCorrect, alreadyOpen);
+    jumpAvatar();                             /* 自动反馈弹出时，头像同样跳一下 */
+    startBubbleTimer(true, AUTO_FEEDBACK_MS);  /* 内部先 clearTimeout，绝不会叠定时器 */
   }
   function showNotice(message) {
     textEl.textContent = message;
@@ -5218,6 +5363,7 @@
 
   actionBtn.addEventListener('click', function (e) {
     e.stopPropagation();
+    nodAvatar();                              /* 按键关闭的瞬间，头像点一下头 */
     var run = currentAction;
     closeBubble();
     if (typeof run === 'function') { try { run(); } catch (err) {} }
@@ -5636,17 +5782,25 @@
   /* 只读 #taskMsg 的 class，记录答题结果与时间；不参与判题、不改 state */
   var msgEl = document.getElementById('taskMsg');
   if (msgEl && typeof MutationObserver === 'function') {
+    /* 记录上一次的判定结果类：主程序切下一题时会先把 className 置空，
+       因此「ok → '' → ok」能正常触发第二次；同一道题重复赋同一个值则不会重复弹窗。 */
+    var lastTaskCls = '';
     new MutationObserver(function () {
       var cls = ' ' + (msgEl.className || '') + ' ';
+      var cur = '';
       if (cls.indexOf(' bad ') >= 0) {
         lastWrong = true;
         lastCorrect = false;
         lastAnswerAt = Date.now();
+        cur = 'bad';
       } else if (cls.indexOf(' ok ') >= 0) {
         lastCorrect = true;
         lastWrong = false;
         lastAnswerAt = Date.now();
+        cur = 'ok';
       }
+      if (cur && cur !== lastTaskCls) popupAnswerFeedback(cur === 'ok');
+      lastTaskCls = cur;
     }).observe(msgEl, { attributes: true, attributeFilter: ['class'] });
   }
 
