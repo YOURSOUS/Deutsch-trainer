@@ -657,7 +657,598 @@
   /* 原生表单控件（滑杆底槽 / 下拉 / 滚动条）跟随主题，避免浅色模式下被系统深色渲染 */
   :root { color-scheme: light; }
   html[data-theme="dark"] { color-scheme: dark; }
-  /* ===== 背景主题化修复 区块 结束 ===== */
+  /* ======================================================================
+     右下角空崎日奈悬浮助手 v2（独立区块，删除本段即可完全回退）
+     泡泡 UI / 圆润字体 / 换装工具 / 丝滑拖拽
+     ====================================================================== */
+  #hinaAssistant {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: max-content;
+    pointer-events: none;                 /* 容器不挡页面，只有头像 / 气泡可点 */
+  }
+  #hinaAssistant > * { pointer-events: auto; }
+  #hinaAssistant[hidden] { display: none; }
+
+  /* 隐藏后的找回圆点：独立于 #hinaAssistant，父级隐藏不影响它 */
+  #hinaRestoreDot {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    z-index: 9998;
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    margin: 0;
+    border-radius: 50%;
+    clip-path: none;
+    border: 1px solid var(--hina-border);
+    background: var(--hina-card-a);
+    color: var(--hina-text-dim);
+    font-family: "YouYuan", "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1;
+    text-align: center;
+    cursor: pointer;
+    opacity: .35;
+    filter: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .12);
+    transition: opacity .15s ease, transform .15s ease, border-color .15s ease;
+  }
+  #hinaRestoreDot[hidden] { display: none; }
+  #hinaRestoreDot:hover {
+    opacity: .85;
+    transform: scale(1.08);
+    border-color: var(--hina-primary);
+    filter: none;
+  }
+  #hinaRestoreDot:active { transform: scale(.95); }
+
+  #hinaAvatarFloat {
+    position: relative;
+  }
+  #hinaAvatarWrap {
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    cursor: grab;
+    position: relative;
+    touch-action: none;                   /* 拖拽时不让页面跟着滚 */
+    transition: transform .18s cubic-bezier(.34, 1.56, .64, 1), filter .18s ease;
+    filter: drop-shadow(0 8px 18px var(--hina-primary-a32));
+  }
+  #hinaAvatarWrap:hover { transform: scale(1.05); }
+  #hinaAvatarWrap:active { cursor: grabbing; }
+  #hinaAvatarWrap:focus-visible {
+    outline: 2px solid var(--hina-primary);
+    outline-offset: 3px;
+  }
+  #hinaAvatar {
+    display: block;
+    position: relative;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid var(--hina-card);
+    background: var(--hina-card);
+    box-shadow: 0 0 0 1px var(--hina-border), inset 0 1px 0 var(--hina-card-line);
+    user-select: none;
+    -webkit-user-drag: none;
+    will-change: transform, top;
+    transition: transform .12s ease-out;
+    animation: hina-breathe 4.6s ease-in-out infinite;
+  }
+  @keyframes hina-breathe {
+    0%, 100% { top: 0; }
+    50% { top: -4px; }                    /* 轻微上下浮动，不占用 transform（留给视线追踪） */
+  }
+
+  /* ===== 头像右下角：相机 + 恢复（hover 出现） ===== */
+  #hinaAvatarTools {
+    position: absolute;
+    right: -4px;
+    bottom: -4px;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(2px);
+    transition: opacity .16s ease, transform .16s ease;
+  }
+  #hinaAvatarFloat:hover #hinaAvatarTools,
+  #hinaAvatarTools:focus-within {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+  #hinaAvatarTools button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    margin: 0;
+    border-radius: 50%;
+    clip-path: none;
+    border: 1px solid var(--hina-border);
+    background: var(--hina-card);
+    color: var(--hina-text-dim);
+    font-size: 11px;
+    line-height: 1;
+    text-align: center;
+    cursor: pointer;
+    filter: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .18);
+    transition: color .15s ease, border-color .15s ease, background .15s ease;
+  }
+  #hinaAvatarTools button:hover {
+    color: var(--hina-primary);
+    border-color: var(--hina-primary);
+    background: var(--hina-primary-a25);
+    transform: none;
+    filter: none;
+  }
+  @media (hover: none) {
+    #hinaAvatarTools { opacity: .75; pointer-events: auto; transform: none; }
+  }
+
+  #hinaAvatarFile { display: none; }
+
+  /* ===== 泡泡对话框：大圆角 + 果冻紫渐变 ===== */
+  #hinaBubble {
+    position: absolute;
+    right: 2px;
+    bottom: calc(100% + 16px);
+    width: 312px;
+    max-width: calc(100vw - 32px);
+    box-sizing: border-box;
+    padding: 16px 16px 14px;
+    color: var(--hina-text);
+    border: 1px solid var(--hina-primary-a45);
+    border-radius: 24px;
+    background:
+      radial-gradient(120% 100% at 18% 0%, var(--hina-card-line), transparent 58%),
+      linear-gradient(145deg, var(--hina-primary-a45), var(--hina-primary-a25)),
+      var(--hina-card-a);
+    box-shadow:
+      inset 0 1px 0 var(--hina-card-line),
+      inset 0 0 22px var(--hina-primary-a25),
+      0 18px 40px var(--hina-primary-a32),
+      0 0 26px var(--hina-primary-a25);
+    -webkit-backdrop-filter: blur(10px) saturate(150%);
+    backdrop-filter: blur(10px) saturate(150%);
+    transform-origin: bottom right;
+    animation: hina-pop .34s cubic-bezier(.34, 1.56, .64, 1);
+  }
+  #hinaBubble[hidden] { display: none; }
+  #hinaBubble.hina-bubble-below {
+    bottom: auto;
+    top: calc(100% + 16px);
+    transform-origin: top right;
+  }
+  @keyframes hina-pop {
+    from { opacity: 0; transform: scale(.78) translateY(12px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  #hinaText, #hinaActionBtn, #hinaSettingsBtn {
+    font-family: "YouYuan", "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-weight: 600;
+  }
+  #hinaText {
+    margin: 0;
+    padding-right: 22px;                 /* 给右上角小齿轮留位 */
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--hina-text);
+    word-break: break-word;
+  }
+  #hinaActionBtn {
+    width: 100%;
+    box-sizing: border-box;
+    margin: 12px 0 0;
+    padding: 10px 14px;
+    font-size: 14px;
+    border-radius: 999px;
+    clip-path: none;
+    background: linear-gradient(135deg, var(--hina-primary), var(--hina-primary-deep));
+    box-shadow: inset 0 1px 0 var(--hina-card-line), 0 8px 18px var(--hina-primary-a32);
+    filter: none;
+  }
+  #hinaSettingsBtn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    margin: 0;
+    border-radius: 50%;
+    clip-path: none;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--hina-text-dim);
+    font-size: 13px;
+    line-height: 20px;
+    text-align: center;
+    cursor: pointer;
+    filter: none;
+    box-shadow: none;
+    opacity: .65;
+    transition: opacity .15s ease, color .15s ease, background .15s ease;
+  }
+  #hinaSettingsBtn:hover {
+    opacity: 1;
+    color: var(--hina-primary);
+    background: var(--hina-primary-a25);
+    border-color: var(--hina-primary-a32);
+    transform: none;
+    filter: none;
+  }
+  #hinaBubble.hina-tone-warn {
+    border-color: var(--hina-bad);
+    box-shadow:
+      inset 0 1px 0 var(--hina-card-line),
+      inset 0 0 22px var(--hina-primary-a25),
+      0 18px 40px rgba(220, 38, 38, .28),
+      0 0 26px rgba(220, 38, 38, .22);
+  }
+  #hinaBubble.hina-tone-gold {
+    border-color: var(--hina-gold);
+    box-shadow:
+      inset 0 1px 0 var(--hina-card-line),
+      inset 0 0 22px var(--hina-gold-a35),
+      0 18px 40px var(--hina-gold-a35),
+      0 0 26px var(--hina-gold-a35);
+  }
+
+  #hinaHideBtn {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    z-index: 2;
+    width: 18px;
+    height: 18px;
+    padding: 0;
+    margin: 0;
+    border-radius: 50%;
+    clip-path: none;
+    border: 1px solid var(--hina-border);
+    background: var(--hina-card);
+    color: var(--hina-text-dim);
+    font-size: 12px;
+    line-height: 15px;
+    text-align: center;
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;                 /* 不显示时不能误点到隐藏按钮 */
+    transform: none;
+    filter: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .18);
+    transition: opacity .15s ease, color .15s ease, border-color .15s ease;
+  }
+  #hinaAvatarFloat:hover #hinaHideBtn,
+  #hinaHideBtn:focus-visible { opacity: 1; pointer-events: auto; }
+  #hinaHideBtn:hover {
+    color: var(--hina-bad);
+    border-color: var(--hina-bad);
+    transform: none;
+    filter: none;
+  }
+  @media (hover: none) { #hinaHideBtn { opacity: .65; pointer-events: auto; } }
+
+  @media (max-width: 520px) {
+    #hinaAssistant { right: 16px; bottom: 16px; }
+    #hinaAvatarWrap { width: 72px; height: 72px; }
+    #hinaBubble { width: min(80vw, 312px); }
+    #hinaText { font-size: 14px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #hinaAvatar { animation: none; transition: none; }
+    #hinaBubble { animation: none; }
+  }
+
+  /* ======================================================================
+     台词管理 Modal：与泡泡同一套果冻紫语言
+     ====================================================================== */
+  body.hina-modal-open { overflow: hidden; }
+
+  #hinaModal {
+    position: fixed;
+    inset: 0;
+    z-index: 10001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    background: rgba(24, 16, 48, .34);
+    -webkit-backdrop-filter: blur(7px);
+    backdrop-filter: blur(7px);
+  }
+  #hinaModal[hidden] { display: none; }
+
+  #hinaModalPanel {
+    width: min(520px, 100%);
+    max-height: min(82vh, 640px);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 18px;
+    border-radius: 24px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, .84);
+    border: 1px solid rgba(255, 255, 255, .9);
+    box-shadow:
+      0 24px 60px rgba(60, 40, 140, .28),
+      inset 0 1px 0 rgba(255, 255, 255, .9);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    backdrop-filter: blur(18px) saturate(160%);
+    color: var(--hina-text);
+    animation: hina-modal-in .28s cubic-bezier(.34, 1.56, .64, 1);
+  }
+  html[data-theme="dark"] #hinaModalPanel {
+    background: rgba(24, 18, 49, .88);
+    border-color: rgba(155, 123, 255, .22);
+    box-shadow:
+      0 24px 60px rgba(0, 0, 0, .55),
+      inset 0 1px 0 rgba(255, 255, 255, .06);
+  }
+  @keyframes hina-modal-in {
+    from { opacity: 0; transform: scale(.92) translateY(10px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  #hinaModalHead { display: flex; align-items: center; gap: 8px; }
+  #hinaModalTitle {
+    margin: 0;
+    font-family: "YouYuan", "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--hina-text);
+  }
+  #hinaModalClose {
+    margin: 0 0 0 auto;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border-radius: 50%;
+    clip-path: none;
+    border: 0;
+    background: transparent;
+    color: var(--hina-text-dim);
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    filter: none;
+    box-shadow: none;
+    transition: transform .15s ease, color .15s ease, background .15s ease;
+  }
+  #hinaModalClose:hover {
+    color: var(--hina-bad);
+    background: rgba(220, 38, 38, .10);
+    transform: scale(1.08);
+    filter: none;
+  }
+  #hinaModalClose:active { transform: scale(.94); }
+  #hinaModalHint {
+    margin: -4px 0 0;
+    font-family: "YouYuan", "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--hina-text-dim);
+  }
+
+  #hinaLineList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1 1 auto;
+    min-height: 80px;
+    max-height: 44vh;
+    overflow-y: auto;
+    padding: 2px;
+  }
+  .hina-line-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: var(--hina-primary-a25);
+    border: 1px solid var(--hina-primary-a25);
+    font-family: "YouYuan", "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--hina-text);
+  }
+  .hina-line-text { flex: 1; min-width: 0; word-break: break-word; }
+  #hinaLineList .hina-line-del {
+    flex: 0 0 auto;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    margin: 0;
+    border-radius: 50%;
+    clip-path: none;
+    border: 0;
+    background: transparent;
+    color: var(--hina-bad);
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    filter: none;
+    box-shadow: none;
+    transition: transform .15s ease, background .15s ease;
+  }
+  #hinaLineList .hina-line-del:hover {
+    transform: scale(1.18);
+    filter: none;
+  }
+  #hinaLineList .hina-line-del:active { transform: scale(.94); }
+  .hina-line-empty {
+    padding: 28px 8px;
+    text-align: center;
+    color: var(--hina-text-dim);
+    font-family: "YouYuan", "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-size: 13px;
+  }
+
+  #hinaLineAddRow { display: flex; align-items: center; gap: 8px; }
+  #hinaLineInput {
+    flex: 1;
+    width: auto;
+    min-width: 0;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1px solid var(--hina-primary-a32);
+    background: var(--hina-card);
+    color: var(--hina-text);
+    font-family: "YouYuan", "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-size: 14px;
+    box-shadow: inset 0 2px 6px rgba(60, 40, 140, .10);
+    transition: border-color .15s ease, box-shadow .15s ease;
+  }
+  #hinaLineInput:focus {
+    outline: none;
+    border-color: var(--hina-primary);
+    box-shadow: inset 0 2px 6px rgba(60, 40, 140, .10), 0 0 0 2px var(--hina-primary-a25);
+  }
+  #hinaLineAdd {
+    flex: 0 0 auto;
+    width: 42px;
+    height: 40px;
+    padding: 0;
+    margin: 0;
+    border-radius: 12px;
+    clip-path: none;
+    border: 0;
+    background: #3b82f6;
+    color: #fff;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    filter: none;
+    box-shadow: 0 6px 14px rgba(59, 130, 246, .35);
+    transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
+  }
+  #hinaLineAdd:hover {
+    background: #2563eb;
+    transform: translateY(-1px) scale(1.03);
+    box-shadow: 0 8px 18px rgba(59, 130, 246, .42);
+    filter: none;
+  }
+  #hinaLineAdd:active { transform: scale(.95); }
+
+  #hinaModalSave {
+    width: 100%;
+    box-sizing: border-box;
+    margin: 2px 0 0;
+    padding: 11px 14px;
+    border-radius: 999px;
+    clip-path: none;
+    border: 0;
+    background: linear-gradient(135deg, var(--hina-primary), var(--hina-primary-deep));
+    color: #fff;
+    font-family: "YouYuan", "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    filter: none;
+    box-shadow: inset 0 1px 0 var(--hina-card-line), 0 8px 18px var(--hina-primary-a32);
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  #hinaModalSave:hover {
+    transform: translateY(-1px);
+    box-shadow: inset 0 1px 0 var(--hina-card-line), 0 10px 22px var(--hina-primary-a45);
+    filter: none;
+  }
+  #hinaModalSave:active { transform: scale(.98); }
+
+  @media (max-width: 520px) {
+    #hinaModal { padding: 12px; }
+    #hinaModalPanel { padding: 16px; max-height: 86vh; }
+    #hinaLineList { max-height: 42vh; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #hinaModalPanel { animation: none; }
+  }
+
+  /* ======================================================================
+     微信内置浏览器 · 存档安全提示条（独立模块）
+     只在 UA 含 MicroMessenger 时由文件末尾的 IIFE 插入，其它环境完全不渲染。
+     回退方式：删除本段 CSS + 文件末尾对应的脚本块即可，零副作用。
+     ====================================================================== */
+  #wxTip {
+    position: fixed;
+    left: 12px;
+    bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    z-index: 9000;              /* 低于日奈助手(9998/9999)与台词 Modal(10001) */
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    max-width: min(300px, calc(100vw - 124px));   /* 右侧给日奈助手(72px宽+24px边距+16px间隙)让位 */
+    padding: 8px 8px 8px 12px;
+    border: 1px solid var(--hina-border-soft);
+    border-radius: 13px;
+    background: var(--hina-card);
+    color: var(--hina-text-dim);
+    font-family: "YouYuan", "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-size: 12px;
+    line-height: 1.45;
+    text-align: left;
+    box-shadow: var(--hina-shadow);
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity .28s ease, transform .28s ease;
+    pointer-events: none;       /* 淡出期间绝不挡点击 */
+  }
+  #wxTip.show { opacity: 1; transform: none; pointer-events: auto; }
+  #wxTipText { flex: 1 1 auto; min-width: 0; }
+  /* 关闭按钮：必须逐项复位全局 button 的渐变底色 / 阴影 / 圆角 / 外边距 */
+  #wxTipClose {
+    flex: 0 0 auto;
+    width: 18px;
+    height: 18px;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    border-radius: 50%;
+    clip-path: none;
+    background: transparent;
+    color: var(--hina-text-dim);
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 18px;
+    text-align: center;
+    cursor: pointer;
+    filter: none;
+    box-shadow: none;
+    transform: none;
+    transition: background .15s ease, color .15s ease;
+  }
+  #wxTipClose:hover {
+    background: var(--hina-indigo-a16);
+    color: var(--hina-primary-deep);
+    transform: none;
+    box-shadow: none;
+  }
+  #wxTipClose:active { transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    #wxTip { transition: none; }
+  }
 </style>
 </head>
 <body>
@@ -4226,6 +4817,933 @@
       if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); translate(); }
     });
   })();
+
+  /* 只读状态引用：供右下角日奈助手读取；不修改 state，也不参与任何业务写入 */
+  window.__STATE__ = state;
+})();
+</script>
+
+<!-- ======================================================================
+     右下角空崎日奈悬浮助手 v3（独立模块，删除本区块即可完全回退）
+     ====================================================================== -->
+<div id="hinaAssistant" aria-live="polite">
+  <div id="hinaBubble" role="dialog" aria-label="日奈助手" hidden>
+    <button id="hinaSettingsBtn" type="button" aria-label="自定义台词" title="自定义台词">⚙</button>
+    <p id="hinaText"></p>
+    <button id="hinaActionBtn" type="button">开始练习</button>
+  </div>
+  <div id="hinaAvatarFloat">
+    <div id="hinaAvatarWrap" role="button" tabindex="0" aria-label="打开日奈助手" aria-expanded="false">
+      <img id="hinaAvatar" src="img/hina-face.png" alt="空崎日奈" draggable="false">
+    </div>
+    <button id="hinaHideBtn" type="button" aria-label="隐藏日奈助手" title="隐藏">×</button>
+    <div id="hinaAvatarTools">
+      <button id="hinaAvatarReset" type="button" aria-label="恢复默认头像" title="恢复默认头像">↺</button>
+      <button id="hinaAvatarCam" type="button" aria-label="更换头像" title="更换头像">📷</button>
+    </div>
+    <input id="hinaAvatarFile" type="file" accept="image/*" hidden>
+  </div>
+
+  <!-- 台词管理 Modal -->
+  <div id="hinaModal" role="dialog" aria-modal="true" aria-labelledby="hinaModalTitle" hidden>
+    <div id="hinaModalPanel">
+      <div id="hinaModalHead">
+        <h3 id="hinaModalTitle">日奈的台词</h3>
+        <button id="hinaModalClose" type="button" aria-label="关闭">×</button>
+      </div>
+      <p id="hinaModalHint">默认台词删除后会本地屏蔽；自定义台词会从列表中移除。</p>
+      <div id="hinaLineList"></div>
+      <div id="hinaLineAddRow">
+        <input id="hinaLineInput" type="text" maxlength="200" placeholder="输入新的台词..." autocomplete="off">
+        <button id="hinaLineAdd" type="button" aria-label="添加台词">＋</button>
+      </div>
+      <button id="hinaModalSave" type="button">保存并关闭</button>
+    </div>
+  </div>
+</div>
+
+<button id="hinaRestoreDot" type="button" aria-label="显示日奈助手" title="显示日奈助手" hidden>G</button>
+
+<script>
+/* 独立 IIFE：只读 window.__STATE__，不写入任何业务状态、不覆盖任何全局变量 */
+(function () {
+  'use strict';
+
+  if (window.__hinaAssistantBooted) return;
+  window.__hinaAssistantBooted = true;
+
+  var assistant = document.getElementById('hinaAssistant');
+  if (!assistant) return;
+  var restoreDot = document.getElementById('hinaRestoreDot');
+  var bubble = document.getElementById('hinaBubble');
+  var textEl = document.getElementById('hinaText');
+  var actionBtn = document.getElementById('hinaActionBtn');
+  var settingsBtn = document.getElementById('hinaSettingsBtn');
+  var wrap = document.getElementById('hinaAvatarWrap');
+  var avatar = document.getElementById('hinaAvatar');
+  var hideBtn = document.getElementById('hinaHideBtn');
+  var camBtn = document.getElementById('hinaAvatarCam');
+  var resetAvatarBtn = document.getElementById('hinaAvatarReset');
+  var fileInput = document.getElementById('hinaAvatarFile');
+  var modal = document.getElementById('hinaModal');
+  var modalClose = document.getElementById('hinaModalClose');
+  var lineList = document.getElementById('hinaLineList');
+  var lineInput = document.getElementById('hinaLineInput');
+  var lineAdd = document.getElementById('hinaLineAdd');
+  var modalSave = document.getElementById('hinaModalSave');
+  if (!bubble || !textEl || !actionBtn || !wrap || !avatar) return;
+
+  var POS_KEY = 'de-hina-pos';
+  var LEGACY_POS_KEY = 'de-hina-pos-v1';
+  var AVATAR_KEY = 'de-hina-avatar';
+  var LINES_KEY = 'de-hina-lines';
+  var DEFAULT_AVATAR = 'img/hina-face.png';
+  var EDGE = 8;
+  var MAX_AVATAR_FILE = 6 * 1024 * 1024;
+  var MAX_LINES = 100;
+  var ANSWER_FRESH_MS = 5000;
+  var BUBBLE_TTL_MS = 8000;
+
+  var currentAction = null;
+  var lastCorrect = false;
+  var lastWrong = false;
+  var lastAnswerAt = 0;
+  var justDragged = false;
+  var drag = null;
+  var gazeRaf = 0;
+  var mouseX = 0;
+  var mouseY = 0;
+  var lastLineText = '';
+  var customLines = [];
+  var hiddenIds = [];
+  var draftCustom = [];
+  var draftHidden = [];
+  var isDirty = false;
+  var bubbleTimer = null;
+  var bubbleDeadline = 0;
+  var bubbleRemaining = 0;
+  var bubblePaused = false;
+  var bubbleAuto = false;
+  var bubbleHover = false;
+  var bubbleFocus = false;
+  var customSeq = 0;
+  var modalFocusTimer = null;
+  var reduceMotion = !!(window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+  /* 默认台词目录：删除 = 记住这个 id，不再参与随机 / 错题提示 */
+  var DEFAULT_CATALOG = [
+    { id: 'daily-0', text: '好麻烦……老师，我们休息五分钟吧？' },
+    { id: 'daily-1', text: '老师，一直盯着屏幕对眼睛不好。' },
+    { id: 'daily-2', text: '星野前辈要是也像老师这么努力就好了……' },
+    { id: 'daily-3', text: '再盯下去屏幕都要被看穿了，老师。' },
+    { id: 'daily-4', text: '好想吃炸鸡……啊不是，老师请专心一点。' },
+    { id: 'daily-5', text: '风纪委员会的工作已经够多了，老师就别让我操心了。' },
+    { id: 'wrong-warning', text: '错题积压得有点多呢……真麻烦，一起清理一下吗？' },
+    { id: 'streak', text: '连续打卡 X 天了……嘛，稍微有点开心呢，就一点点哦。' }
+  ];
+  var DEFAULT_IDS = {};
+  for (var di = 0; di < DEFAULT_CATALOG.length; di += 1) DEFAULT_IDS[DEFAULT_CATALOG[di].id] = true;
+
+  function storageGet(key) {
+    try { return window.localStorage.getItem(key); } catch (e) { return null; }
+  }
+  function storageSet(key, value) {
+    try { window.localStorage.setItem(key, value); return true; } catch (e) { return false; }
+  }
+  function storageRemove(key) {
+    try { window.localStorage.removeItem(key); } catch (e) {}
+  }
+  function cleanList(arr) {
+    var out = [];
+    if (!arr) return out;
+    for (var i = 0; i < arr.length; i += 1) {
+      var s = String(arr[i] == null ? '' : arr[i]).trim();
+      if (s) out.push(s);
+      if (out.length >= MAX_LINES) break;
+    }
+    return out;
+  }
+  function parseLines(raw) {
+    if (!raw) return [];
+    return cleanList(String(raw).split(/\r?\n|\\n/));
+  }
+  function makeCustomId() {
+    customSeq += 1;
+    return 'custom_' + Date.now().toString(36) + '_' + customSeq.toString(36) +
+      '_' + Math.random().toString(36).slice(2, 6);
+  }
+  /* 自定义台词统一为 [{ id, text }]；兼容旧版字符串数组 */
+  function normalizeCustom(arr) {
+    var out = [];
+    var seen = {};
+    if (!Array.isArray(arr)) return out;
+    for (var i = 0; i < arr.length; i += 1) {
+      var item = arr[i];
+      var text = '';
+      var id = '';
+      if (typeof item === 'string') {
+        text = item;
+      } else if (item && typeof item === 'object') {
+        text = item.text;
+        id = item.id;
+      }
+      text = String(text == null ? '' : text).trim();
+      if (!text) continue;
+      id = (typeof id === 'string' && /^custom_[A-Za-z0-9_]+$/.test(id)) ? id : makeCustomId();
+      while (seen[id]) id = makeCustomId();
+      seen[id] = true;
+      out.push({ id: id, text: text });
+      if (out.length >= MAX_LINES) break;
+    }
+    return out;
+  }
+  /* v3: { v:3, custom:[{id,text}], hidden:[] }；兼容 v2 字符串与更旧的纯换行文本 */
+  function decodeSettings(raw) {
+    if (!raw) return { custom: [], hidden: [] };
+    try {
+      var obj = JSON.parse(raw);
+      if (Array.isArray(obj)) return { custom: normalizeCustom(obj), hidden: [] };
+      if (obj && typeof obj === 'object') {
+        return {
+          custom: Array.isArray(obj.custom) ? normalizeCustom(obj.custom) : [],
+          hidden: Array.isArray(obj.hidden) ? obj.hidden.map(String) : []
+        };
+      }
+    } catch (e) {}
+    return { custom: normalizeCustom(parseLines(raw)), hidden: [] };
+  }
+
+  function getState() {
+    var s = window.__STATE__;
+    return (s && typeof s === 'object') ? s : null;
+  }
+  function countWrong(s) {
+    var a = Array.isArray(s.wrong) ? s.wrong.length : 0;
+    var b = Array.isArray(s.dictationWrong) ? s.dictationWrong.length : 0;
+    return a + b;
+  }
+  function goView(name) {
+    if (typeof window.__SWITCH_VIEW__ === 'function') {
+      window.__SWITCH_VIEW__(name);
+      return;
+    }
+    var tab = document.querySelector('.tab-btn[data-view="' + name + '"]');
+    if (tab) tab.click();
+  }
+  function setTone(tone) {
+    bubble.classList.remove('hina-tone-warn', 'hina-tone-gold');
+    if (tone === 'warn') bubble.classList.add('hina-tone-warn');
+    else if (tone === 'gold') bubble.classList.add('hina-tone-gold');
+  }
+  function dailyItem(text) {
+    return { text: text, action: '知道啦', tone: '', run: closeBubble };
+  }
+  function pickOne(pool) {
+    var list = pool;
+    if (list.length > 1 && lastLineText) {
+      var filtered = [];
+      for (var i = 0; i < list.length; i += 1) {
+        if (list[i].text !== lastLineText) filtered.push(list[i]);
+      }
+      if (filtered.length) list = filtered;
+    }
+    if (!list.length) {
+      return { text: '台词都被删光了……老师，随便说点什么吧。', action: '知道啦', tone: '', run: closeBubble };
+    }
+    var item = list[Math.floor(Math.random() * list.length)];
+    lastLineText = item.text;
+    return item;
+  }
+
+  /* 台词池：刚答完题（5 秒内）最高优先；否则错题提示 / 日常 / 自定义统一随机 */
+  function buildLine() {
+    var now = Date.now();
+    if (lastAnswerAt && now - lastAnswerAt > ANSWER_FRESH_MS) {
+      lastCorrect = false;
+      lastWrong = false;
+      lastAnswerAt = 0;
+    }
+    if (lastAnswerAt && (lastCorrect || lastWrong)) {
+      if (lastCorrect) {
+        return {
+          text: '答对了呢。……做得好，老师。',
+          action: '继续努力', tone: 'gold',
+          answerFeedback: true, run: closeBubble
+        };
+      }
+      return {
+        text: '没关系，看看错在哪里吧，我会陪着你的。',
+        action: '我记住了', tone: 'warn',
+        answerFeedback: true, run: closeBubble
+      };
+    }
+
+    var s = getState();
+    if (s && (!Array.isArray(s.history) || s.history.length === 0)) {
+      return {
+        text: '哈啊……老师，虽然好麻烦，但学习还是要开始的吧？',
+        action: '开始练习', tone: '',
+        run: function () { goView('practice'); }
+      };
+    }
+
+    var linesPool = [];
+    var wrongTotal = s ? countWrong(s) : 0;
+    var streak = s ? Math.max(0, Number(s.streak) || 0) : 0;
+    for (var i = 0; i < DEFAULT_CATALOG.length; i += 1) {
+      var d = DEFAULT_CATALOG[i];
+      if (hiddenIds.indexOf(d.id) >= 0) continue;
+      if (d.id === 'wrong-warning') {
+        if (s && wrongTotal >= 5) {
+          linesPool.push({
+            text: d.text, action: '去清理', tone: 'warn',
+            run: function () { goView('toolbox'); }
+          });
+        }
+      } else if (d.id === 'streak') {
+        if (s && streak >= 3) {
+          linesPool.push({
+            text: '连续打卡 ' + streak + ' 天了……嘛，稍微有点开心呢，就一点点哦。',
+            action: '继续加油', tone: 'gold', run: closeBubble
+          });
+        }
+      } else {
+        linesPool.push(dailyItem(d.text));
+      }
+    }
+    for (var j = 0; j < customLines.length; j += 1) linesPool.push(dailyItem(customLines[j].text));
+    return pickOne(linesPool);
+  }
+
+  function updateBubbleSide() {
+    if (bubble.hidden) return;
+    var r = assistant.getBoundingClientRect();
+    var bw = bubble.offsetWidth || 312;
+    var bh = bubble.offsetHeight || 0;
+    bubble.classList.toggle('hina-bubble-below', r.top < bh + 20);
+    var defaultLeft = r.right - 2 - bw;
+    var shift = defaultLeft < EDGE ? (EDGE - defaultLeft) : 0;
+    bubble.style.right = (2 - shift) + 'px';
+  }
+
+  function clearBubbleTimer() {
+    if (bubbleTimer) { clearTimeout(bubbleTimer); bubbleTimer = null; }
+  }
+  function armBubbleTimer(ms) {
+    clearBubbleTimer();
+    bubbleDeadline = Date.now() + ms;
+    bubbleTimer = setTimeout(function () {
+      bubbleTimer = null;
+      if (!bubblePaused && !bubble.hidden) closeBubble();
+    }, ms);
+  }
+  function startBubbleTimer(auto) {
+    clearBubbleTimer();
+    bubbleAuto = !!auto;
+    bubblePaused = false;
+    bubbleRemaining = 0;
+    if (!bubbleAuto) return;
+    armBubbleTimer(BUBBLE_TTL_MS);
+  }
+  function pauseBubbleTimer() {
+    if (!bubbleTimer || bubblePaused) return;
+    bubblePaused = true;
+    bubbleRemaining = Math.max(0, bubbleDeadline - Date.now());
+    clearBubbleTimer();
+  }
+  function resumeBubbleTimer() {
+    if (!bubblePaused || bubble.hidden || !bubbleAuto) return;
+    if (bubbleHover || bubbleFocus) return;
+    bubblePaused = false;
+    armBubbleTimer(bubbleRemaining > 0 ? bubbleRemaining : BUBBLE_TTL_MS);
+  }
+
+  function openBubble() {
+    var line = buildLine();
+    if (line.answerFeedback) {
+      lastCorrect = false;
+      lastWrong = false;
+      lastAnswerAt = 0;
+    }
+    textEl.textContent = line.text;
+    actionBtn.textContent = line.action;
+    currentAction = line.run;
+    setTone(line.tone);
+    bubble.hidden = false;
+    wrap.setAttribute('aria-expanded', 'true');
+    updateBubbleSide();
+    /* 答题反馈 / 错题预警不自动关闭，其余 8 秒后收起 */
+    startBubbleTimer(!(line.answerFeedback || line.tone === 'warn'));
+  }
+  function closeBubble() {
+    clearBubbleTimer();
+    bubbleAuto = false;
+    bubblePaused = false;
+    bubbleRemaining = 0;
+    bubbleHover = false;
+    bubbleFocus = false;
+    bubble.hidden = true;
+    wrap.setAttribute('aria-expanded', 'false');
+    currentAction = null;
+  }
+  function showNotice(message) {
+    textEl.textContent = message;
+    actionBtn.textContent = '知道啦';
+    currentAction = closeBubble;
+    setTone('');
+    bubble.hidden = false;
+    wrap.setAttribute('aria-expanded', 'true');
+    updateBubbleSide();
+    startBubbleTimer(true);
+  }
+
+  bubble.addEventListener('mouseenter', function () {
+    bubbleHover = true;
+    pauseBubbleTimer();
+  });
+  bubble.addEventListener('mouseleave', function () {
+    bubbleHover = false;
+    resumeBubbleTimer();
+  });
+  bubble.addEventListener('focusin', function () {
+    bubbleFocus = true;
+    pauseBubbleTimer();
+  });
+  bubble.addEventListener('focusout', function (e) {
+    if (bubble.contains(e.relatedTarget)) return;
+    bubbleFocus = false;
+    resumeBubbleTimer();
+  });
+
+  actionBtn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    var run = currentAction;
+    closeBubble();
+    if (typeof run === 'function') { try { run(); } catch (err) {} }
+  });
+
+  wrap.addEventListener('click', function (e) {
+    if (justDragged) { justDragged = false; return; }
+    e.stopPropagation();
+    if (bubble.hidden) openBubble(); else closeBubble();
+  });
+  wrap.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+      e.preventDefault();
+      if (bubble.hidden) openBubble(); else closeBubble();
+    }
+  });
+
+  if (hideBtn) {
+    hideBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      closeBubble();
+      assistant.hidden = true;
+      if (restoreDot) restoreDot.hidden = false;
+    });
+  }
+  if (restoreDot) {
+    restoreDot.addEventListener('click', function (e) {
+      e.stopPropagation();
+      assistant.hidden = false;
+      restoreDot.hidden = true;
+      closeBubble();
+      try { if (wrap.focus) wrap.focus(); } catch (err) {}
+    });
+  }
+
+  document.addEventListener('pointerdown', function (e) {
+    if (bubble.hidden) return;
+    if (assistant.contains(e.target)) return;
+    closeBubble();
+  }, true);
+
+  /* ===================== 台词管理 Modal ===================== */
+  function currentRows() {
+    var rows = [];
+    for (var i = 0; i < DEFAULT_CATALOG.length; i += 1) {
+      var d = DEFAULT_CATALOG[i];
+      if (draftHidden.indexOf(d.id) < 0) rows.push({ kind: 'default', key: d.id, text: d.text });
+    }
+    for (var j = 0; j < draftCustom.length; j += 1) {
+      rows.push({ kind: 'custom', key: draftCustom[j].id, text: draftCustom[j].text });
+    }
+    return rows;
+  }
+
+  function renderLineList() {
+    if (!lineList) return;
+    lineList.innerHTML = '';
+    var rows = currentRows();
+    if (!rows.length) {
+      var empty = document.createElement('div');
+      empty.className = 'hina-line-empty';
+      empty.textContent = '还没有可用的台词，添加一句吧。';
+      lineList.appendChild(empty);
+      return;
+    }
+    for (var i = 0; i < rows.length; i += 1) {
+      var row = document.createElement('div');
+      row.className = 'hina-line-row';
+      var span = document.createElement('span');
+      span.className = 'hina-line-text';
+      span.textContent = rows[i].text;
+      var del = document.createElement('button');
+      del.type = 'button';
+      del.className = 'hina-line-del';
+      del.textContent = '×';
+      del.setAttribute('aria-label', '删除这句台词');
+      del.setAttribute('data-kind', rows[i].kind);
+      del.setAttribute('data-key', rows[i].key);
+      row.appendChild(span);
+      row.appendChild(del);
+      lineList.appendChild(row);
+    }
+  }
+
+  function openLineModal() {
+    if (!modal || !lineList || !lineInput) return;
+    if (!modal.hidden) return;
+    draftCustom = customLines.map(function (item) {
+      return { id: item.id, text: item.text };
+    });
+    draftHidden = hiddenIds.slice();
+    isDirty = false;
+    lineInput.value = '';
+    renderLineList();
+    try { lineList.scrollTop = 0; } catch (e) {}
+    closeBubble();
+    modal.hidden = false;
+    document.body.classList.add('hina-modal-open');
+    if (modalFocusTimer) { clearTimeout(modalFocusTimer); modalFocusTimer = null; }
+    modalFocusTimer = setTimeout(function () {
+      modalFocusTimer = null;
+      if (!modal.hidden) { try { lineInput.focus(); } catch (e) {} }
+    }, 30);
+  }
+  function closeLineModal(force) {
+    if (!modal || modal.hidden) return;
+    if (force !== true && isDirty) {
+      var discard = false;
+      try { discard = window.confirm('台词尚未保存，确定要丢弃吗？'); }
+      catch (err) { discard = true; }
+      if (!discard) return;
+    }
+    if (modalFocusTimer) { clearTimeout(modalFocusTimer); modalFocusTimer = null; }
+    modal.hidden = true;
+    isDirty = false;
+    document.body.classList.remove('hina-modal-open');
+    try { if (wrap.focus) wrap.focus(); } catch (e) {}
+  }
+  function addDraftLine() {
+    var text = String(lineInput.value || '').trim();
+    if (!text) return;
+    if (draftCustom.length >= MAX_LINES) return;
+    draftCustom.push({ id: makeCustomId(), text: text });
+    isDirty = true;
+    lineInput.value = '';
+    renderLineList();
+    try {
+      lineList.scrollTop = lineList.scrollHeight;
+      lineInput.focus();
+    } catch (e) {}
+  }
+  function saveLineModal() {
+    customLines = draftCustom.map(function (item) {
+      return { id: item.id, text: item.text };
+    });
+    hiddenIds = draftHidden.slice();
+    var ok = storageSet(LINES_KEY, JSON.stringify({
+      v: 3,
+      custom: customLines,
+      hidden: hiddenIds
+    }));
+    lastLineText = '';
+    isDirty = false;
+    closeLineModal(true);
+    showNotice(ok ? '台词已保存，老师。' : '台词已更新，但这台设备存不下（仅本次页面有效）。');
+  }
+
+  if (settingsBtn) {
+    settingsBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      openLineModal();
+    });
+  }
+  if (lineList) {
+    lineList.addEventListener('click', function (e) {
+      var btn = e.target && e.target.closest ? e.target.closest('.hina-line-del') : null;
+      if (!btn) return;
+      var kind = btn.getAttribute('data-kind');
+      var key = btn.getAttribute('data-key');
+      if (kind === 'default') {
+        if (draftHidden.indexOf(key) < 0) {
+          draftHidden.push(key);
+          isDirty = true;
+        }
+      } else {
+        var beforeLen = draftCustom.length;
+        draftCustom = draftCustom.filter(function (item) { return item.id !== key; });
+        if (draftCustom.length !== beforeLen) isDirty = true;
+      }
+      renderLineList();
+    });
+  }
+  if (lineAdd) lineAdd.addEventListener('click', addDraftLine);
+  if (lineInput) {
+    lineInput.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' && !e.isComposing) { e.preventDefault(); addDraftLine(); }
+    });
+  }
+  if (modalSave) modalSave.addEventListener('click', saveLineModal);
+  if (modalClose) modalClose.addEventListener('click', function () { closeLineModal(); });
+  if (modal) {
+    modal.addEventListener('click', function (e) {
+      if (e.target === modal) closeLineModal();
+    });
+  }
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && modal && !modal.hidden) closeLineModal();
+  });
+
+  /* 焦点陷阱：Tab / Shift+Tab 只在 Modal 内循环 */
+  function modalFocusables() {
+    if (!modal) return [];
+    var nodes = modal.querySelectorAll('button, input, select, textarea, a[href], [tabindex]:not([tabindex="-1"])');
+    var list = [];
+    for (var i = 0; i < nodes.length; i += 1) {
+      var el = nodes[i];
+      if (!el || el.disabled) continue;
+      if (el.getAttribute && el.getAttribute('aria-hidden') === 'true') continue;
+      if (el.getClientRects && el.getClientRects().length === 0) continue;
+      list.push(el);
+    }
+    return list;
+  }
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Tab' || !modal || modal.hidden) return;
+    var list = modalFocusables();
+    if (!list.length) { e.preventDefault(); return; }
+    var first = list[0];
+    var last = list[list.length - 1];
+    var active = document.activeElement;
+    if (!modal.contains(active)) {
+      e.preventDefault();
+      try { first.focus(); } catch (err) {}
+      return;
+    }
+    if (e.shiftKey && active === first) {
+      e.preventDefault();
+      try { last.focus(); } catch (err) {}
+    } else if (!e.shiftKey && active === last) {
+      e.preventDefault();
+      try { first.focus(); } catch (err) {}
+    }
+  });
+
+  /* ===================== 头像换装 ===================== */
+  function applyAvatarFile(file) {
+    if (!file || typeof FileReader === 'undefined' || typeof Image === 'undefined') return;
+    if (!/^image\//.test(String(file.type || ''))) return;
+    if (file.size && file.size > MAX_AVATAR_FILE) return;
+
+    var reader = new FileReader();
+    reader.onload = function () {
+      var data = String(reader.result || '');
+      if (!data) return;
+      var img = new Image();
+      img.onload = function () {
+        try {
+          if (!img.width || !img.height) return;
+          var canvas = document.createElement('canvas');
+          canvas.width = 200;
+          canvas.height = 200;
+          var ctx = canvas.getContext('2d');
+          if (!ctx) return;
+          var scale = Math.max(200 / img.width, 200 / img.height);
+          var w = img.width * scale;
+          var h = img.height * scale;
+          ctx.fillStyle = '#ffffff';
+          ctx.fillRect(0, 0, 200, 200);
+          try {
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = 'high';
+          } catch (e) {}
+          ctx.drawImage(img, (200 - w) / 2, (200 - h) / 2, w, h);
+          var out = canvas.toDataURL('image/jpeg', 0.86);
+          if (!out || out.indexOf('data:image/') !== 0) return;
+          avatar.src = out;
+          storageSet(AVATAR_KEY, out);
+        } catch (err) {}
+      };
+      img.onerror = function () {};
+      img.src = data;
+    };
+    reader.onerror = function () {};
+    reader.readAsDataURL(file);
+  }
+
+  if (camBtn && fileInput) {
+    camBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      try { fileInput.value = ''; } catch (err) {}
+      try { fileInput.click(); } catch (err) {}
+    });
+    fileInput.addEventListener('change', function () {
+      var f = fileInput.files && fileInput.files[0];
+      try { fileInput.value = ''; } catch (err) {}
+      if (f) applyAvatarFile(f);
+    });
+  }
+  if (resetAvatarBtn) {
+    resetAvatarBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      avatar.src = DEFAULT_AVATAR;
+      storageRemove(AVATAR_KEY);
+    });
+  }
+
+  avatar.addEventListener('error', function () {
+    var cur = avatar.getAttribute('src') || '';
+    if (cur && cur !== DEFAULT_AVATAR) {
+      avatar.src = DEFAULT_AVATAR;
+      storageRemove(AVATAR_KEY);
+    }
+  });
+  var savedAvatar = storageGet(AVATAR_KEY);
+  if (typeof savedAvatar === 'string' && savedAvatar.indexOf('data:image/') === 0
+      && savedAvatar.length < 2 * 1024 * 1024) {
+    avatar.src = savedAvatar;
+  } else if (savedAvatar) {
+    storageRemove(AVATAR_KEY);
+  }
+
+  /* ===================== 拖拽 ===================== */
+  function moveTo(left, top) {
+    var w = assistant.offsetWidth || 84;
+    var h = assistant.offsetHeight || 84;
+    var maxLeft = Math.max(EDGE, window.innerWidth - w - EDGE);
+    var maxTop = Math.max(EDGE, window.innerHeight - h - EDGE);
+    left = Math.max(EDGE, Math.min(maxLeft, left));
+    top = Math.max(EDGE, Math.min(maxTop, top));
+    assistant.style.left = left + 'px';
+    assistant.style.top = top + 'px';
+    assistant.style.right = 'auto';
+    assistant.style.bottom = 'auto';
+    updateBubbleSide();
+  }
+  function savePos() {
+    storageSet(POS_KEY, JSON.stringify({
+      left: parseFloat(assistant.style.left) || 0,
+      top: parseFloat(assistant.style.top) || 0
+    }));
+  }
+  function restorePos() {
+    var raw = storageGet(POS_KEY);
+    var legacy = false;
+    if (!raw) { raw = storageGet(LEGACY_POS_KEY); legacy = !!raw; }
+    if (!raw) return;
+    try {
+      var p = JSON.parse(raw);
+      if (p && typeof p.left === 'number' && typeof p.top === 'number'
+          && isFinite(p.left) && isFinite(p.top)) {
+        moveTo(p.left, p.top);
+        if (legacy) { savePos(); storageRemove(LEGACY_POS_KEY); }
+      }
+    } catch (e) {}
+  }
+  function resetPos() {
+    assistant.style.left = '';
+    assistant.style.top = '';
+    assistant.style.right = '';
+    assistant.style.bottom = '';
+    storageRemove(POS_KEY);
+    storageRemove(LEGACY_POS_KEY);
+    updateBubbleSide();
+  }
+
+  function endDrag(e) {
+    if (!drag) return;
+    var moved = drag.moved;
+    var pid = drag.id;
+    drag = null;
+    try { if (wrap.releasePointerCapture) wrap.releasePointerCapture(pid); } catch (err) {}
+    if (moved) {
+      justDragged = true;
+      savePos();
+      setTimeout(function () { justDragged = false; }, 0);
+    }
+  }
+
+  wrap.addEventListener('pointerdown', function (e) {
+    if (e.button !== undefined && e.button !== 0) return;
+    var r = assistant.getBoundingClientRect();
+    drag = {
+      id: e.pointerId, sx: e.clientX, sy: e.clientY,
+      left: r.left, top: r.top, moved: false
+    };
+    justDragged = false;
+    try { wrap.setPointerCapture(e.pointerId); } catch (err) {}
+  });
+  wrap.addEventListener('pointermove', function (e) {
+    if (!drag || e.pointerId !== drag.id) return;
+    var dx = e.clientX - drag.sx;
+    var dy = e.clientY - drag.sy;
+    if (!drag.moved && Math.abs(dx) + Math.abs(dy) > 5) drag.moved = true;
+    if (!drag.moved) return;
+    moveTo(drag.left + dx, drag.top + dy);
+  });
+  wrap.addEventListener('pointerup', endDrag);
+  wrap.addEventListener('pointercancel', endDrag);
+
+  document.addEventListener('dblclick', function (e) {
+    if (assistant.contains(e.target)) return;
+    var el = e.target;
+    if (el && el.closest &&
+        el.closest('.card, button, a, input, textarea, select, label, [contenteditable="true"]')) return;
+    resetPos();
+  });
+
+  /* ===================== 视线追踪 ===================== */
+  function applyGaze() {
+    gazeRaf = 0;
+    var r = wrap.getBoundingClientRect();
+    if (!r.width || !r.height) return;
+    var nx = (mouseX - (r.left + r.width / 2)) / 120;
+    var ny = (mouseY - (r.top + r.height / 2)) / 120;
+    nx = Math.max(-1, Math.min(1, nx));
+    ny = Math.max(-1, Math.min(1, ny));
+    avatar.style.transform = 'translate(' + (nx * 3).toFixed(2) + 'px,' + (ny * 3).toFixed(2) + 'px)';
+  }
+  if (!reduceMotion) {
+    document.addEventListener('mousemove', function (e) {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      if (!gazeRaf && window.requestAnimationFrame) gazeRaf = window.requestAnimationFrame(applyGaze);
+    });
+    window.addEventListener('blur', function () { avatar.style.transform = 'translate(0,0)'; });
+  }
+
+  window.addEventListener('resize', function () {
+    if (assistant.style.left) {
+      moveTo(parseFloat(assistant.style.left) || 0, parseFloat(assistant.style.top) || 0);
+    } else {
+      updateBubbleSide();
+    }
+  });
+
+  /* 只读 #taskMsg 的 class，记录答题结果与时间；不参与判题、不改 state */
+  var msgEl = document.getElementById('taskMsg');
+  if (msgEl && typeof MutationObserver === 'function') {
+    new MutationObserver(function () {
+      var cls = ' ' + (msgEl.className || '') + ' ';
+      if (cls.indexOf(' bad ') >= 0) {
+        lastWrong = true;
+        lastCorrect = false;
+        lastAnswerAt = Date.now();
+      } else if (cls.indexOf(' ok ') >= 0) {
+        lastCorrect = true;
+        lastWrong = false;
+        lastAnswerAt = Date.now();
+      }
+    }).observe(msgEl, { attributes: true, attributeFilter: ['class'] });
+  }
+
+  /* 启动时读取完整设置；旧版纯换行数据自动迁移为 custom 列表 */
+  var storedSettings = decodeSettings(storageGet(LINES_KEY));
+  customLines = storedSettings.custom;
+  hiddenIds = [];
+  for (var hi = 0; hi < storedSettings.hidden.length; hi += 1) {
+    var hid = String(storedSettings.hidden[hi]);
+    if (DEFAULT_IDS[hid] && hiddenIds.indexOf(hid) < 0) hiddenIds.push(hid);
+  }
+
+  restorePos();
+})();
+</script>
+
+<!-- ==========================================================================
+     微信内置浏览器 · 存档安全提示（独立 IIFE，删除本段即可完全回退）
+     背景：微信内置浏览器会在切后台时回收渲染进程，sessionStorage 可能被清空，
+           极端情况下 localStorage 写入也会被吞掉，导致进度丢失。
+     边界：只读 navigator.userAgent，只写自己的 localStorage 键
+           （de-wx-tip-dismissed，不在 STORE_KEYS 内，不会被进度择优逻辑误读）；
+           不读不写 state，不注册任何全局变量，异常全部吞掉。
+     ========================================================================== -->
+<script>
+(function () {
+  'use strict';
+  try {
+    var ua = navigator.userAgent || '';
+    if (!/MicroMessenger/i.test(ua)) return;     /* 非微信环境：一个 DOM 都不创建 */
+    if (/miniProgram/i.test(ua)) return;         /* 小程序 webview 不做打扰 */
+
+    var DISMISS_KEY = 'de-wx-tip-dismissed';
+    var DISMISS_DAYS = 7;
+
+    /* 用户点过关闭且未过期 → 直接不显示 */
+    try {
+      var dismissedAt = parseInt(localStorage.getItem(DISMISS_KEY), 10);
+      if (dismissedAt && (Date.now() - dismissedAt) < DISMISS_DAYS * 864e5) return;
+    } catch (e) { /* 隐私模式下读不到，继续走正常提示 */ }
+
+    function hide(bar, timer) {
+      if (timer) clearTimeout(timer);
+      bar.className = '';
+      setTimeout(function () {
+        if (bar && bar.parentNode) bar.parentNode.removeChild(bar);
+      }, 400);                                   /* 等淡出动画结束再摘除 */
+    }
+
+    function mount() {
+      if (!document.body || document.getElementById('wxTip')) return;
+
+      var bar = document.createElement('div');
+      bar.id = 'wxTip';
+      bar.setAttribute('role', 'status');
+      bar.setAttribute('aria-live', 'polite');
+
+      var txt = document.createElement('span');
+      txt.id = 'wxTipText';
+      txt.textContent = '微信内可能丢失进度，建议用系统浏览器';
+
+      var btn = document.createElement('button');
+      btn.id = 'wxTipClose';
+      btn.type = 'button';
+      btn.setAttribute('aria-label', '关闭提示');
+      btn.textContent = '\u2715';
+
+      bar.appendChild(txt);
+      bar.appendChild(btn);
+      document.body.appendChild(bar);
+
+      /* 下一帧再加 class，确保过渡动画生效 */
+      if (typeof requestAnimationFrame === 'function') {
+        requestAnimationFrame(function () { bar.className = 'show'; });
+      } else {
+        bar.className = 'show';
+      }
+
+      /* 12 秒后自动淡出；注意此处不写 localStorage，下次进微信仍会轻提示一次 */
+      var timer = setTimeout(function () { hide(bar, null); }, 12000);
+
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        try { localStorage.setItem(DISMISS_KEY, String(Date.now())); } catch (err) {}
+        hide(bar, timer);
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', mount);
+    } else {
+      mount();
+    }
+  } catch (e) {
+    /* 提示功能出任何问题都不允许影响主程序 */
+  }
 })();
 </script>
 </body>

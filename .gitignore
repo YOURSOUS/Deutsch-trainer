@@ -1,0 +1,22 @@
+# ===== 历史版本备份 =====
+# 21 个 index_*.html 已移入此处，不随仓库发布。
+# 注意：.gitignore 只挡 Git 提交，挡不住"手动拖拽上传"——
+#       线上封锁由 netlify.toml 的 [[redirects]] 负责，两者缺一不可。
+_archive/
+
+# ===== 开发环境残留 =====
+.idea/
+.venv/
+venv/
+node_modules/
+__pycache__/
+*.pyc
+
+# ===== 工作区协作记录 =====
+.workbuddy/
+
+# ===== 系统 / 编辑器 =====
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
