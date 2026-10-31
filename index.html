@@ -1319,6 +1319,69 @@
   @media (prefers-reduced-motion: reduce) {
     #wxTip { transition: none; }
   }
+
+  /* ======================================================================
+     移动端设备提示条（#deviceTip）：完全复用 #wxTip 的样式与过渡动画。
+     仅按钮由 18px 圆形“✕”改为可容纳“知道了”文字的小按钮。
+     回退方式：删除本段 CSS + 文件末尾对应的脚本块即可，零副作用。
+     ====================================================================== */
+  #deviceTip {
+    position: fixed;
+    left: 12px;
+    bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    z-index: 9000;              /* 与 #wxTip 同级，低于日奈助手(9998/9999) */
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    max-width: min(320px, calc(100vw - 124px));   /* 右侧给日奈助手(72px宽+24px边距+16px间隙)让位 */
+    padding: 8px 8px 8px 12px;
+    border: 1px solid var(--hina-border-soft);
+    border-radius: 13px;
+    background: var(--hina-card);
+    color: var(--hina-text-dim);
+    font-family: "YouYuan", "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-size: 12px;
+    line-height: 1.45;
+    text-align: left;
+    box-shadow: var(--hina-shadow);
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity .28s ease, transform .28s ease;
+    pointer-events: none;       /* 淡出期间绝不挡点击 */
+  }
+  #deviceTip.show { opacity: 1; transform: none; pointer-events: auto; }
+  #deviceTipText { flex: 1 1 auto; min-width: 0; }
+  /* 关闭按钮：复用 #wxTipClose 的复位思路，但改为可容纳“知道了”文字的小按钮 */
+  #deviceTipClose {
+    flex: 0 0 auto;
+    padding: 3px 10px;
+    margin: 0;
+    border: 1px solid var(--hina-border-soft);
+    border-radius: 9px;
+    clip-path: none;
+    background: var(--hina-indigo-a16);
+    color: var(--hina-primary-deep);
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.4;
+    text-align: center;
+    cursor: pointer;
+    filter: none;
+    box-shadow: none;
+    transform: none;
+    transition: background .15s ease, color .15s ease;
+  }
+  #deviceTipClose:hover {
+    background: var(--hina-primary-deep);
+    color: #fff;
+    transform: none;
+    box-shadow: none;
+  }
+  #deviceTipClose:active { transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    #deviceTip { transition: none; }
+  }
 </style>
 </head>
 <body>
@@ -1682,18 +1745,158 @@
     if (SP_DE_HINT.test(text.toLowerCase())) return 'de-DE';
     return C ? 'zh-CN' : 'de-DE';
   }
-  /* ===== v0.8 极简发音：百度翻译公共 TTS 直连 =====
-   * 不走 Netlify 云函数，不 fetch、不 IndexedDB、不做缓存 / 预取 / 超时重试。
-   * <audio> 直接播放跨域音频（媒体元素不受 CORS 限制），国内线路通常一秒出声。
-   * 任何失败（网络 / 解码 / 自动播放被拦截 / 6 秒无响应）→ speakLocal 兜底。 */
-  let currentAudio = null;               /* 当前播放实例：切题 / 连点先停旧音，避免叠音 */
+  /* ===== v1.0 发音引擎：PC 直连 / 移动端多源并发竞速 =====
+   * PC：new Audio(url) 直连（referrerPolicy=no-referrer 绕过防盗链），800ms 未触发 playing（或 error）→ 立刻降级 speakLocal。
+   * 移动：getTtsSources() 多源（百度优先 + Google 兜底）× 直连 / fetch→Blob 两条链路并发竞速，谁先 playing 谁胜出；
+   *       胜出后立刻 abort 另一条 fetch、销毁另一个 Audio、回收另一个 Blob URL；
+   *       1000ms 未分胜负 → abort 全部并降级 speakLocal。
+   * 全程 try-catch + 代次（audioGen）校验：切题 / 连点不串音，也不留残余定时器。 */
+  let currentAudio = null;               /* 当前正在出声的 Audio（竞速胜者） */
+  let currentBlobUrl = '';               /* 胜者若是 Blob 源，记录待回收的 URL */
   let currentUtt = null;                 /* 系统语音兜底实例 */
+  let audioGen = 0;                      /* 代次：每次 playAudio 自增，异步回调据此判断是否过期 */
+  let currentRace = null;                /* 进行中的竞速句柄（未决出胜负时非空），供下次调用抢占 */
+
+  const PC_TIMEOUT_MS = 800;             /* PC：800ms 未出声即降级 */
+  const MOBILE_TIMEOUT_MS = 1000;        /* 移动端：1000ms 未分胜负即降级 */
 
   /* 百度 lan：中文走 zh，其余走 de；要强制德语就把这里改成 return 'de'。 */
   function ttsLang(text) {
     return /[\u4e00-\u9fff]/.test(String(text == null ? '' : text)) ? 'zh' : 'de';
   }
+  /* 百度翻译公共 TTS：PC 直连、移动端竞速的默认源 */
+  function baiduUrl(t) {
+    return 'https://fanyi.baidu.com/gettts?lan=' + ttsLang(t) +
+      '&text=' + encodeURIComponent(t) + '&spd=3&source=web';
+  }
+  /* Google 免费 TTS：移动端百度失败时兜底重试（德语 de / 中文 zh-CN） */
+  function googleUrl(t) {
+    const tl = (ttsLang(t) === 'zh') ? 'zh-CN' : 'de';
+    return 'https://translate.google.com/translate_tts?ie=UTF-8&tl=' + tl +
+      '&client=tw-ob&q=' + encodeURIComponent(t);
+  }
+  function ttsUrl(t) { return baiduUrl(t); }   /* 旧别名：PC 分支与旧调用保持走百度 */
+  /* 多源候选列表（顺序即优先级）：百度在前，Google 殿后兜底。两者均支持德语(de)/中文(zh)。
+   * 要再加源，往这里 push 即可——但务必确认该源支持目标语种
+   * （例：有道 dictvoice 的 type=2 是美式英语，不会说德语，故不纳入）。 */
+  function getTtsSources(t) {
+    return [ baiduUrl(t), googleUrl(t) ];
+  }
+  function isMobileUA() {
+    try {
+      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i
+        .test(navigator.userAgent || '');
+    } catch (e) { return false; }
+  }
 
+  /* ===== 移动端音频解锁器（手势白名单）=====
+   * 移动端浏览器禁止"非用户手势触发"的 Audio.play() / speechSynthesis，导致自动发音被静默拦截。
+   * 在首个 touchstart / touchend / click 时：用 Web Audio（0 增益振荡器）+ 一段极短静音 <audio>
+   * 把页面录入"已交互"状态，后续自动发音即可被放行。{ once:true } 保证只跑一次。 */
+  var _audioUnlocked = false;
+  function unlockAudio() {
+    if (_audioUnlocked) return;
+    _audioUnlocked = true;
+    try {
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if (AC) {
+        try {
+          var ctx = new AC();
+          if (ctx.state === 'suspended' && typeof ctx.resume === 'function') ctx.resume();
+          var osc = ctx.createOscillator();
+          var g = ctx.createGain();
+          g.gain.value = 0;                 /* 0 增益：听不到，但足以解锁播放策略 */
+          osc.connect(g); g.connect(ctx.destination);
+          if (typeof osc.start === 'function') osc.start(0);
+          if (typeof osc.stop === 'function') osc.stop(0.03);
+        } catch (e) {}
+      }
+    } catch (e) {}
+    try {                                   /* 兜底：极短静音媒体元素（HTMLMediaElement 解锁） */
+      var a = new Audio();
+      a.volume = 0;
+      a.src = 'data:audio/mp3;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4Ljc2LjEwMAAAAAAAAAAAAAAA//tQxAADB8AhSmxhIIEVCSiJrDCQBTQQ91lwogYxkEZSChgZOUhSQlJgQlZgYlZgZnN2c3N2d3eHt7e7u7u7vHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8';
+      var pp = a.play();
+      if (pp && typeof pp.catch === 'function') pp.catch(function () {});
+    } catch (e) {}
+    try { if (typeof speechSynthesis !== 'undefined') speechSynthesis.cancel(); } catch (e) {}
+  }
+  if (typeof document !== 'undefined' && document.addEventListener) {
+    document.addEventListener('touchstart', unlockAudio, { once: true, passive: true });
+    document.addEventListener('touchend', unlockAudio, { once: true, passive: true });
+    document.addEventListener('click', unlockAudio, { once: true });
+  }
+
+  /* 彻底销毁一个 <audio>：停播 → 断流 → 解绑事件 → 回收 Blob URL。
+   * 成功 / 失败 / 被抢占都会走这里，保证不留残余请求和内存。 */
+  function destroyAudio(a, blobUrl) {
+    if (a) {
+      try { a.onplaying = null; a.onended = null; a.onerror = null; a.oncanplay = null; } catch (e) {}
+      try { a.pause(); } catch (e) {}
+      try { a.currentTime = 0; } catch (e) {}
+      try { a.removeAttribute('src'); a.load(); } catch (e) {}   /* 断开仍在下载的网络流 */
+      if (currentAudio === a) { currentAudio = null; currentBlobUrl = ''; }
+    }
+    if (blobUrl) { try { URL.revokeObjectURL(blobUrl); } catch (e) {} }
+  }
+
+  /* Promise.any 兼容实现：老安卓 WebView / 部分微信内置浏览器没有 Promise.any。
+   * 语义一致——任一 resolve 即 resolve，全部 reject 才 reject。 */
+  function anyPromise(list) {
+    if (typeof Promise !== 'function') return null;
+    if (typeof Promise.any === 'function') {
+      try { return Promise.any(list); } catch (e) {}
+    }
+    return new Promise(function (resolve, reject) {
+      var left = list.length;
+      if (!left) { reject(new Error('empty')); return; }
+      var errs = [];
+      for (var i = 0; i < list.length; i++) {
+        Promise.resolve(list[i]).then(resolve, function (err) {
+          errs.push(err);
+          left -= 1;
+          if (left === 0) reject(errs);
+        });
+      }
+    });
+  }
+
+  /* 建立一条播放轨道：出声（playing）→ onWin；自然播完 → onFinish；出错 → onFail。
+   * 返回句柄 { audio, blobUrl, won, dead, kill() }，kill() 幂等。 */
+  function openTrack(src, blobUrl, onWin, onFinish, onFail) {
+    var a;
+    try { a = new Audio(); } catch (e) { try { onFail(e); } catch (e2) {} return null; }
+    try { a.referrerPolicy = 'no-referrer'; } catch (e) {}   /* 直连去掉 Referer：绕过部分接口的防盗链校验 */
+    var h = { audio: a, blobUrl: blobUrl || '', won: false, dead: false };
+    function cleanup() {
+      if (h.dead) return;
+      h.dead = true;
+      destroyAudio(h.audio, h.blobUrl);
+      h.audio = null;
+    }
+    h.kill = cleanup;
+    a.onplaying = function () {
+      if (h.dead || h.won) return;
+      h.won = true;
+      try { onWin(h); } catch (e) {}
+    };
+    a.onended = function () {
+      if (h.dead) return;
+      try { onFinish(h); } catch (e) {}
+    };
+    a.onerror = function () {
+      if (h.dead) return;
+      try { onFail(new Error('audio error')); } catch (e) {}
+    };
+    try { a.preload = 'auto'; a.src = src; } catch (e) {
+      try { onFail(e); } catch (e2) {}
+      cleanup();
+      return null;
+    }
+    return h;
+  }
+
+  var _ttsTipAt = 0;                         /* 系统语音失败提示的节流时间戳 */
   /* 降级方案：浏览器自带语音。德语 → de-DE，中文 → zh-CN；
    * 播放结束或失败都回调 onEnded（失败也回调，避免连播卡死）。 */
   function speakLocal(text, tag, onEnded) {
@@ -1729,7 +1932,23 @@
       };
       u.onerror = function(e) {
         if (currentUtt === u) currentUtt = null;
-        console.warn('[发音] 系统语音失败（' + (tag || '') + '）' + ((e && e.error) ? '：' + e.error : ''));
+        var code = (e && e.error) ? e.error : '';
+        /* 被取消 / 打断 / 主动中止不算故障，静默收尾即可 */
+        if (code === 'interrupted' || code === 'canceled' || code === 'aborted' || code === 'flush') {
+          finish();
+          return;
+        }
+        console.warn('[发音] 系统语音失败（' + (tag || '') + '）' + (code ? '：' + code : ''));
+        /* 真故障（多为缺少德语语音包）：给用户一条轻提示，每 15 秒最多一次，避免刷屏 */
+        try {
+          var now = (typeof Date !== 'undefined') ? Date.now() : 0;
+          if (now - _ttsTipAt > 15000) {
+            _ttsTipAt = now;
+            if (typeof wallTip === 'function') {
+              wallTip('发音失败：当前设备缺少德语语音包，且网络发音接口被拦截。请前往手机「设置」下载德语语音包，或改用系统浏览器 / Edge 打开。', true);
+            }
+          }
+        } catch (e2) {}
         finish();
       };
       speechSynthesis.speak(u);
@@ -1742,76 +1961,253 @@
   }
 
   /* 播放一段文本：true = 已发起播放。
-   * 百度公共语音直连；播完回调 onEnded；出错静默降级系统语音。 */
+   * PC 直连（800ms 兜底）；移动端直连 与 fetch→Blob 竞速（1000ms 兜底）。
+   * 任何失败降级 speakLocal；onEnded 保证恰好回调一次（被抢占时静默不回调）。 */
   function playAudio(text, tag, onEnded) {
     const t = String(text == null ? '' : text).trim();
-    let done = false;
-    function finish() {
-      if (done) return;
-      done = true;
+    try { if (!_audioUnlocked) unlockAudio(); } catch (e) {}   /* 若本次调用来自手势，当场解锁 */
+    const gen = ++audioGen;                 /* 代次自增：此前所有异步回调一律作废 */
+    let settled = false;
+    function settle() {
+      if (settled) return;
+      settled = true;
       if (typeof onEnded === 'function') { try { onEnded(); } catch (e) {} }
     }
-    if (!t) { finish(); return false; }
+    if (!t) { settle(); return false; }
 
-    /* 先停掉上一句：音频 + 系统语音，避免叠音；旧句的 onEnded 不再触发 */
-    const prev = currentAudio;
+    /* 抢占：叫停上一次未决出胜负的竞速（连点 / 切题），并停掉正在出声的音频 */
+    if (currentRace) { try { currentRace.kill(); } catch (e) {} currentRace = null; }
+    destroyAudio(currentAudio, currentBlobUrl);
     currentAudio = null;
-    if (prev) {
-      try {
-        prev.onplaying = null; prev.onended = null; prev.onerror = null;
-        prev.pause(); prev.currentTime = 0;
-      } catch (e) {}
-    }
+    currentBlobUrl = '';
     if (typeof speechSynthesis !== 'undefined') { try { speechSynthesis.cancel(); } catch (e) {} }
     currentUtt = null;
 
-    let a = null;
-    let timer = null;
     let fellBack = false;
-    function clearTimer() {
-      if (timer) { clearTimeout(timer); timer = null; }
-    }
-    function fallback() {
-      if (done || fellBack) return;
-      if (a && currentAudio !== a) return;      /* 已被新一次播放接管 */
+    function fallback(reason) {
+      if (settled || fellBack || gen !== audioGen) return;    /* 代次过期 → 静默退出 */
       fellBack = true;
-      clearTimer();
-      if (a) {
-        try {
-          a.onplaying = null; a.onended = null; a.onerror = null;
-          a.pause(); a.currentTime = 0;
-        } catch (e) {}
+      if (typeof console !== 'undefined' && console.warn) {
+        console.warn('[发音] 降级系统语音（' + (tag || '') + '）' + (reason ? '：' + reason : ''));
       }
-      if (currentAudio === a) currentAudio = null;
-      try { speakLocal(t, tag, finish); }
-      catch (e) { finish(); }
+      try { speakLocal(t, tag, settle); }
+      catch (e) { settle(); }
     }
 
-    if (typeof Audio === 'undefined') { fallback(); return true; }
+    if (typeof Audio === 'undefined') { fallback('无 Audio 支持'); return true; }
 
-    /* 百度翻译公共语音接口：国内直连、无需 Key、直接交给 <audio> */
-    const url = 'https://fanyi.baidu.com/gettts?lan=' + ttsLang(t) +
-      '&text=' + encodeURIComponent(t) + '&spd=3&source=web';
+    const url = ttsUrl(t);
+    const mobile = isMobileUA();
 
-    try { a = new Audio(url); }
-    catch (e) { fallback(); return true; }
+    /* ================= PC：直连 + 800ms 超时锁 ================= */
+    if (!mobile || typeof Promise !== 'function' || typeof fetch !== 'function') {
+      let pcTimer = null;
+      let pc = null;
+      const pcRace = {
+        kill: function () {
+          if (pcTimer) { clearTimeout(pcTimer); pcTimer = null; }
+          if (pc) { try { pc.kill(); } catch (e) {} pc = null; }
+          if (currentRace === pcRace) currentRace = null;
+        }
+      };
+      currentRace = pcRace;
 
-    currentAudio = a;
-    a.onplaying = clearTimer;               /* 真出声了就撤掉兜底定时器 */
-    a.onended = function() {
-      clearTimer();
-      if (currentAudio === a) currentAudio = null;
-      finish();
+      pc = openTrack(url, '',
+        function (h) {                                   /* playing：真出声，撤掉兜底定时器 */
+          if (gen !== audioGen) { pcRace.kill(); return; }
+          if (pcTimer) { clearTimeout(pcTimer); pcTimer = null; }
+          currentAudio = h.audio;
+          currentRace = null;                            /* 已出声，收尾交给 onended */
+        },
+        function (h) {                                   /* 自然播完 */
+          if (gen !== audioGen) { pcRace.kill(); return; }
+          destroyAudio(h.audio, '');
+          currentAudio = null;
+          currentRace = null;
+          settle();
+        },
+        function (e) {                                   /* 出错 / 解码失败 */
+          if (gen !== audioGen) return;
+          if (pc && pc.won) {                            /* 已出声后中途出错：直接收尾，不重复朗读 */
+            destroyAudio(pc.audio, '');
+            currentAudio = null;
+            pcRace.kill();
+            settle();
+            return;
+          }
+          pcRace.kill();
+          fallback((e && e.message) || 'audio error');
+        }
+      );
+      if (!pc) { currentRace = null; fallback('音频实例创建失败'); return true; }
+
+      pcTimer = setTimeout(function () {
+        pcTimer = null;
+        if (gen !== audioGen || (pc && pc.won)) return;
+        pcRace.kill();
+        fallback('PC ' + PC_TIMEOUT_MS + 'ms 未出声');
+      }, PC_TIMEOUT_MS);
+
+      try {
+        const p = pc.audio.play();
+        if (p && typeof p.catch === 'function') {
+          p.catch(function (err) {
+            if (gen !== audioGen) return;
+            pcRace.kill();
+            fallback((err && err.name) || 'play 被拒绝');
+          });
+        }
+      } catch (e) {
+        pcRace.kill();
+        fallback((e && e.message) || 'play 异常');
+      }
+      return true;
+    }
+
+    /* ========== 移动端：直连(A) 与 fetch→Blob(B) 并发竞速 ========== */
+    const tracks = [];
+    const controllers = [];
+    let timer = null;
+    let decided = false;
+
+    const srcs = getTtsSources(t);            /* 多源：百度优先，失败自动换 Google 重试 */
+
+    const race = {
+      kill: function () {
+        if (timer) { clearTimeout(timer); timer = null; }
+        for (let i = 0; i < controllers.length; i++) { try { controllers[i].abort(); } catch (e) {} }
+        controllers.length = 0;
+        for (let j = 0; j < tracks.length; j++) { try { tracks[j].kill(); } catch (e) {} }
+        tracks.length = 0;
+        if (currentRace === race) currentRace = null;
+      }
     };
-    a.onerror = function() { fallback(); };
-    timer = setTimeout(fallback, 6000);     /* 接口挂死且无 error 时，6 秒后切系统语音 */
+    currentRace = race;
 
-    try {
-      const p = a.play();
-      if (p && typeof p.catch === 'function') p.catch(function() { fallback(); });
-    } catch (e) {
-      fallback();
+    function win(h) {                        /* 竞速胜出：立刻清理战场 */
+      if (decided || gen !== audioGen) { race.kill(); return; }
+      decided = true;
+      for (let k = 0; k < tracks.length; k++) {
+        if (tracks[k] !== h) { try { tracks[k].kill(); } catch (e) {} }  /* 销毁落败 Audio + 回收其 Blob */
+      }
+      for (let m = 0; m < controllers.length; m++) { try { controllers[m].abort(); } catch (e) {} }
+      controllers.length = 0;
+      if (timer) { clearTimeout(timer); timer = null; }
+      currentAudio = h.audio;
+      currentBlobUrl = h.blobUrl || '';
+      currentRace = null;                    /* 已决出胜负，收尾交给 onended */
     }
+    function finishTrack(h) {                /* 胜者自然播完：回收自身 Blob 并收尾 */
+      if (gen !== audioGen) { race.kill(); return; }
+      const isWinner = (currentAudio === h.audio);   /* 已决出胜负的非胜者轨道：仅销毁，不重复结算 */
+      destroyAudio(h.audio, h.blobUrl);
+      if (!isWinner) return;
+      currentAudio = null;
+      currentBlobUrl = '';
+      currentRace = null;
+      settle();
+    }
+
+    /* 一条链路依次尝试一组候选 URL（百度 → Google）。
+     * 任一候选轨道先触发 playing 即 resolve 该轨道句柄；当前候选出错且尚未出声时，
+     * 自动尝试下一个候选（百度失败 → 立刻换 Google 重试一次）。全部失败才 reject。
+     * kind: 'direct'（<audio> 直连）| 'blob'（fetch → Blob → ObjectURL）。 */
+    function openLane(kind, urls) {
+      return new Promise(function (resolve, reject) {
+        var idx = -1;
+        var lastErr = null;
+        var cur = null;                       /* 当前正在尝试的轨道句柄 */
+        function bailLast() {                 /* 当前候选失败：先销毁，再试下一个 */
+          if (cur) { try { var c = cur; cur = null; c.kill(); } catch (er) {} }
+        }
+        function next() {
+          idx += 1;
+          if (idx >= urls.length) {
+            if (cur) { try { cur.kill(); } catch (er) {} cur = null; }
+            reject(lastErr || new Error(kind + ' 全部候选失败'));
+            return;
+          }
+          var u = urls[idx];
+          if (kind === 'direct') {
+            var h = openTrack(u, '',
+              function (hh) { if (decided || gen !== audioGen) { try { hh.kill(); } catch (e) {} return; } resolve(hh); },
+              function (hh) { finishTrack(hh); },   /* 胜者自然结束由 finishTrack 的 isWinner 判定，迟到尾巴不会重复结算 */
+              function (e) {
+                if (cur && cur.won) { try { finishTrack(cur); } catch (er) {} return; }
+                lastErr = e || new Error(kind + ' failed');
+                bailLast(); next();           /* 百度失败 → 立刻换 Google 再试一次 */
+              }
+            );
+            if (!h) { lastErr = new Error(kind + ' 创建失败'); bailLast(); next(); return; }
+            tracks.push(h); cur = h;
+            try { var p = h.audio.play(); if (p && p.catch) p.catch(function () {}); } catch (e) {}
+          } else {                            /* blob */
+            var ctrl = (typeof AbortController === 'function') ? new AbortController() : null;
+            if (ctrl) controllers.push(ctrl);
+            var blobUrl = ''; var h2 = null;
+            try {
+              fetch(u, ctrl ? { signal: ctrl.signal } : undefined)
+                .then(function (res) {
+                  if (!res || !res.ok) throw new Error('HTTP ' + (res ? res.status : '?'));
+                  return res.blob();
+                })
+                .then(function (blob) {
+                  if (gen !== audioGen || decided) throw new Error('superseded');
+                  blobUrl = URL.createObjectURL(blob);
+                  h2 = openTrack(blobUrl, blobUrl,
+                    function (hh) { if (decided || gen !== audioGen) { try { hh.kill(); } catch (e) {} return; } resolve(hh); },
+                    function (hh) { finishTrack(hh); },   /* 同上：isWinner 判定，迟到尾巴不结算 */
+                    function (e) {
+                      if (h2 && h2.won) { try { finishTrack(h2); } catch (er) {} return; }
+                      lastErr = e || new Error(kind + ' 音频错误');
+                      bailLast(); next();     /* 百度失败 → 立刻换 Google 再试一次 */
+                    }
+                  );
+                  if (!h2) throw new Error(kind + ' 创建失败');
+                  tracks.push(h2); cur = h2;
+                  var q = h2.audio.play();
+                  if (q && q.catch) q.catch(function () {});
+                })
+                .catch(function (err) {
+                  if (blobUrl && !(h2 && h2.won)) { try { URL.revokeObjectURL(blobUrl); } catch (er) {} }
+                  lastErr = err || new Error(kind + ' 获取失败');
+                  bailLast(); next();
+                });
+            } catch (e) {
+              if (blobUrl) { try { URL.revokeObjectURL(blobUrl); } catch (er) {} }
+              lastErr = e; bailLast(); next();
+            }
+          }
+        }
+        next();
+      });
+    }
+
+    timer = setTimeout(function () {         /* 极限超时：全部中断并降级 */
+      timer = null;
+      if (decided || gen !== audioGen) { race.kill(); return; }
+      race.kill();                           /* abort 全部 fetch + 销毁全部 Audio + 回收全部 Blob */
+      fallback('移动端 ' + MOBILE_TIMEOUT_MS + 'ms 未分胜负');
+    }, MOBILE_TIMEOUT_MS);
+
+    const anyP = anyPromise([
+      openLane('direct', srcs),   /* 直连：百度优先，失败换 Google */
+      openLane('blob', srcs)      /* 隐身流：百度优先，失败换 Google */
+    ]);
+    if (!anyP) { race.kill(); fallback('Promise 不可用'); return true; }
+    anyP.then(function (h) {
+      win(h);
+    }).catch(function (errs) {
+      if (gen !== audioGen) return;
+      race.kill();
+      let msg = '竞速失败（百度+Google）';
+      try {
+        const list = (errs && errs.errors) ? errs.errors : (Array.isArray(errs) ? errs : [errs]);
+        if (list[0] && list[0].message) msg = String(list[0].message);
+      } catch (e) {}
+      fallback(msg);
+    });
+
     return true;
   }
 
@@ -5887,6 +6283,90 @@
         e.stopPropagation();
         try { localStorage.setItem(DISMISS_KEY, String(Date.now())); } catch (err) {}
         hide(bar, timer);
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', mount);
+    } else {
+      mount();
+    }
+  } catch (e) {
+    /* 提示功能出任何问题都不允许影响主程序 */
+  }
+})();
+</script>
+
+<!-- ==========================================================================
+     移动端设备提示条（#deviceTip，独立 IIFE，删除本段即可完全回退）
+     背景：移动端（iOS/Android/微信）音频策略与 CORS 限制不可控，发音功能常失效；
+           改为主攻 PC 端体验，移动端以提示条引导用户到电脑访问。
+     边界：只读 navigator.userAgent，只写自己的 localStorage 键
+           （de-device-tip-dismissed，不在 STORE_KEYS 内，不会被进度择优逻辑误读）；
+           不读不写 state，不触碰 playAudio 等发音核心逻辑，不注册任何全局变量，
+           异常全部吞掉。
+     兼容：微信内置浏览器已有 #wxTip 且锚点相同，此处跳过以避免重叠。
+     ========================================================================== -->
+<script>
+(function () {
+  'use strict';
+  try {
+    var ua = navigator.userAgent || '';
+    /* 非移动端：一个 DOM 都不创建 */
+    if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua)) return;
+    /* 微信端已有 #wxTip 且锚点相同，跳过避免两条提示重叠 */
+    if (/MicroMessenger/i.test(ua)) return;
+
+    var DISMISS_KEY = 'de-device-tip-dismissed';
+    var DISMISS_DAYS = 7;
+
+    /* 用户点过关闭且未过期（7 天内）→ 直接不显示 */
+    try {
+      var dismissedAt = parseInt(localStorage.getItem(DISMISS_KEY), 10);
+      if (dismissedAt && (Date.now() - dismissedAt) < DISMISS_DAYS * 864e5) return;
+    } catch (e) { /* 隐私模式下读不到，继续走正常提示 */ }
+
+    function hide(bar) {
+      bar.className = '';
+      setTimeout(function () {
+        if (bar && bar.parentNode) bar.parentNode.removeChild(bar);
+      }, 400);                                   /* 等淡出动画结束再摘除 */
+    }
+
+    function mount() {
+      if (!document.body || document.getElementById('deviceTip')) return;
+
+      var bar = document.createElement('div');
+      bar.id = 'deviceTip';
+      bar.setAttribute('role', 'status');
+      bar.setAttribute('aria-live', 'polite');
+
+      var txt = document.createElement('span');
+      txt.id = 'deviceTipText';
+      txt.textContent = '检测到移动端环境。受限于系统音频策略，部分发音功能可能受限。为获得完整学习体验，建议使用 PC/电脑浏览器访问。';
+
+      var btn = document.createElement('button');
+      btn.id = 'deviceTipClose';
+      btn.type = 'button';
+      btn.setAttribute('aria-label', '关闭提示');
+      btn.textContent = '知道了';
+
+      bar.appendChild(txt);
+      bar.appendChild(btn);
+      document.body.appendChild(bar);
+
+      /* 下一帧再加 class，确保过渡动画生效 */
+      if (typeof requestAnimationFrame === 'function') {
+        requestAnimationFrame(function () { bar.className = 'show'; });
+      } else {
+        bar.className = 'show';
+      }
+
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        try { localStorage.setItem(DISMISS_KEY, String(Date.now())); } catch (err) {}
+        hide(bar);
       });
     }
 

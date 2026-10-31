@@ -57,9 +57,33 @@
 
 ### 3. 发音引擎（历经九九八十一难的产物）
 
-- **当前方案**：百度翻译公共接口（`fanyi.baidu.com/gettts`）为主 + 系统 `speechSynthesis` 兜底。
+- **当前方案（v1.0）**：多源并发竞速。**源列表 `getTtsSources(t)` = 百度翻译公共接口（`fanyi.baidu.com/gettts`）优先 + Google 免费 TTS（`translate.google.com/translate_tts`）兜底**，两者均支持德语(de)/中文(zh)；系统 `speechSynthesis` 作为最终兜底。直连路径统一 `referrerPolicy = 'no-referrer'`（绕过部分接口的防盗链校验）。移动端额外有**音频解锁器**对抗自动播放拦截。
 - **不要尝试改回 Netlify Edge TTS。** 公网云函数的冷启动 + 跨国网络延迟会导致极差的体验，这是已经踩过并回退过的坑。
-- 手机端没声音，是安卓系统未安装德语 TTS 语音包，**不是代码 Bug**。
+- 安卓没装德语语音包时，系统 TTS 会静默失败，现在会弹出一条顶部提示引导用户去系统设置装包（见约束 8）；这**不是代码 Bug**。
+- ⚠️ **有道 `dictvoice` 不纳入**：其 `type=2` 是美式英语，**不会说德语**，对德语学习站是负收益，故源列表只保留百度 + Google。要加第三源，改 `getTtsSources()` 即可，但必须确认该源支持目标语种。
+
+**v1.0 双轨制（PC / 移动分流）**
+
+函数入口 `playAudio(text, tag, onEnded)`，开头用 UA 判断 `isMobileUA()` 分流：
+
+| | PC（`!isMobile`） | 移动端（`isMobile`） |
+| --- | --- | --- |
+| 链路 | `new Audio(url)` 直连（no-referrer） | `getTtsSources()` 多源 × 直连 **并发竞速** `fetch→Blob→ObjectURL` |
+| 胜负 | 出声即胜 | 谁先触发 `playing` 谁胜 |
+| 超时 | `PC_TIMEOUT_MS = 800` | `MOBILE_TIMEOUT_MS = 1000` |
+| 超时/全败 | 降级 `speakLocal()` | 降级 `speakLocal()` |
+
+关键约束（改这块前务必读懂）：
+
+1. **代次机制 `audioGen`**：每次 `playAudio` 自增。所有异步回调（竞速、超时、`onended`）都要校验 `gen !== audioGen`，过期即静默退出、**不回调 `onEnded`**（切题 / 连点不串音）。同时入口处会 `currentRace.kill()` 抢占上一次未决出胜负的竞速——**这两层缺一不可**，只靠代次校验无法阻止“旧竞速在超时后才出声”。
+2. **胜出后必须清理战场**：`abort()` 另一条 fetch、销毁落败的 Audio、回收落败的 Blob URL，否则会双声道叠音。
+3. **`currentBlobUrl` 必须和 `currentAudio` 成对维护**，否则被抢占时 Blob 内存泄漏。
+4. **`onEnded` 保证恰好回调一次**（成功路径挂在赢家轨道的 `onended` 上，绝非“赢了就不回调”）——被抢占的那一次不回调（静默）。**改这块时千万保留此契约**，否则 `发音页` 连读、自动跳题等依赖 `onEnded` 的流程会卡死。
+5. ⚠️ **Promise B（fetch）依赖 CORS，且绝不可加自定义请求头**：`<audio>` 播跨域媒体不受 CORS 限制，但 `fetch` 受。若源不返回 `Access-Control-Allow-Origin`，B 会稳定失败、A 恒胜——竞速退化成纯直连（无害，但 B 无收益）。**切勿为“防盗链”给 `fetch` 加 `Referer` / 其他自定义头**，那会触发 CORS 预检（OPTIONS）导致整个 blob 通道对所有源全灭；防盗链绕过只靠 `<audio>` 的 `referrerPolicy = 'no-referrer'`。
+6. ⚠️ **超时值偏激进**：800ms / 1000ms 是刻意的“秒出”取舍。若线上观察到频繁降级到系统语音，优先调大 `PC_TIMEOUT_MS`（建议 1200–1500ms），不要改判定逻辑。
+7. **移动端音频解锁器（v0.10 新增）**：在首个 `touchstart / touchend / click`（`{ once: true }`）时用 Web Audio（0 增益振荡器）+ 一段极短静音 `<audio>` 把页面录入“已交互”状态，解除移动端对自动播放的拦截；`playAudio` 入口也会再尝试一次解锁（若本次调用本身来自手势）。Google 兜底走 `openLane(kind, getTtsSources(t))`，每个候选出错且尚未出声时自动切到下一个源重试，全部失败才 reject 降级。
+8. **系统 TTS 失败要给视觉提示（v0.10 新增）**：`speakLocal` 的 `onerror` 不再静默退出——当错误码为 `synthesis-failed / voice-unavailable / language-unavailable` 等真故障时，复用顶部 `#saveTip`（经 `wallTip()`）提示“缺少德语语音包，请去系统设置下载 / 改用系统浏览器”；`interrupted / canceled / aborted / flush`（被取消或打断）属正常，不打扰。提示每 15 秒最多一次，避免刷屏。
+9. **`Promise.any` 必须走兼容垫片 `anyPromise()`**：老安卓 WebView / 部分微信内置浏览器没有 `Promise.any`，裸用会抛 `TypeError` 让整个播放函数崩溃（完全没声音）。`anyPromise()` 在缺失时自降级为手写竞速。
 
 ### 4. 四大会话视图
 
