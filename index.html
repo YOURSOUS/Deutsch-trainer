@@ -5541,6 +5541,7 @@
   /* 台词池：刚答完题（5 秒内）最高优先；否则错题提示 / 日常 / 自定义统一随机 */
   function buildLine() {
     var now = Date.now();
+    // 1. 处理答题后的 5 秒新鲜期
     if (lastAnswerAt && now - lastAnswerAt > ANSWER_FRESH_MS) {
       lastCorrect = false;
       lastWrong = false;
@@ -5560,22 +5561,30 @@
         answerFeedback: true, run: closeBubble
       };
     }
-
+    // 2. 获取状态与新手判定
     var s = getState();
-    if (s && (!Array.isArray(s.history) || s.history.length === 0)) {
+    // 只要答过题、有错题、有打卡，就不算新手！
+    var hasProgress = s && (
+      (s.stats && s.stats.done > 0) ||
+      (s.today && s.today.count > 0) ||
+      (Array.isArray(s.wrong) && s.wrong.length > 0) ||
+      (Number(s.streak) > 0)
+    );
+    // 只有完全没碰过的小白，才给初始文本
+    if (s && !hasProgress) {
       return {
         text: '哈啊……老师，虽然好麻烦，但学习还是要开始的吧？',
         action: '开始练习', tone: '',
         run: function () { goView('practice'); }
       };
     }
-
+    // 3. 构建随机池（日常 + 自定义 + 错题预警 + 连打）
     var linesPool = [];
     var wrongTotal = s ? countWrong(s) : 0;
     var streak = s ? Math.max(0, Number(s.streak) || 0) : 0;
     for (var i = 0; i < DEFAULT_CATALOG.length; i += 1) {
       var d = DEFAULT_CATALOG[i];
-      if (hiddenIds.indexOf(d.id) >= 0) continue;
+      if (hiddenIds.indexOf(d.id) >= 0) continue; // 用户删掉的屏蔽
       if (d.id === 'wrong-warning') {
         if (s && wrongTotal >= 5) {
           linesPool.push({
@@ -5594,7 +5603,14 @@
         linesPool.push(dailyItem(d.text));
       }
     }
-    for (var j = 0; j < customLines.length; j += 1) linesPool.push(dailyItem(customLines[j].text));
+    // 加入自定义台词
+    for (var j = 0; j < customLines.length; j += 1) {
+      linesPool.push(dailyItem(customLines[j].text));
+    }
+    // 4. 绝对兜底：防止用户把默认台词全删光了导致池子为空
+    if (linesPool.length === 0) {
+      return dailyItem('老师，今天的天气适合睡觉呢……别盯着屏幕了。');
+    }
     return pickOne(linesPool);
   }
 
