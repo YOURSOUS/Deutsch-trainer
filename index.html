@@ -423,6 +423,36 @@
   #killedList .killed-row:first-child { border-top: 0; }
   #killedList .killed-key { flex: 0 0 auto; max-width: 42%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 12px; opacity: .65; }
 
+  /* ★ v1.0 基础区 / 进阶区 分段控制器（纯新增，浅色/深色跟随主题令牌） */
+  .zone-card { padding-top: 12px; padding-bottom: 12px; }
+  .zone-switch { display: flex; gap: 8px; flex-wrap: wrap; }
+  .zone-btn {
+    flex: 1 1 210px; margin: 0; padding: 11px 14px;
+    font-family: inherit; font-size: 14px; font-weight: 600;
+    color: var(--hina-text-deep); background: var(--hina-card);
+    border: 1px solid var(--hina-border); border-radius: 0; box-shadow: none;
+    clip-path: polygon(
+      var(--hina-cut-btn, 8px) 0, 100% 0,
+      100% calc(100% - var(--hina-cut-btn, 8px)), calc(100% - var(--hina-cut-btn, 8px)) 100%,
+      0 100%, 0 var(--hina-cut-btn, 8px));
+    cursor: pointer;
+    transition: color .15s ease, border-color .15s ease, background .15s ease;
+  }
+  .zone-btn.is-active {
+    color: #fff; border-color: transparent;
+    background: linear-gradient(135deg, var(--hina-primary), var(--hina-indigo));
+  }
+  .zone-btn.is-unlocked:not(.is-active):hover:not(:disabled) {
+    color: var(--hina-primary-deep); border-color: var(--hina-primary-a45);
+    background: var(--hina-primary-a25);
+  }
+  .zone-btn.is-locked, .zone-btn:disabled { cursor: not-allowed; opacity: .62; }
+  .zone-card .hint { margin: 9px 0 0; }
+  @media (max-width: 640px) {
+    .zone-switch { flex-direction: column; }
+    .zone-btn { flex: 1 1 auto; width: 100%; padding: 10px 12px; font-size: 13px; }
+  }
+
   /* ---- 2) 顶部吸顶选项卡 ---- */
   .tabbar {
     position: sticky; top: 0; z-index: 40;
@@ -1422,6 +1452,9 @@
      #dictTooltip 是 fixed 浮层，z-index 必须高于日奈助手 Modal(10001)。 */
   .group-passage .dict-word { border-radius: 3px; cursor: pointer; transition: background-color .12s ease; }
   .group-passage .dict-word:hover { background: rgba(124, 92, 255, .1); }
+  /* ★ v1.0：单题题干复用同一套分词 span，hover 提示保持一致（不改上面的既有规则） */
+  #taskQuestion .dict-word { border-radius: 3px; cursor: pointer; transition: background-color .12s ease; }
+  #taskQuestion .dict-word:hover { background: rgba(124, 92, 255, .1); }
   #dictTooltip {
     position: fixed; left: 0; top: 0; display: none;
     box-sizing: border-box; max-width: min(360px, calc(100vw - 24px));
@@ -1487,6 +1520,15 @@
 
   <!-- ================= 视图 1：每日一练（原有答题区，DOM 未做任何改动） ================= -->
   <section class="view" id="viewPractice" data-view-panel="practice">
+
+  <!-- ★ v1.0 基础区 / 进阶区分流（纯新增节点，下方原有卡片 DOM 一行未动） -->
+  <section class="card zone-card" id="zoneCard">
+    <div class="zone-switch" role="tablist" aria-label="刷题分区">
+      <button id="zoneBaseBtn" class="zone-btn is-active" type="button" data-zone="base" role="tab" aria-selected="true">基础刷题区</button>
+      <button id="zoneAdvBtn" class="zone-btn is-locked" type="button" data-zone="adv" role="tab" aria-selected="false" aria-disabled="true" disabled>进阶真题区 🔒 (进度: 0/50题, 正确率 0%)</button>
+    </div>
+    <p class="hint" id="zoneHint">当前：基础刷题区 · 完成 50 题且正确率 ≥ 60% 解锁进阶真题区</p>
+  </section>
 
   <section class="card">
     <h2>1. 每日一练</h2>
@@ -1797,22 +1839,119 @@
     return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
   }
   function itemKey(lv, ix) { return lv + ':' + ix; }
+
   /* ==========================================================================
-   * v0.9 · 一键斩题（永久移出出题池）
+   * v1.0 · 基础区 / 进阶区分流
+   * 只决定「抽题池里哪些题可见」，不触碰 srsUpdate() / dueSrs() / judge() /
+   * judgeGroup() / tally() 的任何进阶与判定规则。
+   * ========================================================================== */
+  const ZONE_NEED_DONE = 50;
+  const ZONE_NEED_ACC = 0.6;
+  function isAdvUnlocked(s) {
+    const bs = s || state.baseStats || {};
+    const done = Math.max(0, Number(bs.done) || 0);
+    const correct = Math.max(0, Number(bs.correct) || 0);
+    /* done>=50 先短路，避免 done=0 时除零；正确率只按 base 区统计 */
+    return done >= ZONE_NEED_DONE && (correct / done) >= ZONE_NEED_ACC;
+  }
+  function zoneAllows(lv, ix) {
+    const it = bankOf(normIdx(lv))[normIdx(ix)];
+    if (!it) return false;
+    const grouped = isGroupItem(it);
+    /* base：只出不含 questions 数组的单句/短题；adv：只出大组题 */
+    return (state.currentZone === 'adv') ? grouped : !grouped;
+  }
+  function renderZoneBar() {
+    const bs = state.baseStats || { done: 0, correct: 0 };
+    const done = Math.max(0, Number(bs.done) || 0);
+    const correct = Math.max(0, Number(bs.correct) || 0);
+    const acc = done > 0 ? Math.round(correct / done * 100) : 0;
+    const unlocked = isAdvUnlocked(bs);
+    /* 兜底：进度回退 / 存档被篡改时强制回基础区 */
+    const zone = (state.currentZone === 'adv' && unlocked) ? 'adv' : 'base';
+    if (zone !== state.currentZone) state.currentZone = zone;
+    const shown = Math.min(done, ZONE_NEED_DONE);
+    if (el.zoneBaseBtn) {
+      el.zoneBaseBtn.classList.toggle('is-active', zone === 'base');
+      el.zoneBaseBtn.setAttribute('aria-selected', zone === 'base' ? 'true' : 'false');
+    }
+    if (el.zoneAdvBtn) {
+      const b = el.zoneAdvBtn;
+      b.classList.toggle('is-active', zone === 'adv');
+      b.classList.toggle('is-locked', !unlocked);
+      b.classList.toggle('is-unlocked', unlocked);
+      b.setAttribute('aria-selected', zone === 'adv' ? 'true' : 'false');
+      b.setAttribute('aria-disabled', unlocked ? 'false' : 'true');
+      b.disabled = !unlocked;
+      b.textContent = unlocked
+        ? '进阶真题区'
+        : '进阶真题区 🔒 (进度: ' + shown + '/' + ZONE_NEED_DONE + '题, 正确率 ' + acc + '%)';
+    }
+    if (el.zoneHint) {
+      el.zoneHint.textContent = zone === 'adv'
+        ? '当前：进阶真题区 · 只出 ÖSD 阅读/听力大组真题'
+        : (unlocked
+            ? '当前：基础刷题区 · 进阶真题区已解锁，可随时切换'
+            : '当前：基础刷题区 · 完成 ' + ZONE_NEED_DONE + ' 题且正确率 ≥ 60% 解锁进阶真题区（进度 ' + shown + '/' + ZONE_NEED_DONE + '，正确率 ' + acc + '%）');
+    }
+  }
+  function setZone(zone) {
+    const z = (zone === 'adv') ? 'adv' : 'base';
+    if (z === 'adv' && !isAdvUnlocked()) { wallTip('还需在基础刷题区完成更多题目才能解锁', false); return; }
+    if (state.currentZone === z) return;
+    state.currentZone = z;
+    /* 切区时按新分区重排「错题 / 到期复习」清单：只重建排队结果，
+       dueSrs() / srsUpdate() / SRS_STEPS 一字不动。 */
+    state.queueBuilt = false;
+    state.queue = [];
+    state.queueCursor = 0;
+    wrongRetryPool = [];        /* 结束上一次临时组卷，避免跨分区串题 */
+    state.currentTask = null;
+    state.currentDictationId = null;
+    state.userActed = true;
+    saveState();
+    renderZoneBar();
+    goNext();
+  }
+
+  /* ==========================================================================
+   * v0.9 · 一键斩题（永久移出出题池）· v1.0 key 归一化加固
    * 唯一约定：单题 key = itemKey(lv, ix)（如 "3:12"）；组题 key = item.id
    *          （如 "zb1_hoeren_teil1"，无 id 时回落 itemKey，与 judgeGroup 的 gid 口径一致）。
    * 斩题只做「拦截」：把 key 从随机池 / 错题重练池 / 当日队列 / 错题本 / SRS 中屏蔽，
    * 绝不触碰 srsUpdate() / dueSrs() / judge() / judgeGroup() 的任何进阶规则。
+   * v1.0 修复「部分题斩不了」：lv/ix 统一 Number 归一化、killed 元素统一 String 比较，
+   * 组题额外反查 item.id，兼容旧存档里的字符串索引 / 数字 key / 混合类型。
    * ========================================================================== */
+  function normIdx(v) {
+    const n = Number(v);
+    return (Number.isFinite(n) && n >= 0) ? n : -1;
+  }
   function killKeyFor(lv, ix) {
-    const it = bankOf(lv)[ix];
-    return (isGroupItem(it) && it.id) ? String(it.id) : itemKey(lv, ix);
+    const L = normIdx(lv), I = normIdx(ix);
+    const it = (L >= 0 && I >= 0) ? bankOf(L)[I] : null;
+    /* 组题：item.id 优先（与 judgeGroup 的 gid 口径一致）；单题/无 id 一律回落 lv:ix */
+    if (isGroupItem(it) && it.id != null && String(it.id) !== '') return String(it.id);
+    return itemKey(L, I);
   }
   function isKilledAt(lv, ix) {
     const list = Array.isArray(state.killed) ? state.killed : [];
     if (list.length === 0) return false;
-    /* 双查：组题按 id 斩，同时兼容按 lv:ix 记录的历史 / 导入存档 */
-    return list.indexOf(killKeyFor(lv, ix)) >= 0 || list.indexOf(itemKey(lv, ix)) >= 0;
+    const L = normIdx(lv), I = normIdx(ix);
+    const it = (L >= 0 && I >= 0) ? bankOf(L)[I] : null;
+    const keys = [];
+    const add = function (k) {
+      const s = (k == null) ? '' : String(k);
+      if (s && keys.indexOf(s) < 0) keys.push(s);
+    };
+    add(itemKey(L, I));                                  /* 单题 / 历史 lv:ix 记录 */
+    add((L >= 0 && I >= 0) ? killKeyFor(L, I) : '');     /* 组题 id */
+    if (isGroupItem(it) && it.id != null) add(it.id);     /* 组题 id 再兜一层 */
+    /* killed 里的元素可能是数字或字符串，统一 String 后再比，避免 === 类型不一致漏判 */
+    for (let i = 0; i < list.length; i += 1) {
+      if (keys.indexOf(String(list[i] == null ? '' : list[i])) >= 0) return true;
+    }
+    return false;
   }
   function currentKillKey() {
     const t = state.currentTask;
@@ -2363,6 +2502,10 @@
        单题 = "级:序号"（itemKey），组题 = item.id（无 id 时回落 itemKey）。
        只作为「抽题池黑名单」，不参与 SRS 进阶、不计入每日抽题。 */
     killed: [],                       // 已斩题目：["3:12", "zb1_hoeren_teil1", ...]
+    /* ★ v1.0 分区解锁进度：只统计「基础区」经 judge() 判定的题库单题
+       （默写题走 tallyDictation、组题走 judgeGroup，均不计入）。 */
+    baseStats: { done: 0, correct: 0 },
+    currentZone: 'base',              // 'base' 基础刷题区 | 'adv' 进阶真题区
     days: {},                         // 每日记录：{"2026-10-10":{count,correct}}
     streak: 0,                        // 连续打卡天数
     dailyGoal: 10,
@@ -2437,6 +2580,10 @@
     nextBtn: document.getElementById('nextBtn'),
     skipBtn: document.getElementById('skipBtn'),
     killBtn: document.getElementById('killBtn'),
+    /* ===== v1.0 新增：基础/进阶分区控制器 DOM 引用 ===== */
+    zoneBaseBtn: document.getElementById('zoneBaseBtn'),
+    zoneAdvBtn: document.getElementById('zoneAdvBtn'),
+    zoneHint: document.getElementById('zoneHint'),
     killedCount: document.getElementById('killedCount'),
     killedList: document.getElementById('killedList'),
     restoreKilledBtn: document.getElementById('restoreKilledBtn'),
@@ -2467,7 +2614,8 @@
       const it = q[cur];
       /* 题目可能因题库调整而失效、或已被斩：跳过并标记为已消费。
          ★ v0.9 只在消费端做拦截，不改 state.srs / dueSrs 的进阶规则。 */
-      if (!it || !bankOf(it.lv)[it.ix] || isKilledAt(it.lv, it.ix)) { cur += 1; state.queueCursor = cur; continue; }
+      /* ★ v1.0：队列消费端同样按当前分区过滤（base 不出组题 / adv 不出单题） */
+      if (!it || !bankOf(it.lv)[it.ix] || isKilledAt(it.lv, it.ix) || !zoneAllows(it.lv, it.ix)) { cur += 1; state.queueCursor = cur; continue; }
       state.queueCursor = cur + 1;
       return it;
     }
@@ -2507,7 +2655,8 @@
   function randomKind() {
     const bag = [];
     if (bankOf(state.level).length > 0) { bag.push('choice'); bag.push('input'); }
-    if (currentDictation().length > 0) bag.push('dictation');
+    /* ★ v1.0：进阶真题区只出大组题，不混入默写（默写题不在 bank 分区体系内） */
+    if (state.currentZone !== 'adv' && currentDictation().length > 0) bag.push('dictation');
     return bag.length ? bag[Math.floor(Math.random() * bag.length)] : '';
   }
   /* 队列探测（只看不消费）：用于"错题 / 到期复习绝对优先" */
@@ -2517,7 +2666,8 @@
     while (cur < q.length) {
       const it = q[cur];
       /* ★ v0.9：与 nextFromQueue() 口径一致，被斩题不参与「队列绝对优先」判定 */
-      if (it && bankOf(it.lv)[it.ix] && !isKilledAt(it.lv, it.ix)) return it;
+      /* ★ v1.0：与 nextFromQueue() 口径一致，非本分区的题不参与「队列绝对优先」判定 */
+      if (it && bankOf(it.lv)[it.ix] && !isKilledAt(it.lv, it.ix) && zoneAllows(it.lv, it.ix)) return it;
       cur += 1;
     }
     return null;
@@ -2588,10 +2738,25 @@
 
   /* ★ 本轮任务 2 新增：统一的「进入下一题」入口。
      先清掉待触发的自动跳转定时器，避免「手动点击 + 定时器」同时触发导致跳两题。 */
+  /* ★ v1.1：当前抽到的题是否落在斩题黑名单里（默写题无 lv:ix，天然不算）。
+     抽题的所有来源（临时组卷池 / 当日队列 / 随机池）最终都汇到 state.currentTask，
+     在这里做最后一道统一判定，比在每条支路上各写一次过滤更不容易漏。 */
+  function currentTaskKilled() {
+    if (currentKind() === 'dictation') return false;
+    const t = state.currentTask;
+    if (!t) return false;
+    return isKilledAt(t.level, t.index);
+  }
   function goNext() {
     if (state.autoNextTimer) { clearTimeout(state.autoNextTimer); state.autoNextTimer = null; }
     state.locked = false;
-    pickTask();
+    /* ★ v1.1 任务 1-4 兜底：无论上游哪一环漏了 key 匹配，斩掉的题绝不允许再上屏。
+       最多重抽 6 次；题目被斩光时 pickTask() 会把 currentTask 置 null，自然退出。 */
+    for (let guard = 0; guard < 6; guard += 1) {
+      pickTask();
+      if (!currentTaskKilled()) break;
+      try { console.warn('[斩题] goNext 抽到已斩题，强制重抽 ' + (guard + 1) + '/6', state.currentTask); } catch (e) {}
+    }
     syncActionBtn();
   }
 
@@ -2599,51 +2764,129 @@
      只「清理现有记录 + 拦截抽题」，不改写任何 SRS 进阶规则；
      SRS / 错题本 / 队列的算法函数本身一字未动，这里只是移除被斩的那一条数据。 */
   function killCurrentTask() {
+    /* ★ v1.2 状态自愈：currentTask 已是 bank 坐标（有 lv:ix），但默写独立存档
+       (DICT_STORE_KEY) 里残留 curId 时，loadDictationData() 会把 currentDictationId
+       恢复成旧值，currentKind() / currentItem() 随之把普通题误判成默写题 ——
+       屏幕上是普通题，斩题却被静默忽略。这是「有些题依然斩不掉」的又一条真实链路
+       （旧存档刷新 / 切模式残留）。这里沿用全局既有约定清掉脏值：pickTask、
+       错题本重做处都有同款「不清会让 currentKind() 判成默写题」防御。
+       默写题本身 currentTask 恒为 null，因此此分支绝不会误伤真正的默写题。 */
+    const t = state.currentTask;
+    if (t && t.level != null && t.index != null &&
+        state.currentDictationId !== null && state.currentDictationId !== undefined) {
+      try {
+        console.warn('[斩题] 检测到默写标记残留，已自愈清空',
+          { dictationId: state.currentDictationId, task: t });
+      } catch (e) {}
+      state.currentDictationId = null;
+    }
     /* 默写题来自独立词库（没有 lv:ix），不在本次斩题的 key 体系内 */
     if (currentKind() === 'dictation') {
+      try { console.log('[斩题] 已忽略：当前是默写题，没有 lv:ix 坐标'); } catch (e) {}
       show_msg('提示', '默写题暂不支持斩题，请使用词汇库收藏管理。', '');
       return;
     }
-    const t = state.currentTask;
     const item = currentItem();
-    if (!t || !item) return;
+    if (!t || !item) {
+      try { console.warn('[斩题] 已中止：currentTask / currentItem 为空', { task: t, item: !!item }); } catch (e) {}
+      return;
+    }
     const grouped = isGroupItem(item);
     /* 与 judgeGroup() 的 gid 口径一致：组题用 item.id，单题用 "级:序号" */
     const key = currentKillKey();
-    if (!key) return;
-    const lv = t.level, ix = t.index;
+    if (!key) {
+      try { console.warn('[斩题] 已中止：无法生成 key'); } catch (e) {}
+      return;
+    }
+    /* ★ v1.0/v1.1：坐标统一数值化、key 统一字符串化。
+       旧实现用 w.lv === lv 严格相等，一旦旧存档里出现字符串 "3"/"12" 就会漏删，
+       残留的错题记录会经「重做此题」把已斩题重新放回屏幕 —— 这就是「部分题斩不了」的链路。
+       v1.1 再把所有 key 比对扩成「斩题 key + 组题 id + 数值化 lv:ix」三口径，
+       任何数字/字符串/混合类型的旧记录都不会漏网。 */
+    const lv = Number(t.level), ix = Number(t.index);
+    const sameAt = function (a, b) {
+      return Number.isFinite(lv) && Number.isFinite(ix) && Number(a) === lv && Number(b) === ix;
+    };
+    const accepted = [];
+    const addKey = function (k) {
+      const s = (k == null) ? '' : String(k);
+      if (s && accepted.indexOf(s) < 0) accepted.push(s);
+    };
+    addKey(key);
+    addKey(itemKey(lv, ix));
+    if (grouped && item.id != null) addKey(item.id);
+    const hitKey = function (k) { return k != null && accepted.indexOf(String(k)) >= 0; };
 
-    /* 1) 写入已斩列表（去重） */
+    const killedBefore = (Array.isArray(state.killed) ? state.killed : []).slice();
+    try {
+      console.log('[斩题] 点击事件已进入 killCurrentTask', {
+        key: key, lv: lv, ix: ix,
+        rawLevel: t.level, rawIndex: t.index,
+        zone: state.currentZone, grouped: grouped,
+        itemId: item.id == null ? '' : String(item.id),
+        acceptedKeys: accepted.slice(), killedBefore: killedBefore
+      });
+    } catch (e) {}
+
+    /* 1) 写入已斩列表（去重；所有元素统一 String 比较后再决定是否 push） */
     if (!Array.isArray(state.killed)) state.killed = [];
-    if (state.killed.indexOf(key) < 0) state.killed.push(key);
+    const exists = state.killed.some(function (k) { return k != null && String(k) === key; });
+    if (!exists) state.killed.push(key);
+    try {
+      console.log('[斩题] state.killed 变化', {
+        before: killedBefore, after: state.killed.slice(), pushed: !exists
+      });
+    } catch (e) {}
 
-    /* 2) 错题本：单题按 key 精确删；组题按 groupId 或同 lv/ix 一并删掉全部子题明细 */
+    const beforeWrong = (state.wrong || []).length;
+    const beforeSrs = (state.srs || []).length;
+    /* 2) 错题本：单题按 key、组题按 groupId（= item.id），再用数值坐标兜底一次 */
     state.wrong = (state.wrong || []).filter(function(w) {
-      if (grouped) return !(w.groupId === key || (w.lv === lv && w.ix === ix));
-      return !(w.key === key || (w.lv === lv && w.ix === ix));
+      if (!w) return true;
+      return !(hitKey(w.key) || hitKey(w.groupId) || sameAt(w.lv, w.ix));
     });
     /* 3) SRS：只移除这一张复习卡，其它卡的 stage / due / 进阶规则完全不变 */
     state.srs = (state.srs || []).filter(function(r) {
-      return !(r.key === key || (r.lv === lv && r.ix === ix));
+      if (!r) return true;
+      return !(hitKey(r.key) || hitKey(r.groupId) || sameAt(r.lv, r.ix));
     });
     /* 4) 当日队列：只清理「尚未消费」的部分，queueCursor 保持不变。
           若连已消费项一起删，游标会错位并白吞掉下一题。 */
     const q = Array.isArray(state.queue) ? state.queue : [];
     const cur = Math.max(0, Math.min(Number(state.queueCursor) || 0, q.length));
+    const beforeQueue = q.length;
     state.queue = q.slice(0, cur).concat(q.slice(cur).filter(function(x) {
-      return !(x && x.lv === lv && x.ix === ix);
+      return !(x && (sameAt(x.lv, x.ix) || hitKey(x.key)));
     }));
     /* 5) 错题组卷临时池（纯内存）同样过滤：大组多个子题可能重复进池 */
+    let beforePool = 0;
     if (typeof wrongRetryPool !== 'undefined' && wrongRetryPool.length) {
-      wrongRetryPool = wrongRetryPool.filter(function(w) { return !(w && w.lv === lv && w.ix === ix); });
+      beforePool = wrongRetryPool.length;
+      wrongRetryPool = wrongRetryPool.filter(function(w) {
+        return !(w && (sameAt(w.lv, w.ix) || hitKey(w.key)));
+      });
     }
+    try {
+      console.log('[斩题] 清理统计（坐标一律 Number(lv)/Number(ix) 比对）', {
+        wrong: beforeWrong + ' -> ' + state.wrong.length,
+        srs: beforeSrs + ' -> ' + state.srs.length,
+        queue: beforeQueue + ' -> ' + state.queue.length,
+        pool: beforePool + ' -> ' + (typeof wrongRetryPool !== 'undefined' ? wrongRetryPool.length : 0)
+      });
+    } catch (e) {}
 
     state.userActed = true;    /* 解除防覆盖闸门，保证斩题结果立刻落盘 */
     saveState();
     renderWrong();
     renderKilledPanel();
     wallTip(grouped ? '已斩整组，后续不再出现该大组' : '已斩本题，后续不再出现', false);
-    goNext();                 /* 统一入口：清定时器、复位判定锁、直接切下一题 */
+    goNext();                 /* 统一入口：内含「抽到已斩题强制重抽」兜底 */
+    try {
+      console.log('[斩题] goNext 之后', {
+        newTask: state.currentTask ? { level: state.currentTask.level, index: state.currentTask.index } : null,
+        stillKilled: currentTaskKilled(), killed: state.killed.slice()
+      });
+    } catch (e) {}
   }
 
   function pickTask() {
@@ -2658,7 +2901,8 @@
          顺带跳过题库调整后已失效的条目。全被斩光就自然落回下方常规出题。 */
       while (wrongRetryPool.length > 0) {
         const cand = wrongRetryPool.shift();
-        if (cand && bankOf(cand.lv)[cand.ix] && !isKilledAt(cand.lv, cand.ix)) { w = cand; break; }
+        /* ★ v1.0：临时组卷池同样按当前分区过滤，避免错题重练串进另一分区 */
+        if (cand && bankOf(cand.lv)[cand.ix] && !isKilledAt(cand.lv, cand.ix) && zoneAllows(cand.lv, cand.ix)) { w = cand; break; }
       }
       if (w) {
         const isGroup = isGroupItem(bankOf(w.lv)[w.ix]);
@@ -2677,7 +2921,8 @@
     /* ★ v0.4 规则：两个队列（错题重练 / 到期复习）只要还有有效题，绝对优先于全新随机题；
        两边都有题时随机选一边，并尽量避开"连续 3 道同题型"。 */
     const qBank = peekBankQueue();
-    const qDict = peekDictationQueue();
+    /* ★ v1.0：进阶真题区屏蔽默写队列，保证只出大组真题 */
+    const qDict = (state.currentZone === 'adv') ? null : peekDictationQueue();
     if (qBank || qDict) {
       let useBank = !!qBank;
       let bankKindQ = '';
@@ -2741,19 +2986,28 @@
         el.taskMeta.textContent = '';
         return;
       }
-      /* ★ v0.9：随机出题池过滤被斩题 —— 只在「可用下标」里抽，题库本身一字不动 */
-      const liveIdx = [];
+      /* ★ v1.0：随机出题池 = 当前分区可见题 - 已斩题；题库本身一字不动。
+         base 区只保留不含 questions 的单题，adv 区只保留大组题。 */
+      const zoneIdx = [];
       for (let i = 0; i < pool.length; i += 1) {
-        if (!isKilledAt(state.level, i)) liveIdx.push(i);
+        if (zoneAllows(state.level, i)) zoneIdx.push(i);
       }
+      const liveIdx = zoneIdx.filter(function(i) { return !isKilledAt(state.level, i); });
       if (liveIdx.length === 0) {
-        /* 本级题目已被全部斩光：明确提示，不再出题 */
+        /* 区分「本区题全被斩光」与「本区本来就没题」，给出可操作的提示 */
+        const allKilled = zoneIdx.length > 0 && zoneIdx.every(function(i) { return isKilledAt(state.level, i); });
         state.currentTask = null;
         state.currentDictationId = null;
         state.locked = false;
         hideGroupBoxes();  /* 清组题残留（含 taskQuestion / speakQBtn 显示态） */
-        el.taskMeta.textContent = '可在「工具箱 → 已斩题目」点击「恢复被斩题目」恢复';
-        el.taskQuestion.textContent = '（本级题库已被清空，请刷新重置）';
+        el.taskMeta.textContent = allKilled
+          ? '可在「工具箱 → 已斩题目」点击「恢复被斩题目」恢复'
+          : (state.currentZone === 'adv'
+              ? '本级暂无进阶真题组，可切换级别（A1/A2/B1/B2 含大组题）或回到基础刷题区'
+              : '本级暂无基础单题，可切换级别或进入进阶真题区');
+        el.taskQuestion.textContent = allKilled
+          ? '（本级题库已被清空，请刷新重置）'
+          : (state.currentZone === 'adv' ? '（本级暂无进阶真题组）' : '（本级暂无基础单题）');
         el.taskMsg.style.display = 'none';
         el.taskMsg.textContent = '';
         el.dictationSpeakBtn.style.display = 'none';
@@ -2801,7 +3055,11 @@
         原样保留为文本节点 —— 既守住 <pre> 的 pre-wrap 排版，又天然免疫 HTML 注入。 */
   function renderDictPassage(box, text) {
     box.textContent = '';
-    if (!text) return;                          /* ★ passage 为空时不触发任何分词 */
+    /* ★ v1.0：题干可能是数字 / null，统一归一化；
+       正则只匹配拉丁字母 + 德语音符，中文指令（「改错：」）、标点、换行 \n
+       全部原样保留为文本节点，不会被包上 span；\n 的换行由 white-space: pre-wrap 呈现。 */
+    text = String(text == null ? '' : text);
+    if (!text) return;                          /* ★ 空文本不触发任何分词 */
     const frag = document.createDocumentFragment();
     const re = /([A-Za-zÄÖÜäöüß]+)/g;
     let last = 0, m;
@@ -2856,13 +3114,63 @@
     }
     return out;
   }
-  /* 查词三级：精确 → 冠词形式（已并入 norm）→ 词干前缀。返回 {entry, via} */
+  /* ★ v1.1 · ASCII 变音替代写法折叠：hoeren → horen、Buecher → bucher、laesst → lasst。
+     注意：主脚本 norm() 做的是「ö→o」而不是「ö→oe」，所以词库里 hören 的索引键是
+     "horen"；这里把输入端的 oe/ae/ue 也折到同一键，两者才能相遇。
+     只在查词层使用，绝不改动 norm() 本身 —— 判题口径零影响。 */
+  function dictFoldAscii(k) {
+    return String(k || '')
+      .replace(/ae/g, 'a').replace(/oe/g, 'o').replace(/ue/g, 'u');
+  }
+  /* ★ v1.1 · 动词变位还原候选：剥离 -t / -st / -te / -ten / -est / -en / -e 等常见
+     屈折尾，再补回不定式 -en（hoert / hört → horen → hören；gibt → giben/geben）。
+     只生成「完整原型」做精确匹配，不做激进截断，避免旧版前缀推测乱命中。 */
+  function dictVerbForms(k) {
+    const out = [];
+    const push = function (s) { if (s && s.length >= 3 && out.indexOf(s) < 0) out.push(s); };
+    push(k);
+    const tails = [
+      ['test', 4], ['ten', 3], ['tet', 3], ['est', 3], ['end', 3],
+      ['te', 2], ['et', 2], ['st', 2], ['en', 2], ['em', 2], ['er', 2], ['es', 2],
+      ['e', 1], ['t', 1], ['n', 1], ['s', 1]
+    ];
+    const stems = [];
+    for (let i = 0; i < tails.length; i += 1) {
+      const t = tails[i][0], n = tails[i][1];
+      if (k.length - n < 3 || k.slice(-n) !== t) continue;
+      const stem = k.slice(0, -n);
+      if (stems.indexOf(stem) < 0) stems.push(stem);
+    }
+    /* 第一轮：不定式原型（动词变位最可能的落点） */
+    for (let i = 0; i < stems.length; i += 1) push(stems[i] + 'en');
+    /* 第二轮：裸词干 / -e / -n 等其它形态，兜住名词与形容词的屈折 */
+    for (let i = 0; i < stems.length; i += 1) {
+      push(stems[i]); push(stems[i] + 'e'); push(stems[i] + 'n');
+    }
+    return out;
+  }
+  /* 查词四级：精确 → 变音替代写法 → 动词变位还原 → 词干前缀。返回 {entry, via} */
   function lookupDict(raw) {
     if (!dictIndex) dictIndex = buildDictIndex();
     const key = dictKey(String(raw || '').replace(/[^A-Za-zÄÖÜäöüß]/g, ''));
     if (!key) return null;
     if (dictIndex[key]) return { entry: dictIndex[key], via: '' };
-    const stems = dictStems(key);
+
+    /* 第 2 级：hoeren → horen → 命中 hören */
+    const folded = dictFoldAscii(key);
+    if (folded !== key && dictIndex[folded]) {
+      return { entry: dictIndex[folded], via: '变音替代写法' };
+    }
+    /* 第 3 级：hoert / hört → horen → 命中 hören。
+       精确原型优先，压掉旧版「词干前缀」把 hört 猜成 Horn、passt 猜成 Pass 的误命中。 */
+    const forms = dictVerbForms(folded);
+    for (let i = 0; i < forms.length; i += 1) {
+      if (dictIndex[forms[i]]) {
+        return { entry: dictIndex[forms[i]], via: '动词变位推测' };
+      }
+    }
+    /* 第 4 级：保留原有保守词干前缀推测（key 与折叠形各试一套） */
+    const stems = dictStems(key).concat(dictStems(folded));
     const keys = Object.keys(dictIndex);
     let best = null, bestGap = 99;
     for (let i = 0; i < keys.length; i += 1) {
@@ -2979,15 +3287,32 @@
     setTimeout(function () { try { window.getSelection().removeAllRanges(); } catch (e) {} }, 0);
   }
 
-  /* 4) 事件委托：只绑在 #groupPassage 容器上，几百个 span 零监听 */
-  if (el.groupPassage) {
-    el.groupPassage.addEventListener('dblclick', function (e) {
+  /* 4) ★ v1.0 事件委托上提到 #viewPractice 父容器：
+        #groupPassage（长文）与 #taskQuestion（单题题干）共用一套捕获逻辑，
+        几百个 span 仍然零监听；contains 判定挡住浮层等外部节点误触发。 */
+  const dictHost = document.getElementById('viewPractice');
+  if (dictHost) {
+    dictHost.addEventListener('dblclick', function (e) {
       const sp = (e.target && e.target.closest) ? e.target.closest('.dict-word') : null;
-      if (!sp) return;
+      if (sp && dictHost.contains(sp)) {
+        e.preventDefault();
+        e.stopPropagation();
+        clearDictSelection();
+        showDictTooltip(e, sp.getAttribute('data-word') || sp.textContent || '');
+        return;
+      }
+      /* ★ v1.1：选项 / 正确答案 / 反馈提示等普通文本没有被 .dict-word 包裹，
+         旧版双击完全无反应，用户会误以为「词库里明明有 Musik 却查不到」。
+         这里用浏览器双击选中的词做兜底：只接受单个纯德语词，且不打扰输入框。 */
+      if (e.target && /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
+      let sel = '';
+      try { sel = String(window.getSelection().toString() || '').trim(); } catch (err) {}
+      sel = sel.replace(/^[^A-Za-zÄÖÜäöüß]+/, '').replace(/[^A-Za-zÄÖÜäöüß]+$/, '');
+      if (!sel || /[^A-Za-zÄÖÜäöüß]/.test(sel) || sel.length < 2) return;
       e.preventDefault();
       e.stopPropagation();
+      showDictTooltip(e, sel);
       clearDictSelection();
-      showDictTooltip(e, sp.getAttribute('data-word') || sp.textContent || '');
     });
   }
   /* 点空白 / 切 Tab / Esc 关闭浮层 */
@@ -3165,7 +3490,9 @@
       '<span class="tag">' + item.type + '</span>' +
       (t.reason ? '<span class="tag reason">' + t.reason + '</span>' : '') +
       '<span class="hint">本级共 ' + bankOf(t.level).length + ' 题 / 全站 ' + totalQuestions() + ' 题</span>';
-    el.taskQuestion.textContent = item.q;
+    /* ★ v1.0：单题题干也走安全分词，双击德语单词即可查词。
+       中文指令 / 标点 / \n 原样保留，speakQBtn 朗读仍读 item.q 原文，不受 DOM 分词影响。 */
+    renderDictPassage(el.taskQuestion, item.q);
     el.answerInput.value = '';
     el.answerInput.disabled = false;
     el.taskMsg.textContent = '';
@@ -3277,7 +3604,9 @@
     for (let i = 0; i < s.length; i += 1) { h = ((h << 5) - h + s.charCodeAt(i)) | 0; }
     return 'h' + (h >>> 0).toString(36);
   }
-  /* 进度丰度：答对过的题、错题、复习卡、打卡天数、学习记录都算分 */
+  /* 进度丰度：答对过的题、错题、复习卡、打卡天数、学习记录都算分
+     ★ v1.0：刻意不计入 killed / baseStats / currentZone —— 与 v0.9 同理由，
+       否则恢复已斩题或重置分区后，带旧字段的冗余副本会反超主键、把改动复活。 */
   function archiveRichness(o) {
     if (!o || typeof o !== 'object') return 0;
     return (Array.isArray(o.mastered) ? o.mastered.length : 0)
@@ -3359,6 +3688,14 @@
     state.srs = Array.isArray(p.srs) ? p.srs : [];
     /* ★ v0.9 向后兼容：旧存档没有 killed 字段时默认空数组，其余字段解析逐行不变 */
     state.killed = Array.isArray(p.killed) ? p.killed : [];
+    /* ★ v1.0 向后兼容：旧存档没有 baseStats / currentZone 时给默认值；
+       即使存档声明 adv，若进度不达标也强制回落 base，防止绕过解锁。 */
+    const bs = (p.baseStats && typeof p.baseStats === 'object') ? p.baseStats : {};
+    state.baseStats = {
+      done: Math.max(0, Number(bs.done) || 0),
+      correct: Math.max(0, Number(bs.correct) || 0)
+    };
+    state.currentZone = (p.currentZone === 'adv' && isAdvUnlocked(state.baseStats)) ? 'adv' : 'base';
     state.days = (p.days && typeof p.days === 'object') ? p.days : {};
     state.streak = Math.max(0, Number(p.streak) || 0);
     state.dailyGoal = Math.max(1, Number(p.dailyGoal) || 10);
@@ -3515,6 +3852,8 @@
       wrong: state.wrong,
       srs: state.srs,
       killed: state.killed,     /* ★ v0.9：已斩题目随进度一起存档 / 导出 / 备份 */
+      baseStats: state.baseStats,   /* ★ v1.0：解锁进度 */
+      currentZone: state.currentZone, /* ★ v1.0：当前分区 */
       days: state.days,
       streak: state.streak,
       dailyGoal: state.dailyGoal,
@@ -3854,6 +4193,9 @@
     el.doneCount.textContent = state.stats.done;
     el.correctCount.textContent = state.stats.correct;
     el.accText.textContent = state.stats.done > 0 ? Math.round(state.stats.correct / state.stats.done * 100) + '%' : '—';
+    /* ★ v1.0：统一同步点（boot / tally / 导入 / 清空记录都会经过这里），
+       保证解锁文案与按钮状态永远和 baseStats 一致；纯展示，不写存档、不改判定。 */
+    try { renderZoneBar(); } catch (e) {}
   }
 
   /* ==========================================================================
@@ -4356,7 +4698,8 @@
     const lv = Number(btn.getAttribute('data-lv'));
     const ix = Number(btn.getAttribute('data-ix'));
     const item = bankOf(lv)[ix];
-    if (!item) return;
+    /* ★ v1.0 兜底：错题本残留记录不能经「重做此题」绕过已斩黑名单 */
+    if (!item || isKilledAt(lv, ix)) return;
     const isGroup = isGroupItem(item);
     state.currentTask = { level: lv, index: ix, kind: isGroup ? 'group' : 'choice', reason: '错题重做' };
     state.currentDictationId = null;   /* ★ 防御：不清会让 currentKind() 判成默写题，重做串进默写界面 */
@@ -4370,7 +4713,8 @@
   /* 任务 3：组卷重练，带边界防呆 */
   document.getElementById('startWrongRetryBtn').addEventListener('click', function() {
     /* ★ v0.9：组卷池同样排除已斩题（斩题时已清理错题本，这里再兜一层） */
-    const liveWrong = state.wrong.filter(function(w) { return !isKilledAt(w.lv, w.ix); });
+    /* ★ v1.0：组卷池在生成时就按当前分区筛好，避免 pickTask 里空转丢弃 */
+    const liveWrong = state.wrong.filter(function(w) { return !isKilledAt(w.lv, w.ix) && zoneAllows(w.lv, w.ix); });
     const totalWrong = liveWrong.length;
     if (totalWrong === 0) { alert('错题本为空'); return; }
     const input = document.getElementById('wrongRetryCount');
@@ -4415,13 +4759,15 @@
        单题错题的 lv:ix 本就唯一，去重对原有行为零影响。 */
     const q = [];
     state.wrong.forEach(function(w) {
-      /* ★ v0.9：被斩题不进当日错题/复习队列（不参与每日抽题） */
-      if (isKilledAt(w.lv, w.ix)) return;
+      /* ★ v0.9：被斩题不进当日错题/复习队列（不参与每日抽题）
+         ★ v1.0：非当前分区的题也不入队（切区时 setZone 会把 queueBuilt 置 false 重建） */
+      if (isKilledAt(w.lv, w.ix) || !zoneAllows(w.lv, w.ix)) return;
       if (q.some(function(x) { return x.lv === w.lv && x.ix === w.ix; })) return;
       q.push({ lv: w.lv, ix: w.ix, reason: '错题重练' });
     });
     dueSrs().forEach(function(r) {
-      if (isKilledAt(r.lv, r.ix)) return;
+      /* ★ v1.0：到期复习卡同样按分区入队；dueSrs() / srsUpdate() 本身一字未动 */
+      if (isKilledAt(r.lv, r.ix) || !zoneAllows(r.lv, r.ix)) return;
       if (!q.some(function(x) { return x.lv === r.lv && x.ix === r.ix; })) q.push({ lv: r.lv, ix: r.ix, reason: '到期复习' });
     });
     state.queue = q;
@@ -4503,7 +4849,16 @@
       addWrong(item);
       show_msg(uiIcon('cross') + ' 答错了', '你的答案：' + String(raw).trim(), 'reveal');
     }
-    tally(ok);
+    /* ★ v1.0：基础区解锁进度 —— 只统计经 judge() 判定的题库单题。
+       done 每次判题 +1；correct 仅答对时 +1（否则正确率会恒为 100%）。
+       刻意放在 tally(ok) 之前：tally 内部会 saveState()，新进度随本次写盘一起落盘。
+       默写题走 tallyDictation、组题走 judgeGroup，均不计入，保持口径单一。 */
+    if (state.currentZone === 'base' && !isGroupItem(item)) {
+      if (!state.baseStats || typeof state.baseStats !== 'object') state.baseStats = { done: 0, correct: 0 };
+      state.baseStats.done = (Number(state.baseStats.done) || 0) + 1;
+      if (ok) state.baseStats.correct = (Number(state.baseStats.correct) || 0) + 1;
+    }
+    tally(ok);         /* 内部 renderStats() → renderZoneBar()：达标即自动解锁按钮 B */
     syncActionBtn();   /* ★ 本轮任务 2：判定完成 → 主按钮转为「下一题」 */
   }
 
@@ -4978,6 +5333,8 @@
     if (name === 'vocab' && typeof window.__VOCAB__ === 'object' && window.__VOCAB__) {
       try { window.__VOCAB__.ensure(); } catch (e) {}
     }
+    /* ★ v1.0：切回练习页时同步分区按钮状态（导入存档 / 清空记录后也一定是最新的） */
+    if (name === 'practice') { try { renderZoneBar(); } catch (e) {} }
     if (name === 'wrong') {
       renderWrong();
     }
@@ -5027,8 +5384,65 @@
     goNext();
   });
   /* ★ v0.9：一键斩题（永久移出出题池；组题斩整组）。
-     刻意不绑定键盘快捷键 —— 破坏性操作必须显式点击，避免误触。 */
-  if (el.killBtn) el.killBtn.addEventListener('click', killCurrentTask);
+     刻意不绑定键盘快捷键 —— 破坏性操作必须显式点击，避免误触。
+     ★ v1.1 任务 1-1：绑定与触发都打日志，控制台里一眼确认事件链是否通。 */
+  if (el.killBtn) {
+    console.log('[斩题] killBtn 事件绑定成功', { id: el.killBtn.id, disabled: el.killBtn.disabled, display: el.killBtn.style.display });
+    el.killBtn.addEventListener('click', function (e) {
+      console.log('[斩题] killBtn click 事件触发', {
+        zone: state.currentZone,
+        task: state.currentTask ? { level: state.currentTask.level, index: state.currentTask.index } : null,
+        display: el.killBtn.style.display, disabled: el.killBtn.disabled
+      });
+      killCurrentTask();
+    });
+  } else {
+    console.error('[斩题] 严重：#killBtn 元素不存在，事件未绑定！');
+  }
+  /* ★ v1.1：诊断钩子（供本地 headless 断言使用）。
+     不挂 DOM、不写 localStorage、不参与判题 / SRS / 存档逻辑，日常使用完全静默。
+     v1.2 仅新增 makeDirty：在内存里注入「默写标记残留」脏值，用于验证
+     killCurrentTask 的状态自愈分支；不触碰任何持久化数据。 */
+  try {
+    window.__KILL_DEBUG__ = {
+      isKilledAt: isKilledAt,
+      killKeyFor: killKeyFor,
+      killCurrentTask: killCurrentTask,
+      goNext: goNext,
+      setZone: setZone,
+      makeDirty: function (id) { state.currentDictationId = id; return state.currentDictationId; },
+      snapshot: function () {
+        return {
+          killed: (state.killed || []).slice(),
+          zone: state.currentZone,
+          baseStats: state.baseStats,
+          task: state.currentTask ? { level: state.currentTask.level, index: state.currentTask.index } : null,
+          taskKilled: currentTaskKilled(),
+          queue: (state.queue || []).slice(),
+          queueCursor: state.queueCursor,
+          wrong: (state.wrong || []).slice(),
+          srs: (state.srs || []).slice(),
+          dictationId: state.currentDictationId
+        };
+      }
+    };
+    window.__DICT_DEBUG__ = {
+      lookup: function (w) {
+        const h = lookupDict(w);
+        return h ? { word: String(h.entry.word), translation: String(h.entry.translation), via: h.via || '' } : null;
+      },
+      size: function () { return (window.ALL_WORDS || []).length; },
+      foldAscii: function (k) { return dictFoldAscii(k); },
+      verbForms: function (k) { return dictVerbForms(k); }
+    };
+  } catch (e) {}
+  /* ★ v1.0：分区切换。按钮 B 未达标时带 disabled，浏览器本身不会派发 click；
+     这里再判一次 isAdvUnlocked()，防止旧存档 / 控制台绕过。 */
+  if (el.zoneBaseBtn) el.zoneBaseBtn.addEventListener('click', function() { setZone('base'); });
+  if (el.zoneAdvBtn) el.zoneAdvBtn.addEventListener('click', function() {
+    if (el.zoneAdvBtn.disabled) return;
+    setZone('adv');
+  });
   document.addEventListener('keydown', function(e) {
     if (document.body.classList.contains('settings-open')) {          // 设置页：Esc 返回，其余快捷键不干扰
       if (e.key === 'Escape') toggleSettingsView(false);
@@ -5447,6 +5861,7 @@
     updateLevelUI();
     renderDaily(); renderStats(); renderHistory(); renderWrong(); renderPanel();
     try { renderKilledPanel(); } catch (e) {}   /* ★ v0.9：已斩列表随进度一起初始化 */
+    try { renderZoneBar(); } catch (e) {}       /* ★ v1.0：分区按钮按存档进度初始化（含旧档默认值） */
     /* 壁纸读取契约：先把图读完，再应用渲染（不阻塞其余 UI） */
     loadWallpaperThenRender();
     applySliderGrad();

@@ -3926,6 +3926,762 @@ window.ALL_QUESTIONS = {
       { type: '改错', q: '改错：Das Phaenomen laesst sich auf mehrere Faktoren zurueckfuehren werden.', a: ['das phaenomen laesst sich auf mehrere faktoren zurueckfuehren'] },
       { type: '改错', q: '改错：Er stimmte zu oberflaechlich, hatte aber Vorbehalte.', a: ['er stimmte oberflaechlich zu, hatte aber vorbehalte'] },
       { type: '改错', q: '改错：Nicht zu uebersehen ist, das die Kosten steigen.', a: ['nicht zu uebersehen ist, dass die kosten steigen'] },
-      { type: '改错', q: '改错：Diese Daten spiegeln die Wirklichkeit nur bedingt wieder.', a: ['diese daten spiegeln die wirklichkeit nur bedingt wider'] }
+      { type: '改错', q: '改错：Diese Daten spiegeln die Wirklichkeit nur bedingt wieder.', a: ['diese daten spiegeln die wirklichkeit nur bedingt wider'] },
+      {
+        "id": "zc1_lesen_a1",
+        "type": "阅读选择",
+        "level": "C1",
+        "source": "ÖSD Zertifikat C1 / ZC1 Modellsatz",
+        "module": "Lesen Aufgabe 1",
+        "passage": "Lesen Sie zuerst den Text auf Blatt 1 und 2. Lösen Sie die folgenden Aufgaben, indem Sie die richtige Antwort (A, B oder C) ankreuzen (siehe Beispiel).\n\n[Text / Blatt 1 + 2]\n\nDie Diktatur der Uhr Noch nie haben die Extreme von Zeitnot und Langeweile das Leben so stark geprägt wie in unserer beschleunigten Gesellschaft. Wie viel Tempo verträgt der Mensch? In Deutschland häufen sich die Symptome einer „Zeit-Krise“. Jeder zweite Erwerbstätige klagt über wachsende Zeitnot. Mit der Flexibilisierung der Arbeit vollzieht sich ein neuer historischer Schritt. Die Zahl der Berufstätigen mit normalen Arbeitszeiten sinkt, stattdessen gibt es immer mehr Teilzeitkräfte, Selbstständige und „Vielarbeiter“. Mehr Menschen als früher arbeiten heute nachts, und jeder Dritte ist auch am Samstag beschäftigt. Früher erstreckte sich die Lebenswelt kaum über das eigene Dorf hinaus – heute ist die Welt zum Dorf geworden. Medien, Internet, Waren und Tourismus haben sie in unsere Reichweite gebracht – und damit all ihre Möglichkeiten und Verheißungen. Trendforscher haben Zeit und Aufmerksamkeit zu den zentralen Marktkriterien der Zukunft erklärt. Um diese knappen Ressourcen konkurrieren nun also Warenwelt und Freizeitindustrie, Beruf und Familie. Allen Ansprüchen – ob denen anderer oder unseren eigenen – können wir unmöglich gerecht werden. Unweigerlich hinken wir hinterher, kommen zu spät, versäumen. Während unsere Lebenserwartung stetig steigt, erweisen sich Ziele und Verbindlichkeiten als immer kurzlebiger – ob Partnerschaft, Arbeitsplatz oder Rente. „Die Zeitwahrnehmung hat ihre Zukunftsorientierung verloren und betont nun Diskontinuitäten und Unsicherheiten“, so der Befund des Soziologen Hanns-Georg Brose. Wo nicht mehr alles zu seiner Zeit, sondern immer mehr zugleich geschieht, wird Zeitmanagement zu einem permanenten Balanceakt. Unerwartetes kollidiert mit Plänen, Dringliches mit Prioritäten, Arbeit mit Privatem. So versucht der Mensch, der mit der Zeit geht, seinen persönlichen Zeiteinsatz zu optimieren wie den der Maschinen, wenn nötig auch auf Kosten eigener Bedürfnisse: Wir schlafen im Durchschnitt eine halbe Stunde weniger als noch vor 20 Jahren, schlucken immer mehr Grippemittel, Wachmacher und Antidepressiva. Der flexible Mensch ist immer auf „Stand-by“ – allzeit bereit. Um Zeit zu gewinnen, macht er weniger Pausen, erledigt nicht mehr eins nach dem anderen, sondern vieles zugleich: mailen, simsen, essen, telefonieren, das Kind stillen. Die Mehrfachtätigkeit ist zum Epochenmerkmal geworden. Der Versuch, mehrere Dinge gleichzeitig zu bewältigen, scheitert allerdings an unserer begrenzt verfügbaren Aufmerksamkeit. Durch einen allzu raschen Wechsel bleibt nicht nur weniger im Gedächtnis hängen, es geht auch Zeit verloren. Eine amerikanische Studie hat ergeben, dass der Versuch, einen Bericht zu schreiben und zwischendurch immer wieder E-Mails zu beantworten, 50 Prozent länger dauert, als beides nacheinander zu erledigen. Der Dauerbetrieb behindert außerdem einen kreativen Prozess: Erst wenn wir eine Pause einlegen, uns abwenden von der Welt, uns uns selbst überlassen, führt das Gehirn Probehandlungen aus, vernetzt sich, stellt Neues zusammen. Dann kommt es vielleicht zu einem unerwarteten Geistesblitz. Das allerdings setzt Geduld voraus. Aber warten? Eine Stunde, ohne etwas Bestimmtes zu tun? Für viele eine quälende Vorstellung, vergeudete Zeit, Stillstand. Sofort suchen sie nach neuer Beschäftigung und setzen damit die Zeit wieder in Bewegung: surfen, chatten, spielen, fernsehen. Doch ausgerechnet der ständige Versuch, sie zu vertreiben, vermehrt die Langeweile – das „Langeweile-Paradox“. Durch Medien, Events und den Konsum von Gütern ist ständig etwas los, überall wird Vergnügen und Außergewöhnliches geboten. Das Gegenteil fällt dann natürlich umso mehr auf. Und wenn man überall Neues findet, wird man des Alten schnell überdrüssig. So überträgt sich die Steigerungslogik der Wirtschaft auch auf die persönliche Glückssuche. Und sogar auf unsere Sinneswahrnehmung: Was früher als Lärm galt, wird von Jüngeren nur noch als laut empfunden; was einst rasante Filmmontage war, ist heute Nachrichtenformat. Nur noch starke Stimuli kommen an, weil das Gehirn die Reizschwellen heraufgesetzt hat. Die Vertreibung der Langeweile beginnt schon im Kindesalter. Es gibt aber bereits eine Gegenbewegung, eine Suche nach einem anderen Verhältnis zur Zeit: Rück-Besinnung auf traditionelle Werte, Entschleunigung statt „Turbo-Kapitalismus“. Bestseller wie Simplify your Life, Anleitung zum Müßiggang oder die Entdeckung der Faulheit verdrängen Ratgeber für ein erfolgreiches Zeitmanagement. Ihre Leser suchen Klarheit und Sinn statt einer noch effizienteren Terminplanung. Der Medienwissenschaftler Peter Glotz sah darin Vorboten eines „Paradigmas der Langsamkeit“: Nachdenklichkeit statt Geschwindigkeit, Bescheidenheit statt Gewinnsucht, Familienorientierung statt Leistungswettbewerb. Formuliert würden die neuen Ziele von einer wachsenden Zahl arbeitsloser oder ausgestiegener Akademiker, denen sich auch die klassische Unterschicht anschließen werde. Auf der anderen Seite stünden jene, die schnell, mobil und flexibel lebten – die immer mehr Geld, aber immer weniger Zeit hätten. Zwischen diesen beiden Polen der beschleunigten Gesellschaft drohe, so Glotz, eine Spaltung: „Die früheren Industriegesellschaften werden vorübergehend durch heftige Kulturkämpfe zwischen Be- und Entschleunigern erschüttert werden.“ [aus einer deutschen Fachzeitschrift]",
+        "questions": [
+          {
+            "q": "Aufgabe 1: Die Veränderungen der heutigen Lebenswelt",
+            "a": [
+              "machen es schwerer, die verschiedenen Lebensbereiche zu vereinbaren."
+            ],
+            "distractors": [
+              "haben die Dorfbevölkerung erst spät erreicht.",
+              "resultieren aus den gestiegenen Ansprüchen der Wirtschaft."
+            ]
+          },
+          {
+            "q": "Aufgabe 2: Die Zeiteinteilung wird schwieriger, weil die Menschen",
+            "a": [
+              "dabei heutzutage immer mehr Dinge berücksichtigen müssen."
+            ],
+            "distractors": [
+              "ihre individuellen Bedürfnisse in den Vordergrund stellen.",
+              "weniger bereit sind, ihre Gesundheit aufs Spiel zu setzen."
+            ]
+          },
+          {
+            "q": "Aufgabe 3: Mehrere Dinge gleichzeitig zu tun",
+            "a": [
+              "erschwert die Entstehung neuer Ideen."
+            ],
+            "distractors": [
+              "macht den Arbeitsprozess kreativer.",
+              "trainiert das Gedächtnis."
+            ]
+          },
+          {
+            "q": "Aufgabe 4: Langeweile entsteht dann, wenn",
+            "a": [
+              "man sich in zu viele Aktivitäten flüchtet."
+            ],
+            "distractors": [
+              "die Freizeitgestaltung zu wenig Abwechslung bietet.",
+              "die Menschen zu geduldig und abwartend sind."
+            ]
+          },
+          {
+            "q": "Aufgabe 5: Die neue Besinnung auf die Langsamkeit",
+            "a": [
+              "führt zu einer Änderung von Wertvorstellungen."
+            ],
+            "distractors": [
+              "fordert eine noch straffere Zeitplanung.",
+              "verringert die Spannungen innerhalb der Gesellschaft."
+            ]
+          }
+        ],
+        "q": "ÖSD C1 · Lesen Aufgabe 1（5 小题）",
+        "a": [
+          "[大组题，请展开作答]"
+        ]
+      },
+      {
+        "id": "zc1_lesen_a2",
+        "type": "阅读配对",
+        "level": "C1",
+        "source": "ÖSD Zertifikat C1 / ZC1 Modellsatz",
+        "module": "Lesen Aufgabe 2",
+        "passage": "Lesen Sie die 10 Überschriften auf Blatt 1 und die 5 Texte auf Blatt 2. Ordnen Sie dann den Texten (1 – 5) die passende Überschrift (A – K) zu. Pro Text passt nur eine Überschrift.\n\n[Überschriften A–K / 卷面原文]\nA – WWF-Projekt zu Artenschutz in Österreich abgeschlossen\nB – 52 Staaten der Erde unterzeichnen Artenschutzabkommen\nC – Forscher überlebt Expedition in den Bergen\nD – Verlust von Lebensraum führt zu Artensterben\nE – Schweizer Projekt für den Naturschutz\nF – Experten dokumentieren weltweites Artensterben\nG – Ein eigener Tag zur Entdeckung der Artenvielfalt in Deutschland\nH – Internationales Forscherteam entdeckt Region mit unbekannten Tier- und Pflanzenarten\nI – Biologen entdecken neue Pflanzenart im Berliner Zoo\nK – Schweizer Wissenschaftler fördern die Landwirtschaft\n\n[Texte 1–5 / 卷面原文]\nText 1: Die Artenvielfalt in Flora und Fauna nimmt rasant ab. Einer neuen Studie zufolge hat der Mensch die Todesrate der Spezies auf das 100- bis 1 000-Fache des natürlichen Maßes getrieben. Experten erstellten jetzt eine Weltkarte mit den „Epizentren des Artentods“. Die Warnungen aus der Wissenschaft werden immer dramatischer. Mittlerweile reden Experten von einer bevorstehenden „globalen Krise“ für die Artenvielfalt. Die Biologen untersuchten Arten, über die es weltweite Daten gibt. Dazu zählen Säugetiere, Vögel, Amphibien, einige Reptilien und als einzige Pflanzengattung Nadelhölzer. „Obwohl die Rettung von Tier- und Pflanzenarten für sich genommen lebenswichtig ist, geht es um viel mehr“, betonte Mike Parr von der AllianceforZero Extinction, einem Zusammenschluss von Umwelt- und Tierschutzorganisationen aus 52 Staaten. „Die künftige genetische Vielfalt der Ökosysteme der Erde steht auf dem Spiel.“ [aus einer österreichischen Zeitung]\n\nText 2: Einmal im Jahr lädt das Magazin GEO zur Expedition in die heimische Natur. Für die Teilnehmer gilt es, innerhalb von 24 Stunden in einem begrenzten Gebiet in Deutschland möglichst viele verschiedene Pflanzen und Tiere zu entdecken. Ziel des GEO-Tages der Artenvielfalt ist eine Bestandsaufnahme unserer unmittelbaren Umwelt: Was wächst und gedeiht eigentlich in hiesigen Breiten? Dabei zählt nicht der Rekord. Vielmehr geht es darum, Bewusstsein zu wecken für die Biodiversität vor unserer Haustür. Der GEO-Tag hat sich mittlerweile zur größten Feldforschungsaktion in Mitteleuropa entwickelt. Deutsche Experten wie Biologen und Zoologen untersuchen an mehreren Orten zwischen Bremerhaven und Helgoland die ArtenvielfaltderNordsee.EineHauptaktionfandimBerliner Tiergarten statt, erforscht wurde dort die Ausbreitung von Tier- und Pflanzenarten auf innerstädtischem Terrain. [aus einer deutschen Zeitung]\n\nText 3: Es ist ein neu entdecktes Paradies in Zeiten von Abholzung und Umweltverschmutzung: Forscher haben im indonesischen Dschungel neue Tierarten, unbekannte Pflanzen und einen lange verschollenen Paradiesvogel gefunden. Die Expedition führte das Forscher-Team aus Australien, Indonesien und den USA im vergangenen Dezember in die abgeschiedenen FojaBerge im westlichen Teil der Insel Papua. Die Methode der Forscher wird RapidAssessmentFieldTrip (RAP) genannt: die schnellstmögliche Katalogisierung möglichst vieler Arten. Das Ziel der Expedition, unter anderem von der National GeographicSocietyfinanziert, war aber nicht nur, neue Arten zu entdecken. «Näher kommt man auf der Erde nicht an den Garten Eden heran», sagte Beehler, einer der Forscher. Er verwies auf den Wert der Region als Reservat für die Artenvielfalt. [aus einer Schweizer Zeitung]\n\nText 4: Als eines der ersten Länder weltweit erfasst die Schweiz ihre biologische Vielfalt. Das Bundesamt für Umwelt (BAFU) hat dazu das Biodiversitäts-Monitoring Schweiz (BDM) gestartet. Im Rahmen dieses Projektes zählen Fachleute regelmässig Tiere und Pflanzen im Gelände. Ihre Stichproben entnehmen die Expertinnen und Experten an festgelegten Punkten, die gleichmässig über die ganze Schweiz verteilt sind. Diese Daten bilden eine wichtige Basis für die künftige Naturschutzpolitik.Das BDM kann so Entwicklungen der biologischen Vielfalt frühzeitig erkennen, Massnahmen auslösen und aufzeigen, ob diese auch den gewünschten Effekt haben. Dazu erfasst das Projekt mithilfe seiner Methode sowohl den Zustand der Artenvielfalt wie auch die Einflüsse und Massnahmen zu ihrer Veränderung. Ein Beispiel: Seit einigen Jahren fördert der Bund die Anlage von «Buntbrachen»* in der Landwirtschaft. Die BDM-Daten ermöglichen Rückschlüsse, ob diese Direktzahlungen tatsächlich dazu führen, dass dadurch die Artenvielfalt wieder zunimmt. * Buntbrachen: ökologische Ausgleichsflächen, die intensiv genutztes Ackerland aufwerten [aus einer Schweizer Internetbroschüre]\n\nText 5: Obwohl Österreich relativ klein ist, verfügen zahlreiche verschiedene Naturräume über eine überdurchschnittliche Vielfalt an Pflanzen. Auch bei den Tieren weist Österreich im Verhältnis zur Fläche eine enorme Vielfalt auf. Doch diese ist bedroht, und in den sogenannten „Roten Listen“ müssen rund 2 800 Arten als unterschiedlich stark gefährdet angeführt werden. Diese Listen sollen einen Überblick darüber geben, welche Tier- und Pflanzenarten besonders vom Aussterben bedroht sind. Die Hauptbedrohung liegt in den meisten Fällen darin, dass durch die modernen intensiven Bewirtschaftungsformen in Land- und Forstwirtschaft Lebensräume schwinden. Der WorldWildlifeFund (WWF) setzt sich daher seit seiner Gründung dafür ein, durch den Beitritt zu internationalen Abkommen und durch die Verbesserung der nationalen Gesetze die Vielfalt auf der gesamten Landesfläche zu erhalten. Er fordert die Unterschutzstellung besonders artenreicher Biotope ein. Zusätzlich führt er spezielle Programme und Projekte für einzelne Arten durch. [aus einer österreichischen Zeitung]",
+        "questions": [
+          {
+            "q": "Text 1: Die Artenvielfalt in Flora und Fauna nimmt rasant ab. Einer neuen Studie zufolge hat der Mensch die Todesrate der Spezies auf das 100- bis 1 000-Fache des natürlichen Maßes getrieben. Experten erstellten jetzt eine Weltkarte mit den „Epizentren des Artentods“. Die Warnungen aus der Wissenschaft werden immer dramatischer. Mittlerweile reden Experten von einer bevorstehenden „globalen Krise“ für die Artenvielfalt. Die Biologen untersuchten Arten, über die es weltweite Daten gibt. Dazu zählen Säugetiere, Vögel, Amphibien, einige Reptilien und als einzige Pflanzengattung Nadelhölzer. „Obwohl die Rettung von Tier- und Pflanzenarten für sich genommen lebenswichtig ist, geht es um viel mehr“, betonte Mike Parr von der AllianceforZero Extinction, einem Zusammenschluss von Umwelt- und Tierschutzorganisationen aus 52 Staaten. „Die künftige genetische Vielfalt der Ökosysteme der Erde steht auf dem Spiel.“ [aus einer österreichischen Zeitung]  →  Welche Überschrift passt?",
+            "a": [
+              "F – Experten dokumentieren weltweites Artensterben"
+            ],
+            "distractors": [
+              "A – WWF-Projekt zu Artenschutz in Österreich abgeschlossen",
+              "B – 52 Staaten der Erde unterzeichnen Artenschutzabkommen"
+            ]
+          },
+          {
+            "q": "Text 2: Einmal im Jahr lädt das Magazin GEO zur Expedition in die heimische Natur. Für die Teilnehmer gilt es, innerhalb von 24 Stunden in einem begrenzten Gebiet in Deutschland möglichst viele verschiedene Pflanzen und Tiere zu entdecken. Ziel des GEO-Tages der Artenvielfalt ist eine Bestandsaufnahme unserer unmittelbaren Umwelt: Was wächst und gedeiht eigentlich in hiesigen Breiten? Dabei zählt nicht der Rekord. Vielmehr geht es darum, Bewusstsein zu wecken für die Biodiversität vor unserer Haustür. Der GEO-Tag hat sich mittlerweile zur größten Feldforschungsaktion in Mitteleuropa entwickelt. Deutsche Experten wie Biologen und Zoologen untersuchen an mehreren Orten zwischen Bremerhaven und Helgoland die ArtenvielfaltderNordsee.EineHauptaktionfandimBerliner Tiergarten statt, erforscht wurde dort die Ausbreitung von Tier- und Pflanzenarten auf innerstädtischem Terrain. [aus einer deutschen Zeitung]  →  Welche Überschrift passt?",
+            "a": [
+              "G – Ein eigener Tag zur Entdeckung der Artenvielfalt in Deutschland"
+            ],
+            "distractors": [
+              "B – 52 Staaten der Erde unterzeichnen Artenschutzabkommen",
+              "C – Forscher überlebt Expedition in den Bergen"
+            ]
+          },
+          {
+            "q": "Text 3: Es ist ein neu entdecktes Paradies in Zeiten von Abholzung und Umweltverschmutzung: Forscher haben im indonesischen Dschungel neue Tierarten, unbekannte Pflanzen und einen lange verschollenen Paradiesvogel gefunden. Die Expedition führte das Forscher-Team aus Australien, Indonesien und den USA im vergangenen Dezember in die abgeschiedenen FojaBerge im westlichen Teil der Insel Papua. Die Methode der Forscher wird RapidAssessmentFieldTrip (RAP) genannt: die schnellstmögliche Katalogisierung möglichst vieler Arten. Das Ziel der Expedition, unter anderem von der National GeographicSocietyfinanziert, war aber nicht nur, neue Arten zu entdecken. «Näher kommt man auf der Erde nicht an den Garten Eden heran», sagte Beehler, einer der Forscher. Er verwies auf den Wert der Region als Reservat für die Artenvielfalt. [aus einer Schweizer Zeitung]  →  Welche Überschrift passt?",
+            "a": [
+              "H – Internationales Forscherteam entdeckt Region mit unbekannten Tier- und Pflanzenarten"
+            ],
+            "distractors": [
+              "C – Forscher überlebt Expedition in den Bergen",
+              "D – Verlust von Lebensraum führt zu Artensterben"
+            ]
+          },
+          {
+            "q": "Text 4: Als eines der ersten Länder weltweit erfasst die Schweiz ihre biologische Vielfalt. Das Bundesamt für Umwelt (BAFU) hat dazu das Biodiversitäts-Monitoring Schweiz (BDM) gestartet. Im Rahmen dieses Projektes zählen Fachleute regelmässig Tiere und Pflanzen im Gelände. Ihre Stichproben entnehmen die Expertinnen und Experten an festgelegten Punkten, die gleichmässig über die ganze Schweiz verteilt sind. Diese Daten bilden eine wichtige Basis für die künftige Naturschutzpolitik.Das BDM kann so Entwicklungen der biologischen Vielfalt frühzeitig erkennen, Massnahmen auslösen und aufzeigen, ob diese auch den gewünschten Effekt haben. Dazu erfasst das Projekt mithilfe seiner Methode sowohl den Zustand der Artenvielfalt wie auch die Einflüsse und Massnahmen zu ihrer Veränderung. Ein Beispiel: Seit einigen Jahren fördert der Bund die Anlage von «Buntbrachen»* in der Landwirtschaft. Die BDM-Daten ermöglichen Rückschlüsse, ob diese Direktzahlungen tatsächlich dazu führen, dass dadurch die Artenvielfalt wieder zunimmt. * Buntbrachen: ökologische Ausgleichsflächen, die intensiv genutztes Ackerland aufwerten [aus einer Schweizer Internetbroschüre]  →  Welche Überschrift passt?",
+            "a": [
+              "E – Schweizer Projekt für den Naturschutz"
+            ],
+            "distractors": [
+              "D – Verlust von Lebensraum führt zu Artensterben",
+              "F – Experten dokumentieren weltweites Artensterben"
+            ]
+          },
+          {
+            "q": "Text 5: Obwohl Österreich relativ klein ist, verfügen zahlreiche verschiedene Naturräume über eine überdurchschnittliche Vielfalt an Pflanzen. Auch bei den Tieren weist Österreich im Verhältnis zur Fläche eine enorme Vielfalt auf. Doch diese ist bedroht, und in den sogenannten „Roten Listen“ müssen rund 2 800 Arten als unterschiedlich stark gefährdet angeführt werden. Diese Listen sollen einen Überblick darüber geben, welche Tier- und Pflanzenarten besonders vom Aussterben bedroht sind. Die Hauptbedrohung liegt in den meisten Fällen darin, dass durch die modernen intensiven Bewirtschaftungsformen in Land- und Forstwirtschaft Lebensräume schwinden. Der WorldWildlifeFund (WWF) setzt sich daher seit seiner Gründung dafür ein, durch den Beitritt zu internationalen Abkommen und durch die Verbesserung der nationalen Gesetze die Vielfalt auf der gesamten Landesfläche zu erhalten. Er fordert die Unterschutzstellung besonders artenreicher Biotope ein. Zusätzlich führt er spezielle Programme und Projekte für einzelne Arten durch. [aus einer österreichischen Zeitung]  →  Welche Überschrift passt?",
+            "a": [
+              "D – Verlust von Lebensraum führt zu Artensterben"
+            ],
+            "distractors": [
+              "F – Experten dokumentieren weltweites Artensterben",
+              "G – Ein eigener Tag zur Entdeckung der Artenvielfalt in Deutschland"
+            ]
+          }
+        ],
+        "q": "ÖSD C1 · Lesen Aufgabe 2（5 小题）",
+        "a": [
+          "[大组题，请展开作答]"
+        ]
+      },
+      {
+        "id": "zc1_lesen_a3",
+        "type": "阅读配对",
+        "level": "C1",
+        "source": "ÖSD Zertifikat C1 / ZC1 Modellsatz",
+        "module": "Lesen Aufgabe 3",
+        "passage": "Lesen Sie den folgenden Text und fügen Sie die Abschnitte A – G (Blatt 2) an der richtigen Stelle (1 – 5) im Text ein. Achtung: Zwei Abschnitte passen nicht in den Text!\n\n[Text / Blatt 1，卷面含 5 个空缺 (1)–(5)]\n\nKleider machen Erfolg Frauen, die es beruflich zu etwas bringen wollen, müssen auf ihr Outfit achten. Kleiden sie sich zu figurbetont, laufen sie Gefahr, für inkompetent gehalten zu werden: Wenn sich eine Frau, die eine Führungsposition innehat, körperbetont kleidet, erweckt sie negative Emotionen sowie den Anschein von Inkompetenz, während dieselbe Frau im Business-Outfit deutlich positiver beurteilt wird. Ein weiteres Ergebnis der Untersuchung hat gezeigt, dass die Kleidung bei Frauen in niedrigen Positionen nicht diesen Effekt hat. Dabei teilten die Wissenschaftler die Studenten in zwei Gruppen: Die eine Hälfte der Versuchspersonen bekam ein Video vorgeführt, auf dem die Frau dezent geschminkt war und eine lange Hose, einen Rollkragenpulli und flache Schuhe trug. Einigen Studenten teilten die Wissenschaftler nun mit, dass es sich bei der Frau um die Geschäftsführerin einer Werbeagentur handle, während die anderen glaubten, sie arbeite als Sekretärin in dieser Firma. Egal, ob ihr Erscheinungsbild aufreizend oder zurückhaltend war – das Ausmaß an Sympathie und Respekt, das die Studenten der Frau gegenüber bekundeten, blieb gleich. Nicht so bei der angeblichen Geschäftsführerin: Hier erzielte die Frau in Business-Kleidung erheblich höhere Sympathiewerte, als wenn sie figurbetont angezogen war. Die gleiche Frau wurde als Chefin im kurzen Rock als weniger kompetent und intelligent angesehen als mit langer Hose. [aus einer deutschen Zeitschrift]\n\n[Abschnitte A–G / Blatt 2 卷面原文]\nA – Die andere Hälfte sah dieselbe Frau, allerdings trug sie dieses Mal kräftiges Make-up und einen knielangen engen Rock, ein Oberteil mit Ausschnitt und hochhackige Schuhe.\n\nB – Schmollmund und offene lange Haare schaden dagegen der Karriere.\n\nC – Die Kleidung spielte also für die Kompetenz- und Intelligenzeinschätzung der vermeintlichen Sekretärin keine Rolle.\n\nD – Das fanden US-Wissenschaftler heraus, die in einer Studie den Einfluss von Kleidung auf die Wirkung ihrer Trägerin im beruflichen Kontext untersuchten.\n\nE – Das Ergebnis: Hielten die Versuchspersonen die Frau für eine einfache Sekretärin, dann hatte ihre Kleidung keinerlei Einfluss auf die emotionalen Reaktionen der Probanden.\n\nF – In ihrem Experiment zeigten die Wissenschaftler insgesamt 66 Studenten (28 Männer, 38 Frauen) ein Video, in dem eine Frau von ihrem Leben und ihren Hobbys erzählte. Anschließend sollten die Probanden schildern, welche Gefühle sie gegenüber der Frau hegten und wie sie diese in Bezug auf berufsrelevante Merkmale einschätzten.\n\nG – Männlich aussehende Frauen sind demnach in Führungspositionen gefragter. Ein schmaler Mund, eine hohe Stirn, tiefliegende Augen und breite Schultern werden als maskulin und damit für die Position geeignet empfunden.",
+        "questions": [
+          {
+            "q": "Lücke (1)：空缺处应填入哪个 Abschnitt (A–G)?",
+            "a": [
+              "D – Das fanden US-Wissenschaftler heraus, die in einer Studie den Einfluss von Kleidung auf die Wirkung ihrer Trägerin im beruflichen Kontext untersuchten."
+            ],
+            "distractors": [
+              "A – Die andere Hälfte sah dieselbe Frau, allerdings trug sie dieses Mal kräftiges Make-up und einen knielangen engen Rock, ein Oberteil mit Ausschnitt und hochhackige Schuhe.",
+              "B – Schmollmund und offene lange Haare schaden dagegen der Karriere."
+            ]
+          },
+          {
+            "q": "Lücke (2)：空缺处应填入哪个 Abschnitt (A–G)?",
+            "a": [
+              "F – In ihrem Experiment zeigten die Wissenschaftler insgesamt 66 Studenten (28 Männer, 38 Frauen) ein Video, in dem eine Frau von ihrem Leben und ihren Hobbys erzählte. Anschließend sollten die Probanden schildern, welche Gefühle sie gegenüber der Frau hegten und wie sie diese in Bezug auf berufsrelevante Merkmale einschätzten."
+            ],
+            "distractors": [
+              "B – Schmollmund und offene lange Haare schaden dagegen der Karriere.",
+              "C – Die Kleidung spielte also für die Kompetenz- und Intelligenzeinschätzung der vermeintlichen Sekretärin keine Rolle."
+            ]
+          },
+          {
+            "q": "Lücke (3)：空缺处应填入哪个 Abschnitt (A–G)?",
+            "a": [
+              "A – Die andere Hälfte sah dieselbe Frau, allerdings trug sie dieses Mal kräftiges Make-up und einen knielangen engen Rock, ein Oberteil mit Ausschnitt und hochhackige Schuhe."
+            ],
+            "distractors": [
+              "D – Das fanden US-Wissenschaftler heraus, die in einer Studie den Einfluss von Kleidung auf die Wirkung ihrer Trägerin im beruflichen Kontext untersuchten.",
+              "E – Das Ergebnis: Hielten die Versuchspersonen die Frau für eine einfache Sekretärin, dann hatte ihre Kleidung keinerlei Einfluss auf die emotionalen Reaktionen der Probanden."
+            ]
+          },
+          {
+            "q": "Lücke (4)：空缺处应填入哪个 Abschnitt (A–G)?",
+            "a": [
+              "E – Das Ergebnis: Hielten die Versuchspersonen die Frau für eine einfache Sekretärin, dann hatte ihre Kleidung keinerlei Einfluss auf die emotionalen Reaktionen der Probanden."
+            ],
+            "distractors": [
+              "D – Das fanden US-Wissenschaftler heraus, die in einer Studie den Einfluss von Kleidung auf die Wirkung ihrer Trägerin im beruflichen Kontext untersuchten.",
+              "F – In ihrem Experiment zeigten die Wissenschaftler insgesamt 66 Studenten (28 Männer, 38 Frauen) ein Video, in dem eine Frau von ihrem Leben und ihren Hobbys erzählte. Anschließend sollten die Probanden schildern, welche Gefühle sie gegenüber der Frau hegten und wie sie diese in Bezug auf berufsrelevante Merkmale einschätzten."
+            ]
+          },
+          {
+            "q": "Lücke (5)：空缺处应填入哪个 Abschnitt (A–G)?",
+            "a": [
+              "C – Die Kleidung spielte also für die Kompetenz- und Intelligenzeinschätzung der vermeintlichen Sekretärin keine Rolle."
+            ],
+            "distractors": [
+              "F – In ihrem Experiment zeigten die Wissenschaftler insgesamt 66 Studenten (28 Männer, 38 Frauen) ein Video, in dem eine Frau von ihrem Leben und ihren Hobbys erzählte. Anschließend sollten die Probanden schildern, welche Gefühle sie gegenüber der Frau hegten und wie sie diese in Bezug auf berufsrelevante Merkmale einschätzten.",
+              "G – Männlich aussehende Frauen sind demnach in Führungspositionen gefragter. Ein schmaler Mund, eine hohe Stirn, tiefliegende Augen und breite Schultern werden als maskulin und damit für die Position geeignet empfunden."
+            ]
+          }
+        ],
+        "q": "ÖSD C1 · Lesen Aufgabe 3（5 小题）",
+        "a": [
+          "[大组题，请展开作答]"
+        ]
+      },
+      {
+        "id": "zc1_hoeren_a1",
+        "type": "听力选择",
+        "level": "C1",
+        "source": "ÖSD Zertifikat C1 / ZC1 Modellsatz",
+        "module": "Hören Aufgabe 1",
+        "passage": "Lesen Sie Aufgabe 1 gut durch. Sie haben 2 Minuten Zeit. Situation: Sie hören jetzt eine Radiosendung. Lesen Sie die folgenden Aussagen und kreuzen Sie jeweils die richtige Lösung (A, B oder C) an. Sie hören den Text zwei Mal.\n\n[卷面 10 条 Aussagen × A/B/C]\nAufgabe 1: Die Bindungstheorie zeigt, dass\n  A die Ansichten der Psychoanalyse heute als veraltet gelten.\n  B die Kindheit wissenschaftlich noch nicht ausreichend erforscht ist.\n  C Kindheitserfahrungen für spätere Verhaltensweisen prägend sind.\n\nAufgabe 2: „Sicher gebundene“ Menschen\n  A können ihre eigenen Gefühle erkennen und äußern.\n  B sind dazu bereit, als Eltern alles für ihre Kinder zu tun.\n  C sind selbstbewusst, gehen aber wenig auf andere ein.\n\nAufgabe 3: Kinder mit unsicher-vermeidender Bindung\n  A haben weniger Stresshormone.\n  B wirken als Erwachsene schüchtern.\n  C zeigen bei Trennungen kaum Gefühle.\n\nAufgabe 4: Kinder mit unsicher-ambivalenter Bindung\n  A beruhigen sich nur, wenn die Mutter in der Nähe ist.\n  B haben Mütter, deren Verhalten schwer einzuschätzen ist.\n  C wissen genau, was sie durch Weinen erreichen können.\n\nAufgabe 5: Eine unsicher-ambivalente Bindung bewirkt bei Erwachsenen, dass\n  A es ihnen schwerfällt, auf ihren Partner einzugehen.\n  B sie Schwierigkeiten haben, einen Partner zu finden.\n  C sie sich möglichst „normale“ Partner suchen.\n\nAufgabe 6: Welchen Bindungstyp Kinder entwickeln, hängt auch davon ab, ob\n  A die Eltern glaubhaft und anschaulich von ihrer Kindheit erzählen.\n  B die Mutter selbst eine schöne Kindheit hatte.\n  C es weitere Bindungspersonen außerhalb der Familie gibt.\n\nAufgabe 7: Eigenschaften und Verhaltensweisen, die Kinder im Säuglingsalter zeigen,\n  A hängen auch davon ab, wie die Geburt verlaufen ist.\n  B können durch den Einfluss der Eltern ausgeglichen werden.\n  C sind für die Entstehung von Bindungsmustern ohne Bedeutung.\n\nAufgabe 8: Die Frage, ob Väter das Bindungsverhalten von Kindern beeinflussen, wurde\n  A anhand von Interviews mit Vätern und Kindern analysiert.\n  B bisher vorwiegend in Bezug auf die rationale Entwicklung untersucht.\n  C durch Untersuchungen über längere Zeiträume hinweg geklärt.\n\nAufgabe 9: Ein gestörtes Bindungsmuster\n  A führt bei Erwachsenen zu häufigen Trennungen.\n  B ist bei Erwachsenen normalerweise nicht mehr zu erkennen.\n  C zeigt sich bei Erwachsenen z. B. durch Ängste oder Verhaltensprobleme.\n\nAufgabe 10: Eine Psychotherapie kann\n  A bei Patienten Verunsicherung auslösen.\n  B für unsichere Kinder belastend sein.\n  C helfen, alte Bindungsmuster zu überwinden.",
+        "audioUrl": "data/audio/c1/ZC1_MS_A1_05122017.mp3",
+        "audioFile": "ZC1_MS_A1_05122017.mp3",
+        "audioUrls": [
+          "data/audio/c1/ZC1_MS_A1_05122017.mp3"
+        ],
+        "audioText": "",
+        "audioTextNote": "源 PDF 为 Kandidatenblätter（考生卷），不含听力原文 Hörtexte；如需无障碍文本须另行获取 Prüferblätter 或人工转写。",
+        "audioNote": "原卷为 10 道 A/B/C 三选一；音频对应本卷 Hören Aufgabe 1。",
+        "questions": [
+          {
+            "q": "Aufgabe 1: Die Bindungstheorie zeigt, dass",
+            "a": [
+              "Kindheitserfahrungen für spätere Verhaltensweisen prägend sind."
+            ],
+            "distractors": [
+              "die Ansichten der Psychoanalyse heute als veraltet gelten.",
+              "die Kindheit wissenschaftlich noch nicht ausreichend erforscht ist."
+            ]
+          },
+          {
+            "q": "Aufgabe 2: „Sicher gebundene“ Menschen",
+            "a": [
+              "können ihre eigenen Gefühle erkennen und äußern."
+            ],
+            "distractors": [
+              "sind dazu bereit, als Eltern alles für ihre Kinder zu tun.",
+              "sind selbstbewusst, gehen aber wenig auf andere ein."
+            ]
+          },
+          {
+            "q": "Aufgabe 3: Kinder mit unsicher-vermeidender Bindung",
+            "a": [
+              "zeigen bei Trennungen kaum Gefühle."
+            ],
+            "distractors": [
+              "haben weniger Stresshormone.",
+              "wirken als Erwachsene schüchtern."
+            ]
+          },
+          {
+            "q": "Aufgabe 4: Kinder mit unsicher-ambivalenter Bindung",
+            "a": [
+              "haben Mütter, deren Verhalten schwer einzuschätzen ist."
+            ],
+            "distractors": [
+              "beruhigen sich nur, wenn die Mutter in der Nähe ist.",
+              "wissen genau, was sie durch Weinen erreichen können."
+            ]
+          },
+          {
+            "q": "Aufgabe 5: Eine unsicher-ambivalente Bindung bewirkt bei Erwachsenen, dass",
+            "a": [
+              "es ihnen schwerfällt, auf ihren Partner einzugehen."
+            ],
+            "distractors": [
+              "sie Schwierigkeiten haben, einen Partner zu finden.",
+              "sie sich möglichst „normale“ Partner suchen."
+            ]
+          },
+          {
+            "q": "Aufgabe 6: Welchen Bindungstyp Kinder entwickeln, hängt auch davon ab, ob",
+            "a": [
+              "die Eltern glaubhaft und anschaulich von ihrer Kindheit erzählen."
+            ],
+            "distractors": [
+              "die Mutter selbst eine schöne Kindheit hatte.",
+              "es weitere Bindungspersonen außerhalb der Familie gibt."
+            ]
+          },
+          {
+            "q": "Aufgabe 7: Eigenschaften und Verhaltensweisen, die Kinder im Säuglingsalter zeigen,",
+            "a": [
+              "können durch den Einfluss der Eltern ausgeglichen werden."
+            ],
+            "distractors": [
+              "hängen auch davon ab, wie die Geburt verlaufen ist.",
+              "sind für die Entstehung von Bindungsmustern ohne Bedeutung."
+            ]
+          },
+          {
+            "q": "Aufgabe 8: Die Frage, ob Väter das Bindungsverhalten von Kindern beeinflussen, wurde",
+            "a": [
+              "durch Untersuchungen über längere Zeiträume hinweg geklärt."
+            ],
+            "distractors": [
+              "anhand von Interviews mit Vätern und Kindern analysiert.",
+              "bisher vorwiegend in Bezug auf die rationale Entwicklung untersucht."
+            ]
+          },
+          {
+            "q": "Aufgabe 9: Ein gestörtes Bindungsmuster",
+            "a": [
+              "zeigt sich bei Erwachsenen z. B. durch Ängste oder Verhaltensprobleme."
+            ],
+            "distractors": [
+              "führt bei Erwachsenen zu häufigen Trennungen.",
+              "ist bei Erwachsenen normalerweise nicht mehr zu erkennen."
+            ]
+          },
+          {
+            "q": "Aufgabe 10: Eine Psychotherapie kann",
+            "a": [
+              "helfen, alte Bindungsmuster zu überwinden."
+            ],
+            "distractors": [
+              "bei Patienten Verunsicherung auslösen.",
+              "für unsichere Kinder belastend sein."
+            ]
+          }
+        ],
+        "q": "ÖSD C1 · Hören Aufgabe 1（10 小题）",
+        "a": [
+          "[大组题，请展开作答]"
+        ]
+      },
+      {
+        "id": "zc1j_lesen_a1",
+        "type": "阅读选择",
+        "level": "C1",
+        "source": "ÖSD Zertifikat C1/Jugendliche / ZC1 J Modellsatz",
+        "module": "Lesen Aufgabe 1",
+        "passage": "Lesen Sie zuerst den Text auf Blatt 1 und 2. Lösen Sie die folgenden Aufgaben, indem Sie die richtige Antwort (A, B oder C) ankreuzen (siehe Beispiel).\n\n[Text / Blatt 1 + 2]\n\n„Jeden Tag in den Betrieb gehen – das stelle ich mir total ätzend vor“, antworten viele Teenager auf die Frage nach ihren Vorstellungen von der Berufswelt ihrer Eltern. Eltern wiederum tun derartige Einstellungen als „Herumlungern“ oder „Arbeitsallergie“ ab. Statt zu arbeiten, würden Jugendliche lieber vor dem Computer sitzen oder mit Freunden „chillen“ und ließen sich so wichtige Chancen entgehen. Doch Pädagogen wissen, dass es oft auch an den vagen Berufsvorstellungen von Jugendlichen liegt. Wie sollte es in diesem Alter auch anders sein? Alles Wissen aus diesem Lebensbereich stammt aus zweiter Hand: von Eltern, Lehrern, aus den Medien. Deshalb raten die meisten Experten zu sorgfältig ausgesuchten frühen Berufserfahrungen. Viele Schulen schreiben ein mehrwöchiges Berufspraktikum vor. Natürlich steht bei den meisten Schülern das Aufbessern des Taschengelds im Vordergrund. Aber zumindest als Nebeneffekt werden auch erste Berufserfahrungen gesammelt und der Lebenslauf für spätere Bewerbungen angereichert. Für die fünfzehnjährige Anna Voss war ihr Kommunikationstechnik-Praktikum ein lehrreicher Realitätscheck, bei dem sie die Schattenseiten ihres bisherigen Traumberufs kennenlernte und sich dementsprechend umorientierte. Je früher Schüler sich über ihre Interessen im Klaren sind, desto besser können sie beispielsweise ihre Leistungskurse ausrichten. Das Praktikum kann wiederum ein Anreiz sein, sich in der Schule mehr anzustrengen: „Die Lehrer erkannten ihre Schüler gar nicht mehr wieder, so motiviert gingen sie zu Werke“, schwärmt die Krankenhaus-Pflegedirektorin Marianne Geiger über ehemalige Praktikanten. Auch für Betriebe sind Ferienjobs vorteilhaft, gerade wenn viele Beschäftigte auf Sommerurlaub gehen. Doch Ferienbeschäftigungen sind längst nicht mehr bloße Lückenfüller, um personalschwache Sommermonate kostengünstig zu überbrücken, sondern „oft eine Vorstufe zu einer Ausbildung oder einem Arbeitsverhältnis“, erklärt Personalvorstand Wilfried Porth. Talentierte junge Leute werden so als potenzielle Mitarbeiter und Fachkräfte getestet. Der Anteil der Neueinsteiger, die zuvor ein Praktikum in der gleichen Firma absolvierten, steigt seit Jahren an. Porsche etwa rekrutiert zwischen 70 und 80 Prozent des akademischen Nachwuchses unter ehemaligen Praktikanten. Doch Praktika gleichen nicht selten einem Lotteriespiel, in dem es reiner Zufall ist, ob jemand den Tag über gammelt oder die Tätigkeit Ferienarbeit, Nebenjobs, Berufspraktika: Wie viel Arbeit brauchen Schüler? so anregend ist, dass die Jugendlichen schon bald von „unserer Firma“ oder „meinem Hotel“ sprechen. Häufig suchen Firmen billige Aushilfen, für aufwendiges Anlernen bleibt keine Zeit. Siemens zum Beispiel stellt mit Verweis auf die spezialisierten Maschinen des Unternehmens keine Schüler ein. Auch bei Subway heißt es, die Einarbeitungsphase lohne sich für Schüler nicht. Unten anfangen – etwa im Supermarkt Regale einräumen – ist jedoch nur dann sinnvoll, wenn man dabei auch ausbaufähige Einblicke in wirtschaftliche und soziale Abläufe gewinnt. Viele fühlen sich zudem erniedrigt, wenn die zugeteilten Aufgaben kaum der eigenen Schul- und Berufsausbildung entsprechen. Dennoch kommt es manchmal vor, dass Jugendliche mit Scheinarbeiten „ruhiggestellt werden“ und Verantwortliche überlegen, „was sie den Praktikanten denn heute zum Spielen geben“ – mit dem enttäuschenden Ergebnis, dass Praktikanten für nicht viel mehr als das Bedienen der Kopier- oder Kaffeemaschine zuständig sind. Vor diesem Hintergrund raten einige Lehrer sogar von Praktika ab. Denn dass Schüler dabei Einblick in die Arbeitsund Wirtschaftswelt bekommen, sei zwar wünschenswert, aber nicht immer der Fall. Auch sollten Jugendliche nicht überstrapaziert werden. Frühmorgens, wenn ihre Mitschüler noch schlafen, klappert Lena Pichler die Briefkästen in ihrem Stadtteil ab. Zeitungen auszutragen füllt zwar das Portemonnaie der Achtzehnjährigen, leert aber ihren Energiespeicher. „Ich musste wegen des Nebenjobs die zehnte Klasse wiederholen“, bedauert sie. Wie Lena verdient sich fast die Hälfte der Schüler in Deutschland mit Nebenjobs etwas dazu, vor allem durch einfache Aktivitäten wie Rasenmähen oder Babysitten, aber auch als Nachhilfelehrer oder Praxishilfe. Das bringt zwar Geld und Selbstvertrauen, kann jedoch zur Vernachlässigung der Schule, zu schlechteren Noten und schließlich schlechteren Karriereaussichten führen. Der Psychologe Thomas von Eisenhart Rothe rät Eltern, darauf zu achten, die Arbeitszeit von Schülern auf drei bis vier Stunden wöchentlich oder auf die Ferien zu beschränken. Andernfalls könnten nicht nur Stress, sondern auch ernsthafte psychische Probleme wie Aggressivität, Verhaltensstörungen und sogar Depression auftreten. „Auch in den Ferien muss es genügend Zeit zum Ausruhen geben“, sagt der Psychologe. Viele dieser Nachteile von Nebenjobs, Ferienarbeit und Berufspraktika bestehen in der Tat. Wer aber allzu leichtfertig deren Unvollkommenheiten in den Vordergrund stellt, vergisst die Bedeutung praktischer Erfahrung, die kein noch so intensiver und guter Unterricht ersetzen kann. Deshalb müssten wirtschaftliche und politische Entscheidungsträger sich bemühen, nicht nur genügend, sondern vor allem interessante Praktikumsplätze bereitzustellen, denn es kommt niemandem zugute, wenn sich Jugendund Berufswelt immer weiter voneinander entfernen. [aus einer deutschen Zeitung]",
+        "questions": [
+          {
+            "q": "Aufgabe 1: Praktika helfen Jugendlichen,",
+            "a": [
+              "berufliche Vorlieben und Abneigungen genauer zu bestimmen."
+            ],
+            "distractors": [
+              "bei Leistungskursen in der Schule bessere Ergebnisse zu erzielen.",
+              "von ihren Lehrern mehr Anerkennung zu erhalten."
+            ]
+          },
+          {
+            "q": "Aufgabe 2: Firmen sind an Praktikanten interessiert, weil",
+            "a": [
+              "man sie als mögliche zukünftige Mitarbeiter betrachtet."
+            ],
+            "distractors": [
+              "die zusätzliche billige Arbeitskraft den Profit erhöht.",
+              "geeignetes Fachpersonal immer schwieriger zu finden ist."
+            ]
+          },
+          {
+            "q": "Aufgabe 3: Problematisch ist bei vielen Praktika, dass",
+            "a": [
+              "Teenager unqualifizierte Tätigkeiten als Demütigung empfinden."
+            ],
+            "distractors": [
+              "Jugendliche sich zu früh mit einem Betrieb identifizieren.",
+              "sie weder den Arbeitgebern noch den Praktikanten nutzen."
+            ]
+          },
+          {
+            "q": "Aufgabe 4: Es können psychische Probleme entstehen, wenn Jugendliche",
+            "a": [
+              "zu viel Zeit für ihren Nebenjob aufwenden."
+            ],
+            "distractors": [
+              "hauptsächlich anspruchslose Tätigkeiten durchführen.",
+              "zu wenig Wertschätzung in ihrer Arbeit erfahren."
+            ]
+          },
+          {
+            "q": "Aufgabe 5: Angesichts der Mängel von Nebenjobs und Praktika",
+            "a": [
+              "sollten Wirtschaft und Politik Maßnahmen zur Verbesserung treffen."
+            ],
+            "distractors": [
+              "messen Jugendliche der Praxiserfahrung immer geringere Bedeutung zu.",
+              "müssen Schulen die mangelnden Praxiskenntnisse ausgleichen."
+            ]
+          }
+        ],
+        "q": "ÖSD C1 · Lesen Aufgabe 1（5 小题）",
+        "a": [
+          "[大组题，请展开作答]"
+        ]
+      },
+      {
+        "id": "zc1j_lesen_a2",
+        "type": "阅读配对",
+        "level": "C1",
+        "source": "ÖSD Zertifikat C1/Jugendliche / ZC1 J Modellsatz",
+        "module": "Lesen Aufgabe 2",
+        "passage": "Lesen Sie die 10 Überschriften auf Blatt 1 und die 5 Texte auf Blatt 2. Ordnen Sie dann den Texten (1 – 5) die passende Überschrift (A – K) zu. Pro Text passt nur eine Überschrift.\n\n[Überschriften A–K / 卷面原文]\nA – Computerspiele entwickeln sich zum neuen Leitmedium\nB – Jugendliche finden pädagogisch wertvolle Computerspiele zu ernst\nC – Studierende entwerfen Computerspiele\nD – Computerspiele weniger schädigend als angenommen\nE – 15 Studierende gewannen Preis für Computerspiele\nF – Mindestalter für Gewalt-Computerspiele in Deutschland angehoben\nG – Computerspiele liegen deutlich hinter Musik & Film\nH – Online-Spiele mit großen Nutzergemeinschaften besonders suchterzeugend\nI – Computerspiele erhöhen Produktivität am Arbeitsplatz\nK – „Ernsthafte“ Computerspiele machen schlau\n\n[Texte 1–5 / 卷面原文]\nText 1: Misserfolg in der Schule, Übergewicht, Gewalttaten und soziale Isolation – Computerspiele sollen an all dem mitschuldig sein. Dass Computerspiele für sozial abweichendes oder sogar schädliches Verhalten ihrer Nutzer verantwortlich sein sollen, ist aber bereits angesichts der Statistiken nicht haltbar: In Europa spielen einhundert Millionen Menschen Computerspiele, 38 Prozent davon sind Frauen. Neuro- und soziopsychologische Studien belegen, dass wir bei Computerspielen weniger aus dem Gewinnen das Vergnügen ziehen als aus dem Erlernen von Fertigkeiten zum Überwinden von Hindernissen. Das ist beispielsweise das Erfolgsprinzip des Online-Rollenspiels „World of Warcraft“: Die Abenteuer, die man bestehen muss, dienen dazu, seinen Avatar* stetig zu verbessern. Durch direkte Einwirkung kann der Spieler erkennbare Ergebnisse produzieren. So erfüllen derartige Spiele eines der grundlegenden Bedürfnisse der Menschheit: das Bedürfnis, produktiv zu sein. Vielleicht sind „Gamer“ deshalb die Gruppe, die am wenigsten vor dem Fernseher sitzt. [aus einer österreichischen Zeitung]\n\nText 2: Fast ein Drittel der deutschen 15-Jährigen bringt es pro Tag im Durchschnitt auf eine Computerspielzeit von mehr als drei Stunden. Jeder dreizehnte Junge ist zudem entweder abhängig oder zumindest gefährdet. Dies geht aus einer Studie des Kriminologischen Forschungsinstituts hervor. Viele Jugendliche verbringen übers Jahr gesehen mehr Zeit mit OnlineComputerspielen als im Schulunterricht. Dies sei „völlig inakzeptabel“, schreiben die Autoren der Studie und fordern, die Altersfreigabe für besonders suchtgefährdende Spiele auf 18 Jahre anzuheben. Eine hohe Suchtgefahr geht vor allem von sogenannten Online-Rollenspielen aus, bei denen Tausende Spieler, die über das Internet verbunden sind, in einer virtuellen Welt gegeneinander antreten. Unter den zehn Spielen mit der größten Suchtgefahr rangieren auch drei sogenannte Shooter-Spiele, bei denen der Nutzer möglichst viele Spielfiguren erschießen muss. [aus einer deutschen Zeitung]\n\nText 3: Computerspiele sind seit vierzig Jahren Teil der Populärkultur und werden seit mehreren Jahrzehnten als Ausgangspunkt für vertiefte soziologische, anthropologische, psychologische und philosophische Studien herangezogen. Vor allem in den USA und Skandinavien gibt es inzwischen auch sogenannte «Game Studies» an diversen Lehranstalten. Bedenkt man die Relevanz von Computerspielen in Kultur und Gesellschaft, so ist das eigentlich nur logisch. Die Spiele-Industrie, mit einem jährlichen Marktvolumen von rund 60 Milliarden Dollar, hat sich zu einem ähnlich bedeutenden Zweig der Populärkultur entwickelt wie die Film- und die Musikindustrie. Der Computerspiel-Forscher Mathias Fuchs, der in Manchester und Potsdam unterrichtet, geht sogar noch weiter: «Computerspiele sind zum Motor der Unterhaltungsindustrie geworden. Sie sind eines der führenden Medien des 21. Jahrhunderts und geben Richtung und Geschwindigkeit vor, denen andere Medien zu folgen haben.» * Avatar: digitales Alter Ego [aus einer Schweizer Zeitung]\n\nText 4: Ein seriöses Videospiel? Nicht ganz, denn auch sogenannte „Serious Games“, also „ernste Computerspiele“, sollen Spaß machen. Gleichzeitig werden sie aber auch als Lernhilfe eingesetzt – ganz egal, ob Ärzte eine Operation oder PolizistenKatastrophenschutztrainieren, Angestellte den Umgang mit Kunden üben oder sich jemand das Rauchen abgewöhnen will. Denn wer spielerisch lernt, tut das schneller und motivierter. Die ersten „Serious Games“ sindindenUSAfürdasMilitärentwickeltworden.Soldaten trainieren damit zum Beispiel das Entschärfen von Minen oder das korrekte Verhalten in Krisengebieten. „Serious Games“werdenauchinderSchulegenutzt.Kinderkönnen beispielsweise mit einem „Was ist was?“-Spiel etwas über die Kulturschätze der Welt lernen. Metastudien zeigen, dass sich derartige Spiele positiv auf die Fähigkeiten zum räumlichen Denken und zur Problemlösung sowie auf das Verständnis systemischer Zusammenhänge auswirken können. [von einer deutschen Nachrichtenagentur] * Flair: (besonders schweizerisch, sonst selten) feiner Instinkt, Gespür\n\nText 5: IneinemSeminarraumsindComputerspieleausdenletztenvierJahrzehntenarchiviertundetwaeinDutzendverschiedeneSpielkonsolen–neue und solche mit fast schon musealem Wert – stehen zur Benutzung bereit. Im Atelier nebenan diskutieren Studenten in kleinen Gruppen oder blicken still in ihren Laptop.Viel mehr als einen Computer braucht man nicht,um Computerspiele zu machen.Ausser natürlich einem Kopf voller Ideen,einem Flair*,sich gestalterisch auszudrücken,und etwas programmiertechnischem Know-how.Hier an der Zürcher Hochschule der Künste gibtesseit2004denStudiengangGame-Design.Jährlichwerdenrund15StudentenfürdiedreijährigeBachelor-Ausbildungaufgenommen.Die StudentenwerdeninallenfürdieEntwicklungvonComputerspielenrelevantenBereichenausgebildetundschliessendenBachelor-Studiengang mit einem komplett selbst gestalteten und programmierten Spiel ab. Verschiedene hier entwickelte Spiele wurden an internationalen Festivals prämiert.Das ist die beste Werbung für die Kunsthochschule. [aus einer Schweizer Zeitung]",
+        "questions": [
+          {
+            "q": "Text 1: Misserfolg in der Schule, Übergewicht, Gewalttaten und soziale Isolation – Computerspiele sollen an all dem mitschuldig sein. Dass Computerspiele für sozial abweichendes oder sogar schädliches Verhalten ihrer Nutzer verantwortlich sein sollen, ist aber bereits angesichts der Statistiken nicht haltbar: In Europa spielen einhundert Millionen Menschen Computerspiele, 38 Prozent davon sind Frauen. Neuro- und soziopsychologische Studien belegen, dass wir bei Computerspielen weniger aus dem Gewinnen das Vergnügen ziehen als aus dem Erlernen von Fertigkeiten zum Überwinden von Hindernissen. Das ist beispielsweise das Erfolgsprinzip des Online-Rollenspiels „World of Warcraft“: Die Abenteuer, die man bestehen muss, dienen dazu, seinen Avatar* stetig zu verbessern. Durch direkte Einwirkung kann der Spieler erkennbare Ergebnisse produzieren. So erfüllen derartige Spiele eines der grundlegenden Bedürfnisse der Menschheit: das Bedürfnis, produktiv zu sein. Vielleicht sind „Gamer“ deshalb die Gruppe, die am wenigsten vor dem Fernseher sitzt. [aus einer österreichischen Zeitung]  →  Welche Überschrift passt?",
+            "a": [
+              "D – Computerspiele weniger schädigend als angenommen"
+            ],
+            "distractors": [
+              "A – Computerspiele entwickeln sich zum neuen Leitmedium",
+              "B – Jugendliche finden pädagogisch wertvolle Computerspiele zu ernst"
+            ]
+          },
+          {
+            "q": "Text 2: Fast ein Drittel der deutschen 15-Jährigen bringt es pro Tag im Durchschnitt auf eine Computerspielzeit von mehr als drei Stunden. Jeder dreizehnte Junge ist zudem entweder abhängig oder zumindest gefährdet. Dies geht aus einer Studie des Kriminologischen Forschungsinstituts hervor. Viele Jugendliche verbringen übers Jahr gesehen mehr Zeit mit OnlineComputerspielen als im Schulunterricht. Dies sei „völlig inakzeptabel“, schreiben die Autoren der Studie und fordern, die Altersfreigabe für besonders suchtgefährdende Spiele auf 18 Jahre anzuheben. Eine hohe Suchtgefahr geht vor allem von sogenannten Online-Rollenspielen aus, bei denen Tausende Spieler, die über das Internet verbunden sind, in einer virtuellen Welt gegeneinander antreten. Unter den zehn Spielen mit der größten Suchtgefahr rangieren auch drei sogenannte Shooter-Spiele, bei denen der Nutzer möglichst viele Spielfiguren erschießen muss. [aus einer deutschen Zeitung]  →  Welche Überschrift passt?",
+            "a": [
+              "H – Online-Spiele mit großen Nutzergemeinschaften besonders suchterzeugend"
+            ],
+            "distractors": [
+              "B – Jugendliche finden pädagogisch wertvolle Computerspiele zu ernst",
+              "C – Studierende entwerfen Computerspiele"
+            ]
+          },
+          {
+            "q": "Text 3: Computerspiele sind seit vierzig Jahren Teil der Populärkultur und werden seit mehreren Jahrzehnten als Ausgangspunkt für vertiefte soziologische, anthropologische, psychologische und philosophische Studien herangezogen. Vor allem in den USA und Skandinavien gibt es inzwischen auch sogenannte «Game Studies» an diversen Lehranstalten. Bedenkt man die Relevanz von Computerspielen in Kultur und Gesellschaft, so ist das eigentlich nur logisch. Die Spiele-Industrie, mit einem jährlichen Marktvolumen von rund 60 Milliarden Dollar, hat sich zu einem ähnlich bedeutenden Zweig der Populärkultur entwickelt wie die Film- und die Musikindustrie. Der Computerspiel-Forscher Mathias Fuchs, der in Manchester und Potsdam unterrichtet, geht sogar noch weiter: «Computerspiele sind zum Motor der Unterhaltungsindustrie geworden. Sie sind eines der führenden Medien des 21. Jahrhunderts und geben Richtung und Geschwindigkeit vor, denen andere Medien zu folgen haben.» * Avatar: digitales Alter Ego [aus einer Schweizer Zeitung]  →  Welche Überschrift passt?",
+            "a": [
+              "A – Computerspiele entwickeln sich zum neuen Leitmedium"
+            ],
+            "distractors": [
+              "D – Computerspiele weniger schädigend als angenommen",
+              "E – 15 Studierende gewannen Preis für Computerspiele"
+            ]
+          },
+          {
+            "q": "Text 4: Ein seriöses Videospiel? Nicht ganz, denn auch sogenannte „Serious Games“, also „ernste Computerspiele“, sollen Spaß machen. Gleichzeitig werden sie aber auch als Lernhilfe eingesetzt – ganz egal, ob Ärzte eine Operation oder PolizistenKatastrophenschutztrainieren, Angestellte den Umgang mit Kunden üben oder sich jemand das Rauchen abgewöhnen will. Denn wer spielerisch lernt, tut das schneller und motivierter. Die ersten „Serious Games“ sindindenUSAfürdasMilitärentwickeltworden.Soldaten trainieren damit zum Beispiel das Entschärfen von Minen oder das korrekte Verhalten in Krisengebieten. „Serious Games“werdenauchinderSchulegenutzt.Kinderkönnen beispielsweise mit einem „Was ist was?“-Spiel etwas über die Kulturschätze der Welt lernen. Metastudien zeigen, dass sich derartige Spiele positiv auf die Fähigkeiten zum räumlichen Denken und zur Problemlösung sowie auf das Verständnis systemischer Zusammenhänge auswirken können. [von einer deutschen Nachrichtenagentur] * Flair: (besonders schweizerisch, sonst selten) feiner Instinkt, Gespür  →  Welche Überschrift passt?",
+            "a": [
+              "K – „Ernsthafte“ Computerspiele machen schlau"
+            ],
+            "distractors": [
+              "D – Computerspiele weniger schädigend als angenommen",
+              "E – 15 Studierende gewannen Preis für Computerspiele"
+            ]
+          },
+          {
+            "q": "Text 5: IneinemSeminarraumsindComputerspieleausdenletztenvierJahrzehntenarchiviertundetwaeinDutzendverschiedeneSpielkonsolen–neue und solche mit fast schon musealem Wert – stehen zur Benutzung bereit. Im Atelier nebenan diskutieren Studenten in kleinen Gruppen oder blicken still in ihren Laptop.Viel mehr als einen Computer braucht man nicht,um Computerspiele zu machen.Ausser natürlich einem Kopf voller Ideen,einem Flair*,sich gestalterisch auszudrücken,und etwas programmiertechnischem Know-how.Hier an der Zürcher Hochschule der Künste gibtesseit2004denStudiengangGame-Design.Jährlichwerdenrund15StudentenfürdiedreijährigeBachelor-Ausbildungaufgenommen.Die StudentenwerdeninallenfürdieEntwicklungvonComputerspielenrelevantenBereichenausgebildetundschliessendenBachelor-Studiengang mit einem komplett selbst gestalteten und programmierten Spiel ab. Verschiedene hier entwickelte Spiele wurden an internationalen Festivals prämiert.Das ist die beste Werbung für die Kunsthochschule. [aus einer Schweizer Zeitung]  →  Welche Überschrift passt?",
+            "a": [
+              "C – Studierende entwerfen Computerspiele"
+            ],
+            "distractors": [
+              "F – Mindestalter für Gewalt-Computerspiele in Deutschland angehoben",
+              "G – Computerspiele liegen deutlich hinter Musik & Film"
+            ]
+          }
+        ],
+        "q": "ÖSD C1 · Lesen Aufgabe 2（5 小题）",
+        "a": [
+          "[大组题，请展开作答]"
+        ]
+      },
+      {
+        "id": "zc1j_lesen_a3",
+        "type": "阅读配对",
+        "level": "C1",
+        "source": "ÖSD Zertifikat C1/Jugendliche / ZC1 J Modellsatz",
+        "module": "Lesen Aufgabe 3",
+        "passage": "Lesen Sie den folgenden Text und fügen Sie die Abschnitte A – G (Blatt 2) an der richtigen Stelle (1 – 5) im Text ein. Achtung: Zwei Abschnitte passen nicht in den Text!\n\n[Text / Blatt 1，卷面含 5 个空缺 (1)–(5)]\n\nJugendsprache – Verfall oder Bereicherung? Jugendliche «simsen» oder «chatten» häufig in ihrem eigenen Jargon, vermitteln ihre Gefühle mit «Emoticons» wie dem Smiley  oder Akronymen wie «LOL», bei dem die Anfangsbuchstaben des englischen Ausdrucks «laughing out loud» besagen, dass man sich köstlich amüsiert. Neben einer gewissen Protesthaltung gegen diese Normen geht es dabei auch um die eigene Identität, denn sprachliche Eigenheiten sind ein Spiegel der Persönlichkeit. Gerade bei der Jugend, die sich nicht verpflichtet fühlt, besonders objektiv, abstrakt oder politisch korrekt zu formulieren, entfalten sich dadurch die Spiel- und Innovationslust, der Sprachwitz. Die viel kritisierte verbale Aggressivität der Jugendsprache funktioniert als emotionales Ventil für die zahlreichen Konflikte, mit denen Jugendliche sich auseinandersetzen. Dass Jugendliche ihren Stil tatsächlich den verschiedenen Situationen anpassen können, zeigen die Ergebnisse einer repräsentativen Studie der Zürcher Hochschule für Angewandte Wissenschaften. Die Studie hat ausserdem ergeben, dass digitale Medien keinen Einfluss auf Rechtschreibkenntnisse und Ausdruckskompetenz der Jugendlichen haben. Dieser Feststellung Rechnung tragend, wird Jugendsprache von Sprachwissenschaftlern heutzutage als komplexes sprachliches Phänomen angesehen, das wie ein Seismograf Veränderungen in unterschiedlichen sozialen Bereichen anzeigt. So ist das Wort «cool» heutzutage längst nicht mehr auf die Altersgruppe der Jugendlichen beschränkt und auch Zusammensetzungen mit «super» – beispielsweise «superlustig» – sind zumindest in der Alltagssprache in den allgemeinen Sprachgebrauch übergegangen. [von einem Schweizer Internetportal]\n\n[Abschnitte A–G / Blatt 2 卷面原文]\nA – «Uncool» ist demnach, sich über diese Ausdrucksweise von den Erwachsenen abzugrenzen, denn dadurch kann man die Alterszugehörigkeit kaum stärken.\n\nB – Man kürzt Wörter ab, erfindet neue und benutzt lautmalerische Ausdrücke. Üblich sind auch Kraftausdrücke wie «megageil» oder «krass». Dabei wird auf Grammatik, Kommaregeln und Rechtschreibung kaum geachtet.\n\nC – Das ist ein Zeichen für die von vielen Erwachsenen beklagte Sprachverarmung der Jugend.\n\nD – Am schnelllebigen, flexiblen Charakter des Jugendjargons kann man solche Entwicklungen besonders gut ablesen. Er ist für Innovationen sehr durchlässig und kann damit auch die Standardsprache entsprechend bereichern.\n\nE – In Situationen allerdings, in denen Gefühle oder Aggression unangemessen sind, müssen Jugendliche ihre Sprache auf den jeweiligen Kontext abstimmen und beispielsweise in Schultexten Ausdrücke wie «voll geil» oder «saumässig cool» vermeiden.\n\nF – Diesen Aspekt widerspiegeln humorvolle Wortschöpfungen wie das Schimpfwort «Denkzwerg», die gleichzeitig auf eine weitere wichtige Funktion der Jugendsprache hinweisen:\n\nG – Vielmehr kann man von einem kreativen Sprachwandel sprechen. Und sollte die verbreitete Kritik des Zerfalls der Sprachkultur doch berechtigt sein, so ist die Jugendsprache nicht Ursache, sondern vielmehr Spiegel der modernen Gesellschaft.",
+        "questions": [
+          {
+            "q": "Lücke (1)：空缺处应填入哪个 Abschnitt (A–G)?",
+            "a": [
+              "B – Man kürzt Wörter ab, erfindet neue und benutzt lautmalerische Ausdrücke. Üblich sind auch Kraftausdrücke wie «megageil» oder «krass». Dabei wird auf Grammatik, Kommaregeln und Rechtschreibung kaum geachtet."
+            ],
+            "distractors": [
+              "A – «Uncool» ist demnach, sich über diese Ausdrucksweise von den Erwachsenen abzugrenzen, denn dadurch kann man die Alterszugehörigkeit kaum stärken.",
+              "C – Das ist ein Zeichen für die von vielen Erwachsenen beklagte Sprachverarmung der Jugend."
+            ]
+          },
+          {
+            "q": "Lücke (2)：空缺处应填入哪个 Abschnitt (A–G)?",
+            "a": [
+              "F – Diesen Aspekt widerspiegeln humorvolle Wortschöpfungen wie das Schimpfwort «Denkzwerg», die gleichzeitig auf eine weitere wichtige Funktion der Jugendsprache hinweisen:"
+            ],
+            "distractors": [
+              "B – Man kürzt Wörter ab, erfindet neue und benutzt lautmalerische Ausdrücke. Üblich sind auch Kraftausdrücke wie «megageil» oder «krass». Dabei wird auf Grammatik, Kommaregeln und Rechtschreibung kaum geachtet.",
+              "C – Das ist ein Zeichen für die von vielen Erwachsenen beklagte Sprachverarmung der Jugend."
+            ]
+          },
+          {
+            "q": "Lücke (3)：空缺处应填入哪个 Abschnitt (A–G)?",
+            "a": [
+              "E – In Situationen allerdings, in denen Gefühle oder Aggression unangemessen sind, müssen Jugendliche ihre Sprache auf den jeweiligen Kontext abstimmen und beispielsweise in Schultexten Ausdrücke wie «voll geil» oder «saumässig cool» vermeiden."
+            ],
+            "distractors": [
+              "C – Das ist ein Zeichen für die von vielen Erwachsenen beklagte Sprachverarmung der Jugend.",
+              "D – Am schnelllebigen, flexiblen Charakter des Jugendjargons kann man solche Entwicklungen besonders gut ablesen. Er ist für Innovationen sehr durchlässig und kann damit auch die Standardsprache entsprechend bereichern."
+            ]
+          },
+          {
+            "q": "Lücke (4)：空缺处应填入哪个 Abschnitt (A–G)?",
+            "a": [
+              "G – Vielmehr kann man von einem kreativen Sprachwandel sprechen. Und sollte die verbreitete Kritik des Zerfalls der Sprachkultur doch berechtigt sein, so ist die Jugendsprache nicht Ursache, sondern vielmehr Spiegel der modernen Gesellschaft."
+            ],
+            "distractors": [
+              "D – Am schnelllebigen, flexiblen Charakter des Jugendjargons kann man solche Entwicklungen besonders gut ablesen. Er ist für Innovationen sehr durchlässig und kann damit auch die Standardsprache entsprechend bereichern.",
+              "E – In Situationen allerdings, in denen Gefühle oder Aggression unangemessen sind, müssen Jugendliche ihre Sprache auf den jeweiligen Kontext abstimmen und beispielsweise in Schultexten Ausdrücke wie «voll geil» oder «saumässig cool» vermeiden."
+            ]
+          },
+          {
+            "q": "Lücke (5)：空缺处应填入哪个 Abschnitt (A–G)?",
+            "a": [
+              "D – Am schnelllebigen, flexiblen Charakter des Jugendjargons kann man solche Entwicklungen besonders gut ablesen. Er ist für Innovationen sehr durchlässig und kann damit auch die Standardsprache entsprechend bereichern."
+            ],
+            "distractors": [
+              "F – Diesen Aspekt widerspiegeln humorvolle Wortschöpfungen wie das Schimpfwort «Denkzwerg», die gleichzeitig auf eine weitere wichtige Funktion der Jugendsprache hinweisen:",
+              "G – Vielmehr kann man von einem kreativen Sprachwandel sprechen. Und sollte die verbreitete Kritik des Zerfalls der Sprachkultur doch berechtigt sein, so ist die Jugendsprache nicht Ursache, sondern vielmehr Spiegel der modernen Gesellschaft."
+            ]
+          }
+        ],
+        "q": "ÖSD C1 · Lesen Aufgabe 3（5 小题）",
+        "a": [
+          "[大组题，请展开作答]"
+        ]
+      },
+      {
+        "id": "zc1j_hoeren_a1",
+        "type": "听力选择",
+        "level": "C1",
+        "source": "ÖSD Zertifikat C1/Jugendliche / ZC1 J Modellsatz",
+        "module": "Hören Aufgabe 1",
+        "passage": "Lesen Sie Aufgabe 1 gut durch. Sie haben 2 Minuten Zeit. Situation: Sie hören jetzt eine Radiosendung. Lesen Sie die folgenden Aussagen und kreuzen Sie jeweils die richtige Lösung (A, B oder C) an. Sie hören den Text zwei Mal.\n\n[卷面 10 条 Aussagen × A/B/C]\nAufgabe 1: Eine Reise zum Mars\n  A erfordert hin und zurück ein halbes Jahr Zeit.\n  B ist alle 2 Jahre unter vorteilhaften Bedingungen verwirklichbar.\n  C werden im nächsten Jahrzehnt mehrere NASA-Sonden unternehmen.\n\nAufgabe 2: Die neue SLS-Rakete der NASA\n  A hat stärkere Triebwerke als bisherige Raumschiffe.\n  B ist größer als alle bisher eingesetzten Raketen.\n  C wird erst seit 4 Jahren für Raummissionen eingesetzt.\n\nAufgabe 3: Künstliche Schwerkraft\n  A erzeugt man am besten mit höchstens 100 Meter langen Raumschiffen.\n  B hätte negative Folgen für den Knochenaufbau der Astronauten.\n  C würden Astronauten im Weltall nicht als störend wahrnehmen.\n\nAufgabe 4: Für eine sichere Landung auf dem Mars könnten\n  A Airbags zum Einsatz kommen.\n  B spezielle Fallschirme verwendet werden.\n  C Triebwerke zum Bremsen benutzt werden.\n\nAufgabe 5: Die Mannschaft der Marsmission\n  A kann während ihres Aufenthalts die Landefähre als Wohnraum nutzen.\n  B muss für die Rückkehr zur Erde auf einen günstigen Zeitpunkt warten.\n  C soll genaue Aufnahmen der Marslandschaften anfertigen.\n\nAufgabe 6: Die NASA\n  A möchte private Unternehmen in Raumfahrtprojekte einbinden.\n  B verfügt derzeit über zu geringe finanzielle Mittel für die Erkundung des Mars.\n  C wird in der Raumfahrt von privaten Unternehmen bald überholt werden.\n\nAufgabe 7: „Mars One“\n  A ist der Name eines NASA-Programms zur Erforschung des Planeten.\n  B möchte Menschen engagieren, die auf dem Mars bleiben wollen.\n  C sucht nach ausgebildeten Medizinern für die erste geplante Marsmission.\n\nAufgabe 8: Die „Mars One“-Organisatoren haben vor,\n  A bereits bei der ersten Landung auf dem Mars Astronauten einzusetzen.\n  B das Landeverfahren zunächst mehrmals auf der Erde zu testen.\n  C Sauerstoff und Trinkwasser aus Eis auf dem Mars zu erzeugen.\n\nAufgabe 9: Die Organisatoren von „Mars One“\n  A bekamen schon vor der Ausschreibung Anfragen von möglichen Freiwilligen.\n  B möchten den Teilnehmern möglichst ähnliche Bedingungen wie auf der Erde bieten.\n  C werden Familienmitglieder von Teilnehmern finanziell unterstützen.\n\nAufgabe 10: Das Projekt „Mars One“\n  A hat einen unabhängigen Stützpunkt im Weltall zum Ziel.\n  B kümmert sich auch um ethische Fragen von Marsmissionen.\n  C wird für Teilnehmer ein Rückkehrtraining anbieten.",
+        "audioUrl": "data/audio/c1/ZC1_J_MS_Aufgabe1.mp3",
+        "audioFile": "ZC1_J_MS_Aufgabe1.mp3",
+        "audioUrls": [
+          "data/audio/c1/ZC1_J_MS_Aufgabe1.mp3"
+        ],
+        "audioText": "",
+        "audioTextNote": "源 PDF 为 Kandidatenblätter（考生卷），不含听力原文 Hörtexte；如需无障碍文本须另行获取 Prüferblätter 或人工转写。",
+        "audioNote": "原卷为 10 道 A/B/C 三选一；音频对应本卷 Hören Aufgabe 1。",
+        "questions": [
+          {
+            "q": "Aufgabe 1: Eine Reise zum Mars",
+            "a": [
+              "ist alle 2 Jahre unter vorteilhaften Bedingungen verwirklichbar."
+            ],
+            "distractors": [
+              "erfordert hin und zurück ein halbes Jahr Zeit.",
+              "werden im nächsten Jahrzehnt mehrere NASA-Sonden unternehmen."
+            ]
+          },
+          {
+            "q": "Aufgabe 2: Die neue SLS-Rakete der NASA",
+            "a": [
+              "ist größer als alle bisher eingesetzten Raketen."
+            ],
+            "distractors": [
+              "hat stärkere Triebwerke als bisherige Raumschiffe.",
+              "wird erst seit 4 Jahren für Raummissionen eingesetzt."
+            ]
+          },
+          {
+            "q": "Aufgabe 3: Künstliche Schwerkraft",
+            "a": [
+              "würden Astronauten im Weltall nicht als störend wahrnehmen."
+            ],
+            "distractors": [
+              "erzeugt man am besten mit höchstens 100 Meter langen Raumschiffen.",
+              "hätte negative Folgen für den Knochenaufbau der Astronauten."
+            ]
+          },
+          {
+            "q": "Aufgabe 4: Für eine sichere Landung auf dem Mars könnten",
+            "a": [
+              "Triebwerke zum Bremsen benutzt werden."
+            ],
+            "distractors": [
+              "Airbags zum Einsatz kommen.",
+              "spezielle Fallschirme verwendet werden."
+            ]
+          },
+          {
+            "q": "Aufgabe 5: Die Mannschaft der Marsmission",
+            "a": [
+              "muss für die Rückkehr zur Erde auf einen günstigen Zeitpunkt warten."
+            ],
+            "distractors": [
+              "kann während ihres Aufenthalts die Landefähre als Wohnraum nutzen.",
+              "soll genaue Aufnahmen der Marslandschaften anfertigen."
+            ]
+          },
+          {
+            "q": "Aufgabe 6: Die NASA",
+            "a": [
+              "möchte private Unternehmen in Raumfahrtprojekte einbinden."
+            ],
+            "distractors": [
+              "verfügt derzeit über zu geringe finanzielle Mittel für die Erkundung des Mars.",
+              "wird in der Raumfahrt von privaten Unternehmen bald überholt werden."
+            ]
+          },
+          {
+            "q": "Aufgabe 7: „Mars One“",
+            "a": [
+              "möchte Menschen engagieren, die auf dem Mars bleiben wollen."
+            ],
+            "distractors": [
+              "ist der Name eines NASA-Programms zur Erforschung des Planeten.",
+              "sucht nach ausgebildeten Medizinern für die erste geplante Marsmission."
+            ]
+          },
+          {
+            "q": "Aufgabe 8: Die „Mars One“-Organisatoren haben vor,",
+            "a": [
+              "Sauerstoff und Trinkwasser aus Eis auf dem Mars zu erzeugen."
+            ],
+            "distractors": [
+              "bereits bei der ersten Landung auf dem Mars Astronauten einzusetzen.",
+              "das Landeverfahren zunächst mehrmals auf der Erde zu testen."
+            ]
+          },
+          {
+            "q": "Aufgabe 9: Die Organisatoren von „Mars One“",
+            "a": [
+              "bekamen schon vor der Ausschreibung Anfragen von möglichen Freiwilligen."
+            ],
+            "distractors": [
+              "möchten den Teilnehmern möglichst ähnliche Bedingungen wie auf der Erde bieten.",
+              "werden Familienmitglieder von Teilnehmern finanziell unterstützen."
+            ]
+          },
+          {
+            "q": "Aufgabe 10: Das Projekt „Mars One“",
+            "a": [
+              "hat einen unabhängigen Stützpunkt im Weltall zum Ziel."
+            ],
+            "distractors": [
+              "kümmert sich auch um ethische Fragen von Marsmissionen.",
+              "wird für Teilnehmer ein Rückkehrtraining anbieten."
+            ]
+          }
+        ],
+        "q": "ÖSD C1 · Hören Aufgabe 1（10 小题）",
+        "a": [
+          "[大组题，请展开作答]"
+        ]
+      },
+      {
+        "id": "zc1pmb_lesen_a2",
+        "type": "阅读配对",
+        "level": "C1",
+        "source": "ÖSD Zertifikat C1/PMB / ZC1 PMB Modellsatz",
+        "module": "Lesen Aufgabe 2",
+        "passage": "Lesen Sie die 10 Überschriften auf Blatt 1 und die 5 Texte auf Blatt 2. Ordnen Sie dann den Texten (1 – 5) die passende Überschrift (A – K) zu. Pro Text passt nur eine Überschrift.\n\n[Überschriften A–K / 卷面原文]\nA – Länger leben? Eingriff in Chromosomen birgt Gefahren\nB – Energie-Pillen helfen gegen Alterskrankheiten\nC – Genmanipulation lässt auf längeres Leben hoffen\nD – Neu entdeckte Genvariante bewahrt vor schneller Alterung\nE – Vorsicht schützt Pessimisten vor Gesundheitsrisiken\nF – Gesunde Fette erhalten jung\nG – Neue Wege in der Hormonforschung\nH – Unterschiede im Alterungsprozess werden vererbt\nI – Länger fit durch mehr Lebensfreude\nK – Wundermittel gegen das Altern bisher überbewertet\n\n[Texte 1–5 / 卷面原文]\nText 1: Wie schnell wir altern, hängt nicht nur mit unserer genetischen Veranlagung und körperlichen Gesundheit zusammen. Psychosoziale Faktoren spielen dabei ebenso eine entscheidende Rolle, wie texanische Forscher herausgefunden haben. In einer Langzeitstudie mit älteren Männern wurde nachgewiesen, dass ein Zusammenhang zwischen dem Einsetzen körperlicher Gebrechlichkeit und der mentalen Einstellung besteht. Während die Probanden zu Beginn der Studie einen vergleichbaren Gesundheitszustand aufwiesen, so zeigte sich im weiteren Verlauf, dass Männer mit einer pessimistischen Grundhaltung schneller körperlich abbauten als positiv denkende Altersgenossen. Das Gute an dieser Nachricht: Optimismus ist zwar teilweise genetisch bedingt, er lässt sich aber auch erlernen, so die Experten. Die kognitive Verhaltenstherapie hilft zum Beispiel dabei, belastende Gedanken zu erkennen und zu verändern und sich erreichbare Ziele zu setzen. Kleine Schritte zu machen und diese zu genießen – auch das erhält die Gesundheit. [aus einer deutschen Fachzeitschrift]\n\nText 2: Im Grunde klingt es simpel: Wenn ein Mangel an körpereigenen Hormonen zahlreiche Alterserscheinungen mitverursacht, könnten künstlich zugeführte Hormone dem Körper wieder auf die Sprünge helfen. In den USA sind solche vermeintlich verjüngenden Wirkstoffe sogar ohne Rezept erhältlich, was Fachleute in Deutschland jedoch skeptisch sehen. „Bislang konnte für kein einziges Hormon nachgewiesen werden, dass es den Alterungsprozess tatsächlich aufhält“, erklärt Prof. Christian Swoboda, Altersmediziner an der Universität Jena. „Zwar können einige dieser Substanzen das subjektive Wohlbefinden steigern, sie sind aber kaum in der Lage, ernsthaften Erkrankungen vorzubeugen – mit Ausnahme vielleicht von Osteoporose.“ Das gelte auch für Melatonin, das zeitweise als Zauberformel gegen das Altern angepriesen wurde. „Melatonin hilft sehr gut gegen Schlafprobleme und Jetlag“, so der Experte, „aber eine lebensverlängernde Wirkung konnte bisher in keiner verlässlichen Studie festgestellt werden.“ [aus einer deutschen Zeitung]\n\nText 3: Ein Fokus der aktuellen Altersforschung ist der allgemeine Energiestoffwechsel und besonders der Stoffwechsel im Fettgewebe. Schon seit einigen Jahren ist bekannt, dass das Fettgewebe nicht einfach nur eine Lagerstätte für überschüssige Kalorien ist, sondern auch ein Hormone abgebendes Organ, welches damit an der Regulation vieler Körperprozesse beteiligt ist. Zahlreiche Forschergruppen sind mittlerweile dabei, die Hormone aus dem Fettgewebe zu isolieren und zu charakterisieren. Dahinter steht die Hoffnung, Hormone zu finden, die Alterungserscheinungen und Alterserkrankungen entscheidend beeinflussen. Hat man diese erst einmal in der Hand, könnten Methoden entwickelt werden, um die Hormonwirkung von aussen zu steuern und so der Alterung entgegenzuwirken. Wenn z. B. bestimmte alterungsrelevante Hormonwerte im kritischen Bereich liegen, könnten therapeutische Strategien zur Hormonsubstitution oder zur Regulation von Hormonrezeptoren abgeleitet werden. [aus einer Schweizer Zeitung]\n\nText 4: Die unterschiedlichen Prozesse, die einen Menschen altern lassen, sind mittlerweile in wesentlichen Bereichen wissenschaftlich erforscht. Nun sollen auch Maßnahmen, die den Alterungsprozess verlangsamen, in nicht allzu ferner Zukunft möglich sein, sind sich manche Wissenschaftler sicher. Forscher der Universität Freiburg haben etwa in dem winzigen Fadenwurm Caenorhabditis elegans ein Gen entdeckt, das für Alterungsprozesse verantwortlich ist. Dieses Gen bildet ein Enzym, das normalerweise die Aktivierung lebensverlängernder Gene verhindert, teilte die Universität in einer Presseaussendung mit. Die sensationelle Entdeckung der Forscher: Schaltete man das betreffende Gen bei einzelnen Fadenwürmern aus, zeigten sich diese nicht nur deutlich widerstandsfähiger gegenüber Stress, auch die Alterung der Tiere konnte um über zwei Drittel verlangsamt werden. Der Mensch besitzt ebenfalls ein solches Gen, und mehr als 75 Prozent der Aminosäure-Bausteine in den entscheidenden Bereichen sind identisch mit jenen des Fadenwurms. [aus einer österreichischen Zeitung]\n\nText 5: Wissenschaftern des Londoner King’sCollegeist es im Rahmen einer Studie gelungen, einen zentralen genetischen Baustein der Alterung zu identifizieren: Ein Erbgutbereich auf Chromosom 3 erfüllt offenbar eine entscheidende Funktion beim Altern von Körperzellen und damit des gesamten Organismus. Im Fokus der Untersuchung standen die Telomere, jene fadenförmigen Chromosomen-Enden, welche bei jeder Zellteilung kürzer werden und damit für die Lebenserwartung einer Zelle maßgeblich bestimmend sind – ähnlich wie bei einer tickenden Uhr. Das Team des King’sCollegeuntersuchte eine große Probandengruppe mit der genetischen Besonderheit auffallend kurzer Telomere und identifizierte dabei den dafür verantwortlichen Erbgutabschnitt auf Chromosom 3. Erbt man diese genetische Variante, büßt man umgerechnet 3,6 Jahre an Telomerlänge ein, konnten die Wissenschaftler berechnen. Der Studie zufolge gibt es offensichtlich Menschen, bei denen ein schnelleres Altern genetisch vorprogrammiert ist. [aus einer österreichischen Zeitung]",
+        "questions": [
+          {
+            "q": "Text 1: Wie schnell wir altern, hängt nicht nur mit unserer genetischen Veranlagung und körperlichen Gesundheit zusammen. Psychosoziale Faktoren spielen dabei ebenso eine entscheidende Rolle, wie texanische Forscher herausgefunden haben. In einer Langzeitstudie mit älteren Männern wurde nachgewiesen, dass ein Zusammenhang zwischen dem Einsetzen körperlicher Gebrechlichkeit und der mentalen Einstellung besteht. Während die Probanden zu Beginn der Studie einen vergleichbaren Gesundheitszustand aufwiesen, so zeigte sich im weiteren Verlauf, dass Männer mit einer pessimistischen Grundhaltung schneller körperlich abbauten als positiv denkende Altersgenossen. Das Gute an dieser Nachricht: Optimismus ist zwar teilweise genetisch bedingt, er lässt sich aber auch erlernen, so die Experten. Die kognitive Verhaltenstherapie hilft zum Beispiel dabei, belastende Gedanken zu erkennen und zu verändern und sich erreichbare Ziele zu setzen. Kleine Schritte zu machen und diese zu genießen – auch das erhält die Gesundheit. [aus einer deutschen Fachzeitschrift]  →  Welche Überschrift passt?",
+            "a": [
+              "I – Länger fit durch mehr Lebensfreude"
+            ],
+            "distractors": [
+              "A – Länger leben? Eingriff in Chromosomen birgt Gefahren",
+              "B – Energie-Pillen helfen gegen Alterskrankheiten"
+            ]
+          },
+          {
+            "q": "Text 2: Im Grunde klingt es simpel: Wenn ein Mangel an körpereigenen Hormonen zahlreiche Alterserscheinungen mitverursacht, könnten künstlich zugeführte Hormone dem Körper wieder auf die Sprünge helfen. In den USA sind solche vermeintlich verjüngenden Wirkstoffe sogar ohne Rezept erhältlich, was Fachleute in Deutschland jedoch skeptisch sehen. „Bislang konnte für kein einziges Hormon nachgewiesen werden, dass es den Alterungsprozess tatsächlich aufhält“, erklärt Prof. Christian Swoboda, Altersmediziner an der Universität Jena. „Zwar können einige dieser Substanzen das subjektive Wohlbefinden steigern, sie sind aber kaum in der Lage, ernsthaften Erkrankungen vorzubeugen – mit Ausnahme vielleicht von Osteoporose.“ Das gelte auch für Melatonin, das zeitweise als Zauberformel gegen das Altern angepriesen wurde. „Melatonin hilft sehr gut gegen Schlafprobleme und Jetlag“, so der Experte, „aber eine lebensverlängernde Wirkung konnte bisher in keiner verlässlichen Studie festgestellt werden.“ [aus einer deutschen Zeitung]  →  Welche Überschrift passt?",
+            "a": [
+              "K – Wundermittel gegen das Altern bisher überbewertet"
+            ],
+            "distractors": [
+              "B – Energie-Pillen helfen gegen Alterskrankheiten",
+              "C – Genmanipulation lässt auf längeres Leben hoffen"
+            ]
+          },
+          {
+            "q": "Text 3: Ein Fokus der aktuellen Altersforschung ist der allgemeine Energiestoffwechsel und besonders der Stoffwechsel im Fettgewebe. Schon seit einigen Jahren ist bekannt, dass das Fettgewebe nicht einfach nur eine Lagerstätte für überschüssige Kalorien ist, sondern auch ein Hormone abgebendes Organ, welches damit an der Regulation vieler Körperprozesse beteiligt ist. Zahlreiche Forschergruppen sind mittlerweile dabei, die Hormone aus dem Fettgewebe zu isolieren und zu charakterisieren. Dahinter steht die Hoffnung, Hormone zu finden, die Alterungserscheinungen und Alterserkrankungen entscheidend beeinflussen. Hat man diese erst einmal in der Hand, könnten Methoden entwickelt werden, um die Hormonwirkung von aussen zu steuern und so der Alterung entgegenzuwirken. Wenn z. B. bestimmte alterungsrelevante Hormonwerte im kritischen Bereich liegen, könnten therapeutische Strategien zur Hormonsubstitution oder zur Regulation von Hormonrezeptoren abgeleitet werden. [aus einer Schweizer Zeitung]  →  Welche Überschrift passt?",
+            "a": [
+              "G – Neue Wege in der Hormonforschung"
+            ],
+            "distractors": [
+              "C – Genmanipulation lässt auf längeres Leben hoffen",
+              "D – Neu entdeckte Genvariante bewahrt vor schneller Alterung"
+            ]
+          },
+          {
+            "q": "Text 4: Die unterschiedlichen Prozesse, die einen Menschen altern lassen, sind mittlerweile in wesentlichen Bereichen wissenschaftlich erforscht. Nun sollen auch Maßnahmen, die den Alterungsprozess verlangsamen, in nicht allzu ferner Zukunft möglich sein, sind sich manche Wissenschaftler sicher. Forscher der Universität Freiburg haben etwa in dem winzigen Fadenwurm Caenorhabditis elegans ein Gen entdeckt, das für Alterungsprozesse verantwortlich ist. Dieses Gen bildet ein Enzym, das normalerweise die Aktivierung lebensverlängernder Gene verhindert, teilte die Universität in einer Presseaussendung mit. Die sensationelle Entdeckung der Forscher: Schaltete man das betreffende Gen bei einzelnen Fadenwürmern aus, zeigten sich diese nicht nur deutlich widerstandsfähiger gegenüber Stress, auch die Alterung der Tiere konnte um über zwei Drittel verlangsamt werden. Der Mensch besitzt ebenfalls ein solches Gen, und mehr als 75 Prozent der Aminosäure-Bausteine in den entscheidenden Bereichen sind identisch mit jenen des Fadenwurms. [aus einer österreichischen Zeitung]  →  Welche Überschrift passt?",
+            "a": [
+              "C – Genmanipulation lässt auf längeres Leben hoffen"
+            ],
+            "distractors": [
+              "E – Vorsicht schützt Pessimisten vor Gesundheitsrisiken",
+              "F – Gesunde Fette erhalten jung"
+            ]
+          },
+          {
+            "q": "Text 5: Wissenschaftern des Londoner King’sCollegeist es im Rahmen einer Studie gelungen, einen zentralen genetischen Baustein der Alterung zu identifizieren: Ein Erbgutbereich auf Chromosom 3 erfüllt offenbar eine entscheidende Funktion beim Altern von Körperzellen und damit des gesamten Organismus. Im Fokus der Untersuchung standen die Telomere, jene fadenförmigen Chromosomen-Enden, welche bei jeder Zellteilung kürzer werden und damit für die Lebenserwartung einer Zelle maßgeblich bestimmend sind – ähnlich wie bei einer tickenden Uhr. Das Team des King’sCollegeuntersuchte eine große Probandengruppe mit der genetischen Besonderheit auffallend kurzer Telomere und identifizierte dabei den dafür verantwortlichen Erbgutabschnitt auf Chromosom 3. Erbt man diese genetische Variante, büßt man umgerechnet 3,6 Jahre an Telomerlänge ein, konnten die Wissenschaftler berechnen. Der Studie zufolge gibt es offensichtlich Menschen, bei denen ein schnelleres Altern genetisch vorprogrammiert ist. [aus einer österreichischen Zeitung]  →  Welche Überschrift passt?",
+            "a": [
+              "H – Unterschiede im Alterungsprozess werden vererbt"
+            ],
+            "distractors": [
+              "E – Vorsicht schützt Pessimisten vor Gesundheitsrisiken",
+              "F – Gesunde Fette erhalten jung"
+            ]
+          }
+        ],
+        "q": "ÖSD C1 · Lesen Aufgabe 2（5 小题）",
+        "a": [
+          "[大组题，请展开作答]"
+        ]
+      },
+      {
+        "id": "zc1pmb_lesen_a3",
+        "type": "阅读配对",
+        "level": "C1",
+        "source": "ÖSD Zertifikat C1/PMB / ZC1 PMB Modellsatz",
+        "module": "Lesen Aufgabe 3",
+        "passage": "Lesen Sie den folgenden Text und fügen Sie die Abschnitte A – G (Blatt 2) an der richtigen Stelle (1 – 5) im Text ein. Achtung: Zwei Abschnitte passen nicht in den Text!\n\n[Text / Blatt 1，卷面含 5 个空缺 (1)–(5)]\n\nHeilen mit nichts – Wie und wann Placebos wirken Das Placebo hat bei vielen praktischen Ärzten einen schlechten Ruf. Es sei eine Mogelpackung, die nicht wirkt. Aber sie übersehen, dass sie täglich in ihrer Praxis den Placebo-Effekt nutzen. Der wirkt zum Beispiel in jedem Gespräch. Das haben Wissenschaftler von der Harvard Medical School in Massachusetts herausgefunden. Die Patienten der ersten Gruppe wurden auf eine Warteliste gesetzt. Die Idee dabei war, dass es den Patienten allein durch die Hoffnung auf eine baldige Untersuchung besser gehen würde. Die zweite Gruppe wurde mit Scheinakupunktur behandelt. Die dritte Gruppe bekam auch eine Scheinakupunktur, darüber hinaus aber zeigte der behandelnde Arzt Mitgefühl und sprach mit den Patienten über ihre Erkrankung und deren Konsequenzen. Wie aber wirkt die Scheinakupunktur? Und genau das hat die Studie auch ergeben: Den Personen auf der Warteliste ging es deutlich besser. Die eingeschränkte Behandlung mit der Scheinakupunktur wirkte noch effizienter. Am besten aber fühlten sich die Patienten, die die Scheinakupunktur von einem empathischen Arzt erhalten hatten. Somit ist bewiesen, dass ähnlich erfolgreiche Ergebnisse wie mit herkömmlichen Medikamenten erzielt werden können. Der zweite genannte Aspekt wird schon länger untersucht. Mittlerweile ist z. B. wissenschaftlich erwiesen, dass kleine und bunte Placebo-Pillen besser wirken als mittelgroße und weiße. Noch besser allerdings wirken Placebo-Spritzen. Aus ethischen Gründen ist bei diesen Krankheiten eine wissenschaftliche Forschung mit Placebos kaum möglich. Doch in vielen anderen Bereichen ist ein Placebo ein Zaubermittel. Denn es kann beinahe alle möglichen Wirkungen und Nebenwirkungen erzeugen. Aber eigentlich müsste man sagen: Das menschliche Gehirn ist das Zaubermittel. Denn dort entstehen diese Effekte.\n\n[Abschnitte A–G / Blatt 2 卷面原文]\nA – Ärzte dürfen ihren Patienten ohne deren Wissen keine Placebos geben. Das ist nicht vertretbar, sagt Professor Urban.\n\nB – Bei der Methode werden Nadeln benutzt, die leicht pieksen, aber nicht tiefer ins Gewebe eindringen. Dadurch gibt es keinerlei medizinische Wirkung. Die Hypothese der Forscher: Allein die Erwartung der Patienten wird die Schmerzen mildern.\n\nC – Dennoch ist bekannt, dass sich das Tumorgeschehen durch Placebos überhaupt nicht beeinflussen lässt. Es gibt also Grenzen.\n\nD – Placebos hingegen können den Betroffenen zu einem gesunden Schlaf verhelfen, ohne Nebenwirkungen zu erzeugen.\n\nE – Sie sind die anpassungsfähigsten, wirksamsten, sichersten und billigsten Mittel, den Erwartungen der Patienten zu entsprechen. Wenige Untersuchungen gibt es zu schweren Erkrankungen, beispielsweise Krebs.\n\nF – Denn bei medikamentöser Behandlung gilt: Je mehr Wirkstoff, desto mehr Wirkung. Und hier: Je mehr Placebo-Effekte, desto bessere Ergebnisse. Somit wurde demonstriert, dass man den Placebo-Effekt in Einzelteile gliedern kann: die Arzt-Patienten-Komponente und die Behandlungskomponente.\n\nG – Sie untersuchten amerikanische Patienten mit Reizdarm, also Menschen, die an Bauchkrämpfen, Blähungen, Verstopfung oder Durchfall leiden, und teilten sie in drei Gruppen ein.",
+        "questions": [
+          {
+            "q": "Lücke (1)：空缺处应填入哪个 Abschnitt (A–G)?",
+            "a": [
+              "G – Sie untersuchten amerikanische Patienten mit Reizdarm, also Menschen, die an Bauchkrämpfen, Blähungen, Verstopfung oder Durchfall leiden, und teilten sie in drei Gruppen ein."
+            ],
+            "distractors": [
+              "A – Ärzte dürfen ihren Patienten ohne deren Wissen keine Placebos geben. Das ist nicht vertretbar, sagt Professor Urban.",
+              "B – Bei der Methode werden Nadeln benutzt, die leicht pieksen, aber nicht tiefer ins Gewebe eindringen. Dadurch gibt es keinerlei medizinische Wirkung. Die Hypothese der Forscher: Allein die Erwartung der Patienten wird die Schmerzen mildern."
+            ]
+          },
+          {
+            "q": "Lücke (2)：空缺处应填入哪个 Abschnitt (A–G)?",
+            "a": [
+              "B – Bei der Methode werden Nadeln benutzt, die leicht pieksen, aber nicht tiefer ins Gewebe eindringen. Dadurch gibt es keinerlei medizinische Wirkung. Die Hypothese der Forscher: Allein die Erwartung der Patienten wird die Schmerzen mildern."
+            ],
+            "distractors": [
+              "C – Dennoch ist bekannt, dass sich das Tumorgeschehen durch Placebos überhaupt nicht beeinflussen lässt. Es gibt also Grenzen.",
+              "D – Placebos hingegen können den Betroffenen zu einem gesunden Schlaf verhelfen, ohne Nebenwirkungen zu erzeugen."
+            ]
+          },
+          {
+            "q": "Lücke (3)：空缺处应填入哪个 Abschnitt (A–G)?",
+            "a": [
+              "F – Denn bei medikamentöser Behandlung gilt: Je mehr Wirkstoff, desto mehr Wirkung. Und hier: Je mehr Placebo-Effekte, desto bessere Ergebnisse. Somit wurde demonstriert, dass man den Placebo-Effekt in Einzelteile gliedern kann: die Arzt-Patienten-Komponente und die Behandlungskomponente."
+            ],
+            "distractors": [
+              "C – Dennoch ist bekannt, dass sich das Tumorgeschehen durch Placebos überhaupt nicht beeinflussen lässt. Es gibt also Grenzen.",
+              "D – Placebos hingegen können den Betroffenen zu einem gesunden Schlaf verhelfen, ohne Nebenwirkungen zu erzeugen."
+            ]
+          },
+          {
+            "q": "Lücke (4)：空缺处应填入哪个 Abschnitt (A–G)?",
+            "a": [
+              "E – Sie sind die anpassungsfähigsten, wirksamsten, sichersten und billigsten Mittel, den Erwartungen der Patienten zu entsprechen. Wenige Untersuchungen gibt es zu schweren Erkrankungen, beispielsweise Krebs."
+            ],
+            "distractors": [
+              "D – Placebos hingegen können den Betroffenen zu einem gesunden Schlaf verhelfen, ohne Nebenwirkungen zu erzeugen.",
+              "F – Denn bei medikamentöser Behandlung gilt: Je mehr Wirkstoff, desto mehr Wirkung. Und hier: Je mehr Placebo-Effekte, desto bessere Ergebnisse. Somit wurde demonstriert, dass man den Placebo-Effekt in Einzelteile gliedern kann: die Arzt-Patienten-Komponente und die Behandlungskomponente."
+            ]
+          },
+          {
+            "q": "Lücke (5)：空缺处应填入哪个 Abschnitt (A–G)?",
+            "a": [
+              "C – Dennoch ist bekannt, dass sich das Tumorgeschehen durch Placebos überhaupt nicht beeinflussen lässt. Es gibt also Grenzen."
+            ],
+            "distractors": [
+              "F – Denn bei medikamentöser Behandlung gilt: Je mehr Wirkstoff, desto mehr Wirkung. Und hier: Je mehr Placebo-Effekte, desto bessere Ergebnisse. Somit wurde demonstriert, dass man den Placebo-Effekt in Einzelteile gliedern kann: die Arzt-Patienten-Komponente und die Behandlungskomponente.",
+              "G – Sie untersuchten amerikanische Patienten mit Reizdarm, also Menschen, die an Bauchkrämpfen, Blähungen, Verstopfung oder Durchfall leiden, und teilten sie in drei Gruppen ein."
+            ]
+          }
+        ],
+        "q": "ÖSD C1 · Lesen Aufgabe 3（5 小题）",
+        "a": [
+          "[大组题，请展开作答]"
+        ]
+      }
     ]
   };

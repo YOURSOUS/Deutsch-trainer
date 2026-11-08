@@ -55846,5 +55846,1541 @@ window.ALL_WORDS = [
     "translation": "挖苦的",
     "phonetic": "",
     "pos": "形容词"
+  },
+  {
+    "word": "ist",
+    "translation": "是；在（sein 的第三人称单数现在时）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "sind",
+    "translation": "是；在（sein 的复数 / 尊称现在时）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "bin",
+    "translation": "是（sein 的第一人称单数现在时）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "bist",
+    "translation": "是（sein 的第二人称单数现在时）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "war",
+    "translation": "曾经是；曾在（sein 的过去时）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "sei",
+    "translation": "是（sein 的第一 / 三人称虚拟式）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "seien",
+    "translation": "是（sein 的复数虚拟式）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "hat",
+    "translation": "有（haben 的第三人称单数现在时）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "hätten",
+    "translation": "会有；本该有（haben 的虚拟式）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "haette",
+    "translation": "会有；本该有（hätte 的 ASCII 写法，haben 虚拟式）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "wird",
+    "translation": "将；变成；被（werden 的第三人称单数）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "wurden",
+    "translation": "曾经被；成为（werden 的过去时复数）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "kann",
+    "translation": "能；会；可以（können 的现在时）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "kannst",
+    "translation": "能；会（können 的第二人称单数）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "könnte",
+    "translation": "可以；可能会（können 的虚拟式）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "muss",
+    "translation": "必须（müssen 的现在时）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "soll",
+    "translation": "应该；据说（sollen 的现在时）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "will",
+    "translation": "想要（wollen 的现在时）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "möchte",
+    "translation": "想要（mögen 的委婉虚拟式，第一 / 三人称）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "möchten",
+    "translation": "想要（mögen 的委婉虚拟式，复数 / 尊称）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "darf",
+    "translation": "被允许；可以（dürfen 的现在时）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "gibt",
+    "translation": "给；有、存在（geben 的第三人称单数；es gibt = 有）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "passt",
+    "translation": "合适；合身（passen 的第三人称单数）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "geht",
+    "translation": "走；进行；可行（gehen 的第三人称单数）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "gehe",
+    "translation": "走；去（gehen 的第一人称单数）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "kommt",
+    "translation": "来；出现（kommen 的第三人称单数）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "komme",
+    "translation": "来（kommen 的第一人称单数）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "lässt",
+    "translation": "让；使；留下（lassen 的第三人称单数）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "verboten",
+    "translation": "被禁止的（verbieten 的第二分词）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "handelt",
+    "translation": "处理；涉及（handeln；es handelt sich um = 是关于…）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "erklärt",
+    "translation": "解释；说明；宣布（erklären 的第二分词 / 第三人称单数）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "gilt",
+    "translation": "适用；有效；被视为（gelten 的第三人称单数）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "gefällt",
+    "translation": "使…喜欢（gefallen 的第三人称单数）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "hängt",
+    "translation": "悬挂；取决于（hängen 的第三人称单数）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "zeigt",
+    "translation": "显示；指出；展示（zeigen 的第三人称单数）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "bekommt",
+    "translation": "得到；收到（bekommen 的第三人称单数）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "bietet",
+    "translation": "提供；呈现（bieten 的第三人称单数）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "bringt",
+    "translation": "带来；送（bringen 的第三人称单数）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "denkt",
+    "translation": "想；认为（denken 的第三人称单数）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "findet",
+    "translation": "找到；觉得（finden 的第三人称单数）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "meint",
+    "translation": "认为；意思是（meinen 的第三人称单数）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "steht",
+    "translation": "站立；写着；处于（stehen 的第三人称单数）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "stellt",
+    "translation": "放置；提出（stellen 的第三人称单数）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "unterstützt",
+    "translation": "支持；资助（unterstützen 的第二分词 / 第三人称单数）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "verbessert",
+    "translation": "改善；改进（verbessern 的第二分词 / 第三人称单数）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "wohnt",
+    "translation": "居住（wohnen 的第三人称单数）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "wohne",
+    "translation": "居住（wohnen 的第一人称单数）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "lerne",
+    "translation": "学习（lernen 的第一人称单数）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "heißt",
+    "translation": "名叫；意为（heißen 的第三人称单数）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "heisse",
+    "translation": "名叫（heiße 的 ss 写法，第一人称单数）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "braucht",
+    "translation": "需要（brauchen 的第三人称单数）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "blieb",
+    "translation": "停留；保持（bleiben 的过去时）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "ging",
+    "translation": "走；去（gehen 的过去时）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "gegangen",
+    "translation": "走过；去过（gehen 的第二分词）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "geholfen",
+    "translation": "帮助过（helfen 的第二分词）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "gekauft",
+    "translation": "买过（kaufen 的第二分词）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "gemacht",
+    "translation": "做过；制造过（machen 的第二分词）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "gesagt",
+    "translation": "说过（sagen 的第二分词）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "gefahren",
+    "translation": "乘车 / 驾驶过（fahren 的第二分词）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "regnete",
+    "translation": "下过雨（regnen 的过去时）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "befragt",
+    "translation": "被询问；询问过（befragen 的第二分词）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "geloest",
+    "translation": "已解决（gelöst 的 ASCII 写法，lösen 的第二分词）",
+    "phonetic": "",
+    "pos": "动词"
+  },
+  {
+    "word": "den",
+    "translation": "定冠词 der 的第四格；复数第三格",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "dem",
+    "translation": "定冠词 der / das 的第三格",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "des",
+    "translation": "定冠词 der / das 的第二格",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "eine",
+    "translation": "一个；某（不定冠词 ein- 的阴性形式）",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "einer",
+    "translation": "不定冠词 ein- 的阴性第二 / 三格",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "einen",
+    "translation": "不定冠词 ein- 的阳性第四格",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "einem",
+    "translation": "不定冠词 ein- 的第三格",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "eines",
+    "translation": "不定冠词 ein- 的第二格",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "sich",
+    "translation": "自己；彼此（反身代词）",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "Sie",
+    "translation": "您（尊称）；她 / 他们（sie 的大写形式）",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "zum",
+    "translation": "到…去；对于（zu dem 的缩合）",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "zur",
+    "translation": "到…去；在…时（zu der 的缩合）",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "beim",
+    "translation": "在…时；在…处（bei dem 的缩合）",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "ins",
+    "translation": "进入…（in das 的缩合）",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "vom",
+    "translation": "从…；关于…（von dem 的缩合）",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "mir",
+    "translation": "我（ich 的第三格）",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "mich",
+    "translation": "我（ich 的第四格）",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "dich",
+    "translation": "你（du 的第四格）",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "ihn",
+    "translation": "他（er 的第四格）",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "uns",
+    "translation": "我们（wir 的第三 / 四格）",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "Ihnen",
+    "translation": "您（Sie 的第三格，尊称）",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "ihre",
+    "translation": "她的；他们的；您的（ihr- 的变格）",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "ihren",
+    "translation": "她的；他们的（ihr- 的第四格）",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "ihrer",
+    "translation": "她的；他们的（ihr- 的第二 / 三格）",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "ihrem",
+    "translation": "她的；他们的（ihr- 的第三格）",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "seine",
+    "translation": "他的；它的（sein- 的变格）",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "unsere",
+    "translation": "我们的（unser- 的变格）",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "unserer",
+    "translation": "我们的（unser- 的第二 / 三格）",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "meine",
+    "translation": "我的（mein- 的变格）",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "allem",
+    "translation": "一切；所有（all- 的第三格；vor allem = 尤其）",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "aller",
+    "translation": "所有的（all- 的第二格）",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "jedem",
+    "translation": "每个；每人（jed- 的第三格）",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "jeden",
+    "translation": "每个（jed- 的第四格）",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "jede",
+    "translation": "每个（jed- 的阴性形式）",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "dieses",
+    "translation": "这个（dies- 的中性 / 第二格）",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "diesem",
+    "translation": "这个（dies- 的第三格）",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "diesen",
+    "translation": "这个（dies- 的第四格）",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "keine",
+    "translation": "没有一个；不（kein- 的阴性 / 复数）",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "Welche",
+    "translation": "哪一个；哪些（welch- 的变格）",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "Welches",
+    "translation": "哪一个（welch- 的中性形式）",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "dazu",
+    "translation": "对此；此外；为此",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "darauf",
+    "translation": "在此之上；随后；对此",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "daran",
+    "translation": "在这上面；对此",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "darüber",
+    "translation": "关于此事；在此之上",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "zufolge",
+    "translation": "根据；据…所说",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "später",
+    "translation": "以后；较晚",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "gerne",
+    "translation": "乐意地；喜欢",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "länger",
+    "translation": "更长；更久（lang 的比较级）",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "schneller",
+    "translation": "更快（schnell 的比较级）",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "leichter",
+    "translation": "更轻；更容易（leicht 的比较级）",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "langsamer",
+    "translation": "更慢（langsam 的比较级）",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "zurecht",
+    "translation": "妥当；应付（zurechtkommen = 应付得来）",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "bedingt",
+    "translation": "有限地；有条件地；由于",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "vielen",
+    "translation": "许多（viel- 的复数第三格；vielen Dank = 多谢）",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "andere",
+    "translation": "其他的；另一个（ander- 的变格）",
+    "phonetic": "",
+    "pos": "形容词"
+  },
+  {
+    "word": "anderen",
+    "translation": "其他的（ander- 的变格）",
+    "phonetic": "",
+    "pos": "形容词"
+  },
+  {
+    "word": "eigene",
+    "translation": "自己的（eigen- 的变格）",
+    "phonetic": "",
+    "pos": "形容词"
+  },
+  {
+    "word": "eigenen",
+    "translation": "自己的（eigen- 的变格）",
+    "phonetic": "",
+    "pos": "形容词"
+  },
+  {
+    "word": "guten",
+    "translation": "好的（gut 的变格）",
+    "phonetic": "",
+    "pos": "形容词"
+  },
+  {
+    "word": "kleinen",
+    "translation": "小的（klein 的变格）",
+    "phonetic": "",
+    "pos": "形容词"
+  },
+  {
+    "word": "besten",
+    "translation": "最好的（gut 的最高级变格）",
+    "phonetic": "",
+    "pos": "形容词"
+  },
+  {
+    "word": "passende",
+    "translation": "合适的（passend 的变格）",
+    "phonetic": "",
+    "pos": "形容词"
+  },
+  {
+    "word": "aktuelle",
+    "translation": "当前的；最新的（aktuell 的变格）",
+    "phonetic": "",
+    "pos": "形容词"
+  },
+  {
+    "word": "bestimmten",
+    "translation": "确定的；某些（bestimmt 的变格）",
+    "phonetic": "",
+    "pos": "形容词"
+  },
+  {
+    "word": "nächsten",
+    "translation": "下一个；最近的（nächst- 的变格）",
+    "phonetic": "",
+    "pos": "形容词"
+  },
+  {
+    "word": "interessantesten",
+    "translation": "最有趣的（interessant 的最高级变格）",
+    "phonetic": "",
+    "pos": "形容词"
+  },
+  {
+    "word": "verschiedene",
+    "translation": "不同的；各种各样的",
+    "phonetic": "",
+    "pos": "形容词"
+  },
+  {
+    "word": "weitere",
+    "translation": "进一步的；另外的",
+    "phonetic": "",
+    "pos": "形容词"
+  },
+  {
+    "word": "richtige",
+    "translation": "正确的；合适的（richtig 的变格）",
+    "phonetic": "",
+    "pos": "形容词"
+  },
+  {
+    "word": "österreichischen",
+    "translation": "奥地利的（österreichisch 的变格）",
+    "phonetic": "",
+    "pos": "形容词"
+  },
+  {
+    "word": "deutschen",
+    "translation": "德国的；德语的（deutsch 的变格）",
+    "phonetic": "",
+    "pos": "形容词"
+  },
+  {
+    "word": "Intelligenter",
+    "translation": "更智能的（intelligent 的比较级）",
+    "phonetic": "",
+    "pos": "形容词"
+  },
+  {
+    "word": "Günstige",
+    "translation": "便宜的；优惠的（günstig 的变格）",
+    "phonetic": "",
+    "pos": "形容词"
+  },
+  {
+    "word": "liebsten",
+    "translation": "最喜欢的（lieb 的最高级；am liebsten = 最喜欢）",
+    "phonetic": "",
+    "pos": "形容词"
+  },
+  {
+    "word": "erster",
+    "translation": "第一的；首先（erst- 的变格）",
+    "phonetic": "",
+    "pos": "形容词"
+  },
+  {
+    "word": "Zusätzliches",
+    "translation": "附加内容；额外事项",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Allgemeines",
+    "translation": "一般事项；概况",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Außergewöhnliches",
+    "translation": "特别的事物；非同寻常的事",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Kinder",
+    "translation": "孩子们（Kind 的复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Kindern",
+    "translation": "孩子们（Kind 的复数第三格）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Menschen",
+    "translation": "人们；人类（Mensch 的复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Frauen",
+    "translation": "女士们；妇女（Frau 的复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Männer",
+    "translation": "男人们（Mann 的复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Kollegen",
+    "translation": "同事们（Kollege 的复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Kolleginnen",
+    "translation": "女同事们（Kollegin 的复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Patienten",
+    "translation": "病人们（Patient 的复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Betroffenen",
+    "translation": "受影响者；当事人（Betroffene 的复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Jugendlichen",
+    "translation": "年轻人；青少年（Jugendliche 的复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Sprecher",
+    "translation": "发言人；说话者；播音员",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Sprecherin",
+    "translation": "女发言人；女播音员",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Texte",
+    "translation": "文本；课文（Text 的复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Bücher",
+    "translation": "书（Buch 的复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Jahre",
+    "translation": "年；岁（Jahr 的复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Informationen",
+    "translation": "信息；资料（Information 的复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Probleme",
+    "translation": "问题；难题（Problem 的复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Aufgaben",
+    "translation": "任务；作业；题目（Aufgabe 的复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Personen",
+    "translation": "人；人员（Person 的复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Berufe",
+    "translation": "职业（Beruf 的复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Schulen",
+    "translation": "学校（Schule 的复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Tiere",
+    "translation": "动物（Tier 的复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Waren",
+    "translation": "商品；货物（Ware 的复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Daten",
+    "translation": "数据；资料（Datum 的复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Gründe",
+    "translation": "原因；理由（Grund 的复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Ländern",
+    "translation": "国家；地区（Land 的复数第三格）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Beschwerden",
+    "translation": "不适；病痛；投诉（Beschwerde 的复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Getränke",
+    "translation": "饮料（Getränk 的复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Speisen",
+    "translation": "菜肴；食物（Speise 的复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Mahlzeiten",
+    "translation": "餐；用餐时间（Mahlzeit 的复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Pausen",
+    "translation": "休息；间歇（Pause 的复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Snacks",
+    "translation": "小吃；零食（Snack 的复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Tipps",
+    "translation": "提示；建议（Tipp 的复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Extras",
+    "translation": "附加项目；额外服务（Extra 的复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Sprachen",
+    "translation": "语言（Sprache 的复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Überschriften",
+    "translation": "标题；题目（Überschrift 的复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Leistungen",
+    "translation": "服务；成绩；效能（Leistung 的复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Serviceleistungen",
+    "translation": "服务项目；配套服务",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Hausaufgaben",
+    "translation": "家庭作业",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Führungen",
+    "translation": "导览；参观讲解（Führung 的复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Auslandsanrufe",
+    "translation": "国际长途电话；海外通话",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Ausbildungsmöglichkeiten",
+    "translation": "培训机会；职业教育选择",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Buchausleihe",
+    "translation": "图书外借（服务）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Öffnungszeiten",
+    "translation": "开放时间；营业时间",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Universitätsbibliothek",
+    "translation": "大学图书馆",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Hauptbibliothek",
+    "translation": "总图书馆；主馆",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Zentralbibliothek",
+    "translation": "中央图书馆",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Literaturarchiv",
+    "translation": "文学档案馆",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Verbotsschild",
+    "translation": "禁止标志；禁令牌",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Tierpark",
+    "translation": "动物园",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Kleiderschrank",
+    "translation": "衣柜",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Betreffzeile",
+    "translation": "（邮件）主题行",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Notizblatt",
+    "translation": "便条纸；记事纸",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Schlüsseldienst",
+    "translation": "开锁服务；配钥匙店",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Reizdarm",
+    "translation": "肠易激；过敏性肠道",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Reizdarmsyndrom",
+    "translation": "肠易激综合征",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Schulproblemen",
+    "translation": "学业问题；学校方面的问题（复数第三格）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Arbeitsort",
+    "translation": "工作地点",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Arbeitsleben",
+    "translation": "工作生活；职业生活",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Geldtransfer",
+    "translation": "汇款；资金转账",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Spezialfarbe",
+    "translation": "特殊颜色；专用色",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Sportarten",
+    "translation": "运动项目（Sportart 的复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Fußballspielen",
+    "translation": "踢足球；足球比赛（复数第三格）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Ausgaben",
+    "translation": "支出；开支；版本（Ausgabe 的复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Anregungen",
+    "translation": "建议；启发（Anregung 的复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Anrufe",
+    "translation": "电话；来电（Anruf 的复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Anweisungen",
+    "translation": "指示；说明（Anweisung 的复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Arztbriefe",
+    "translation": "医生转诊信；病历函（Arztbrief 的复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Arztbesuch",
+    "translation": "就诊；看医生",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Ausbildungsbetrieben",
+    "translation": "实习 / 培训企业（复数第三格）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Autoparkplätze",
+    "translation": "停车位（复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Ausleihe",
+    "translation": "外借；借书处",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Ausschnitt",
+    "translation": "片段；节选；剪裁",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Aschenbecher",
+    "translation": "烟灰缸",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Apfelschorle",
+    "translation": "苹果汁汽水",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Akupunktur",
+    "translation": "针灸",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Altstadt",
+    "translation": "老城区",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Ambulanzgebühr",
+    "translation": "门诊费",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Badegäste",
+    "translation": "浴客；游泳客人（复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Bankdirektor",
+    "translation": "银行行长；分行经理",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Barauszahlung",
+    "translation": "现金支付；现金支取",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Ausdrucksmöglichkeit",
+    "translation": "表达方式；表现手段",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Ängste",
+    "translation": "恐惧；忧虑（Angst 的复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Ansätze",
+    "translation": "开端；迹象；思路（Ansatz 的复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Hause",
+    "translation": "家（zu Hause = 在家；nach Hause = 回家）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Handy",
+    "translation": "手机",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Mail",
+    "translation": "电子邮件；邮件",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Online",
+    "translation": "在线的；联网的",
+    "phonetic": "",
+    "pos": "形容词"
+  },
+  {
+    "word": "Portal",
+    "translation": "门户网站；入口",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Camp",
+    "translation": "营地；夏令营",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Campleitung",
+    "translation": "营地负责人；营地管理",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Bio",
+    "translation": "有机的；生物的",
+    "phonetic": "",
+    "pos": "形容词"
+  },
+  {
+    "word": "Velo",
+    "translation": "自行车（瑞士德语）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Sekretär",
+    "translation": "秘书；书记",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Euro",
+    "translation": "欧元",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "danke",
+    "translation": "谢谢；感谢",
+    "phonetic": "",
+    "pos": "其他"
+  },
+  {
+    "word": "info",
+    "translation": "信息；资讯（Info）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "vorbehalte",
+    "translation": "保留意见；顾虑（Vorbehalt 的复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Schweizer",
+    "translation": "瑞士人；瑞士的",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Wiener",
+    "translation": "维也纳的；维也纳人",
+    "phonetic": "",
+    "pos": "形容词"
+  },
+  {
+    "word": "Europa",
+    "translation": "欧洲（地名，常用基础词）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Deutschland",
+    "translation": "德国（地名，常用基础词）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Österreich",
+    "translation": "奥地利（地名，常用基础词）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Schweiz",
+    "translation": "瑞士（地名，常用基础词）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Berlin",
+    "translation": "柏林（地名，常用基础词）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Wien",
+    "translation": "维也纳（地名，常用基础词）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Spanien",
+    "translation": "西班牙（地名，常用基础词）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "China",
+    "translation": "中国（地名，常用基础词）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Hamburg",
+    "translation": "汉堡（地名，常用基础词）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Bistro",
+    "translation": "小餐馆；小酒馆",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Cafeteria",
+    "translation": "自助餐厅；咖啡厅",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Arten",
+    "translation": "种类；方式（Art 的复数）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Behandlung",
+    "translation": "治疗；处理",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "Herrn",
+    "translation": "先生（Herr 的第三 / 四格，用于称呼）",
+    "phonetic": "",
+    "pos": "名词"
+  },
+  {
+    "word": "alleine",
+    "translation": "独自；单独",
+    "phonetic": "",
+    "pos": "形容词"
+  },
+  {
+    "word": "ähnlich",
+    "translation": "相似的；类似的",
+    "phonetic": "",
+    "pos": "形容词"
   }
 ];
