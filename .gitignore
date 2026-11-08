@@ -59,22 +59,22 @@ data/audio/**/KID_*.mp3
 # ZB2_MS_A2_270917.mp3 / ZB2_J_MS_A2.mp3 的排除，避免线上听力组无声。
 # （Hören 2 的开放式数值填空行仍不纳入题库，但卷面结构已写进 passage。）
 
-# ===== ÖSD C1 听力音频：只上线题目实际引用的 3 个（约 123MB）=====
+# ===== ÖSD C1 听力音频：只上线题目实际引用的 2 个（约 113MB）=====
 # 3 套卷各含 Hören Aufgabe 1 / 2 两条音轨，PMB 另有原始大文件与压缩版各一份，
-# 共 8 个（280.96MB）。只保留被 Hören Aufgabe 1 引用的 3 个：
-#   ZC1_MS_A1_05122017.mp3、ZC1_J_MS_Aufgabe1.mp3、
-#   ZC1_PMB_MS_A1_300625-converted.mp3（压缩版，与 B2/PMB 同口径）。
-# 排除 5 个：
-#   - 3 套卷的 Hören Aufgabe 2 音轨：该题是 10 条开放式 NOTIZEN 补全（无打叉网格，
+# 共 8 个（280.96MB）。方案 B 按用户决策剔除 PMB 与 ZC1 逐字重复的
+# Lesen/Hören Aufgabe 1 两组后，只剩 2 条音轨被题目引用（已分 2 次提交上线）：
+#   ZC1_MS_A1_05122017.mp3、ZC1_J_MS_Aufgabe1.mp3。
+# 其余 6 个全部排除，确保部署包零冗余：
+#   - 3 套卷的 Hören Aufgabe 2 音轨：10 条开放式 NOTIZEN 补全（无打叉网格，
 #     答案卡为单词/短语），按 A1/A2 既定口径不纳入题库，故无题目引用；
-#   - ZC1/PMB 的原始未压缩音轨（55.29MB / 30.77MB），与 -converted 版内容重复。
+#   - ZC1/PMB 的原始未压缩音轨（55.29MB / 30.77MB），与 -converted 版内容重复；
+#   - PMB 的 -converted 音轨：去重后已无任何题目引用。
 data/audio/c1/ZC1_MS_A2_04122017.mp3
 data/audio/c1/ZC1_J_MS_Aufgabe2.mp3
 data/audio/c1/ZC1_PMB_MS_A2_100725-converted.mp3
 data/audio/c1/ZC1_PMB_MS_A1_300625.mp3
 data/audio/c1/ZC1_PMB_MS_A2_100725.mp3
-# 方案 B：PMB 的 Lesen/Hören Aufgabe 1 与 ZC1 逐字重复，已按用户决策从题库剔除，
-# 因此 ZC1_PMB_MS_A1_300625-converted.mp3 也不再被任何题目引用（见下方通用规则说明）。
+data/audio/c1/ZC1_PMB_MS_A1_300625-converted.mp3
 
 # ===== 本地中间产物与备份（严禁进仓库 / Netlify 部署包）=====
 # OSD 收割流水线在 data/_staging/ 下产生的 parsed JSON、词库扫描中间文件
