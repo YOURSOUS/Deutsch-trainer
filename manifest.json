@@ -1,0 +1,26 @@
+{
+  "name": "德语自适应学习小站",
+  "short_name": "德语小站",
+  "description": "A1–C1 德语自适应刷题、默写与 ÖSD 真题训练",
+  "lang": "zh-CN",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#F6F4FF",
+  "theme_color": "#7C5CFF",
+  "icons": [
+    {
+      "src": "img/logo.png",
+      "sizes": "577x433",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "app.png",
+      "sizes": "256x256",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

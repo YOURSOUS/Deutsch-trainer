@@ -85,3 +85,7 @@ data/_staging/
 # 原始下载归档（PDF / ZIP / 原始素材）与本地历史备份，同样不进部署包。
 data/_sources/
 *.bak
+
+# ===== v1.3 PWA 改造前的带时间戳安全备份（只留本地，绝不进部署包）=====
+# 提交一律走精确清单，备份目录不进 Git / Netlify。
+_backups/

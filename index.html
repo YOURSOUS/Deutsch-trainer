@@ -1476,6 +1476,9 @@
   #dictTooltip .dict-tt-fav:hover { background: rgba(255, 255, 255, .2); }
   #dictTooltip .dict-tt-fav[aria-pressed="true"] { color: #ffd76a; border-color: rgba(255, 215, 106, .6); }
 </style>
+<!-- ===== v1.3 PWA：主题色 + Web App Manifest（可安装 / standalone） ===== -->
+<meta name="theme-color" content="#7C5CFF">
+<link rel="manifest" href="manifest.json">
 </head>
 <body>
 <div class="wall" id="wallLayer"></div>
@@ -5448,11 +5451,40 @@
       if (e.key === 'Escape') toggleSettingsView(false);
       return;
     }
+    /* ★ v1.3 极速刷题快捷键：扩展原有这一个「刷题快捷键」监听，不新增 document
+       keydown 监听器（另有 3 个既有监听只处理查词浮层 Esc、台词弹窗 Esc / Tab），
+       避免同一次按键被处理两次。纯 UI 转发（只 click 既有按钮），
+       不触碰 judge / judgeGroup / SRS / 存档 / 查词 / 斩题任何一行。
+       生效条件：每日一练可见 + 不在输入控件内 + 无修饰键 + 未被其它处理器 preventDefault。 */
+    var kTarget = e.target || {};
+    var kTag = kTarget.tagName || '';
+    var kTyping = /^(INPUT|TEXTAREA|SELECT)$/.test(kTag) || !!kTarget.isContentEditable;
+    var kView = document.getElementById('viewPractice');
+    var kPractice = !!kView && !kView.hidden;
+    var kPlain = !e.ctrlKey && !e.metaKey && !e.altKey && !e.defaultPrevented;
+
+    if (kPlain && !kTyping && kPractice) {
+      if (/^[1-4]$/.test(e.key)) {
+        /* 1..4 → A/B/C/D：#choices 内 button.choice 的 DOM 顺序就是 A/B/C/D；
+           已判定（disabled）或选项区隐藏（默写 / 组题 / 填空题）时一律不响应。 */
+        var cList = el.choices ? el.choices.querySelectorAll('button.choice') : null;
+        var cBtn = cList ? cList[Number(e.key) - 1] : null;
+        if (cBtn && !cBtn.disabled && el.choices.style.display !== 'none') {
+          e.preventDefault(); cBtn.click(); return;
+        }
+      }
+      /* Enter → 提交 / 下一题。焦点在文本框时由 #answerInput 原有 keydown 处理；
+         焦点在按钮 / 链接时交给浏览器原生行为，避免一次 Enter 触发两个按钮。 */
+      if (e.key === 'Enter' && !/^(BUTTON|A)$/.test(kTag)) {
+        e.preventDefault(); el.nextBtn.click(); return;
+      }
+    }
     if (e.ctrlKey && e.key === 'Enter') { e.preventDefault(); el.skipBtn.click(); }
     else if (e.key === 'Escape') { el.answerInput.value = ''; el.answerInput.focus(); }
-    else if (e.key === ' ' && !/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) && !e.target.isContentEditable) {
+    else if (e.key === ' ' && !kTyping && kPractice) {
       /* v0.3.1 修复：原先只放行 #answerInput，导致默写框等 textarea 打不出空格（空格被当成朗读快捷键）；
-         改为任何输入控件（INPUT / TEXTAREA / SELECT / contentEditable）内一律不劫持空格。 */
+         改为任何输入控件（INPUT / TEXTAREA / SELECT / contentEditable）内一律不劫持空格。
+         ★ v1.3：按需求把朗读 / 听音快捷键一并限定在「每日一练」视图。 */
       e.preventDefault();
       /* ★ v0.4：听音题的空格键改走「听音」，其余题型仍是朗读题干 */
       if (currentKind() === 'dictation') { if (currentDictSub === 'listen') el.dictationSpeakBtn.click(); }
@@ -7601,6 +7633,87 @@
     }
   } catch (e) {
     /* 提示功能出任何问题都不允许影响主程序 */
+  }
+})();
+</script>
+
+<!-- ==========================================================================
+     v1.3 PWA 运行时（独立 IIFE，删除本段即可完全回退）
+     职责：① 注册 Service Worker；② offline / online 顶部轻提示。
+     边界：不读不写 state / localStorage 进度键，不触碰任何业务函数；
+           只在支持 SW 且为 http(s) 安全上下文时注册（file:// / 微信端静默跳过）；
+           异常全部吞掉，绝不影响主程序。
+     为什么不用 #saveTip：saveState() 每 1.2s 会用「已自动保存」覆盖它，
+           离线提示需要常驻，故自建 #netTip（内联样式，零全局 CSS 污染，
+           配色直接取现有主题令牌，自动适配深色模式）。
+     ========================================================================== -->
+<script>
+(function () {
+  'use strict';
+  try {
+    /* ---------- 1) Service Worker 注册 ---------- */
+    if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
+      var registerSw = function () {
+        navigator.serviceWorker.register('sw.js', { scope: './' }).catch(function () {});
+      };
+      if (document.readyState === 'complete') registerSw();
+      else window.addEventListener('load', registerSw);
+    }
+
+    /* ---------- 2) 断网 / 联网轻提示 ---------- */
+    var OFFLINE_TEXT = '当前处于离线模式，听力音频暂不可用，题库依然可以刷';
+    var ONLINE_TEXT = '已恢复网络连接';
+    var tip = null, hideTimer = null;
+
+    function ensureTip() {
+      if (tip) return tip;
+      tip = document.createElement('div');
+      tip.id = 'netTip';
+      tip.setAttribute('role', 'status');
+      tip.setAttribute('aria-live', 'polite');
+      tip.style.cssText = [
+        'position:fixed', 'left:50%', 'top:12px',
+        'transform:translate(-50%,-160%)', 'z-index:10003',
+        'max-width:min(92vw,560px)', 'padding:10px 16px',
+        'border-radius:12px', 'font-size:13px', 'line-height:1.5',
+        'font-weight:600', 'text-align:center',
+        'box-shadow:0 8px 24px rgba(0,0,0,.18)',
+        'background:var(--hina-card,#fff)',
+        'color:var(--hina-text,#1E1B33)',
+        'border:1px solid var(--hina-border,#DCD2FA)',
+        'border-top:3px solid var(--hina-primary,#7C5CFF)',
+        'transition:transform .28s ease,opacity .28s ease',
+        'opacity:0', 'pointer-events:none'
+      ].join(';') + ';';
+      (document.body || document.documentElement).appendChild(tip);
+      return tip;
+    }
+    function hide() {
+      if (!tip) return;
+      tip.style.opacity = '0';
+      tip.style.transform = 'translate(-50%,-160%)';
+    }
+    function show(text, sticky, warn) {
+      var t = ensureTip();
+      clearTimeout(hideTimer);
+      t.textContent = text;
+      t.style.borderTopColor = warn ? '#dc2626' : 'var(--hina-primary,#7C5CFF)';
+      t.style.opacity = '1';
+      t.style.transform = 'translate(-50%,0)';
+      if (!sticky) hideTimer = setTimeout(hide, 3000);
+    }
+    window.addEventListener('offline', function () { show(OFFLINE_TEXT, true, true); });
+    window.addEventListener('online', function () { show(ONLINE_TEXT, false, false); });
+    /* 页面加载时本来就已断网 → 立即显示，不用等事件 */
+    if (navigator.onLine === false) {
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function () { show(OFFLINE_TEXT, true, true); });
+      } else {
+        show(OFFLINE_TEXT, true, true);
+      }
+    }
+  } catch (e) {
+    /* PWA 运行时出任何问题都不允许影响主程序 */
   }
 })();
 </script>
