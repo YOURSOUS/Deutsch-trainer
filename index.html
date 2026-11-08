@@ -1479,6 +1479,8 @@
 <!-- ===== v1.3 PWA：主题色 + Web App Manifest（可安装 / standalone） ===== -->
 <meta name="theme-color" content="#7C5CFF">
 <link rel="manifest" href="manifest.json">
+<!-- ★ v1.3.1 PWA 图标：iOS「添加到主屏幕」同样使用日奈专属正方形头像 -->
+<link rel="apple-touch-icon" href="img/hina-icon.png">
 </head>
 <body>
 <div class="wall" id="wallLayer"></div>
@@ -1959,6 +1961,35 @@
   function currentKillKey() {
     const t = state.currentTask;
     return t ? killKeyFor(t.level, t.index) : null;
+  }
+
+  /* ==========================================================================
+   * ★ v1.4 · 默写题斩题统一判据
+   * 默写题在独立词库里，没有 lv:ix 坐标，key 一律用 String(item.id)。
+   * 三类 key 互不冲突：默写 id 是纯数字、大组 id 是 za1_lesen_a1 之类字符串、
+   * bank 单题是 "lv:ix"（含冒号）。
+   * ★ 所有默写抽题入口、队列、存档恢复、工具箱标签都必须走这里，
+   *   少接一处就会出现「斩完立刻抽回」或「刷新后复活」。
+   * ========================================================================== */
+  function isKilledDictation(id) {
+    if (id === null || id === undefined) return false;
+    const k = String(id);
+    if (k === '') return false;
+    const list = Array.isArray(state.killed) ? state.killed : [];
+    for (let i = 0; i < list.length; i += 1) {
+      if (list[i] != null && String(list[i]) === k) return true;
+    }
+    return false;
+  }
+  /* 未被斩的默写题数量：randomKind() 用它把已斩光的题源自动剔除，
+     否则全斩光后每次随机仍落到 dictation 分支，只会显示空提示卡住刷题。 */
+  function liveDictationCount() {
+    const list = currentDictation();
+    let n = 0;
+    for (let i = 0; i < list.length; i += 1) {
+      if (!isKilledDictation(dictationIdOf(list[i], i))) n += 1;
+    }
+    return n;
   }
   const SRS_STEPS = [1, 3, 7, 15];
 
@@ -2658,8 +2689,9 @@
   function randomKind() {
     const bag = [];
     if (bankOf(state.level).length > 0) { bag.push('choice'); bag.push('input'); }
-    /* ★ v1.0：进阶真题区只出大组题，不混入默写（默写题不在 bank 分区体系内） */
-    if (state.currentZone !== 'adv' && currentDictation().length > 0) bag.push('dictation');
+    /* ★ v1.0：进阶真题区只出大组题，不混入默写（默写题不在 bank 分区体系内）
+       ★ v1.4：按「未被斩的题数」判断，全斩光时自动剔除该源，避免卡在空提示 */
+    if (state.currentZone !== 'adv' && liveDictationCount() > 0) bag.push('dictation');
     return bag.length ? bag[Math.floor(Math.random() * bag.length)] : '';
   }
   /* 队列探测（只看不消费）：用于"错题 / 到期复习绝对优先" */
@@ -2680,7 +2712,8 @@
     let cur = Math.max(0, Math.min(Number(state.dictationQueueCursor) || 0, q.length));
     while (cur < q.length) {
       const x = q[cur];
-      if (x && dictationItem(x.id)) return { id: x.id, reason: x.reason || '默写错题重练' };
+      /* ★ v1.4：已斩默写题不参与「队列绝对优先」判定（与 peekBankQueue 同口径） */
+      if (x && dictationItem(x.id) && !isKilledDictation(x.id)) return { id: x.id, reason: x.reason || '默写错题重练' };
       cur += 1;
     }
     return null;
@@ -2721,8 +2754,9 @@
     b.textContent = judged ? '下一题' : (grouped ? '提交整组答案' : '提交');
     b.classList.toggle('is-next', judged);
     b.setAttribute('aria-label', judged ? '进入下一题' : (grouped ? '提交整组答案' : '提交答案'));
-    /* ★ v0.9：默写题来自独立词库（无 lv:ix）、以及无有效题目时，隐藏斩题按钮 */
-    if (el.killBtn) el.killBtn.style.display = (currentKind() === 'dictation' || !currentItem()) ? 'none' : '';
+    /* ★ v1.4：默写题同样开放斩题。currentItem() 在默写态恒为 null（词库条目没有 lv:ix），
+       所以只有「完全没有任何题目（!currentItem() 且非默写题）」时才隐藏按钮。 */
+    if (el.killBtn) el.killBtn.style.display = (!currentItem() && currentKind() !== 'dictation') ? 'none' : '';
   }
 
   /* ★ 本轮任务 1 新增：判定正确后统一延迟 1200ms 自动进入下一题。
@@ -2741,11 +2775,12 @@
 
   /* ★ 本轮任务 2 新增：统一的「进入下一题」入口。
      先清掉待触发的自动跳转定时器，避免「手动点击 + 定时器」同时触发导致跳两题。 */
-  /* ★ v1.1：当前抽到的题是否落在斩题黑名单里（默写题无 lv:ix，天然不算）。
+  /* ★ v1.1：当前抽到的题是否落在斩题黑名单里。
      抽题的所有来源（临时组卷池 / 当日队列 / 随机池）最终都汇到 state.currentTask，
-     在这里做最后一道统一判定，比在每条支路上各写一次过滤更不容易漏。 */
+     在这里做最后一道统一判定，比在每条支路上各写一次过滤更不容易漏。
+     ★ v1.4：默写题走 state.currentDictationId，同样纳入这道兜底。 */
   function currentTaskKilled() {
-    if (currentKind() === 'dictation') return false;
+    if (currentKind() === 'dictation') return isKilledDictation(state.currentDictationId);
     const t = state.currentTask;
     if (!t) return false;
     return isKilledAt(t.level, t.index);
@@ -2783,10 +2818,54 @@
       } catch (e) {}
       state.currentDictationId = null;
     }
-    /* 默写题来自独立词库（没有 lv:ix），不在本次斩题的 key 体系内 */
+    /* ======================================================================
+     * ★ v1.4 任务 2 · 默写题斩题闭环
+     * key = String(dictId)，与 bank 的 lv:ix / 大组 item.id 体系互不冲突。
+     * 默写数据存在独立 localStorage（DICT_STORE_KEY），主存档只负责 state.killed，
+     * 所以必须 saveState() + saveDictationData() 双写，缺一就会刷新复活。
+     * ====================================================================== */
     if (currentKind() === 'dictation') {
-      try { console.log('[斩题] 已忽略：当前是默写题，没有 lv:ix 坐标'); } catch (e) {}
-      show_msg('提示', '默写题暂不支持斩题，请使用词汇库收藏管理。', '');
+      const dictId = state.currentDictationId;
+      if (dictId === null || dictId === undefined || String(dictId) === '') {
+        try { console.warn('[斩题] 已中止：默写题缺少 id', { dictId: dictId }); } catch (e) {}
+        return;
+      }
+      const dKey = String(dictId);
+      if (!Array.isArray(state.killed)) state.killed = [];
+      /* 统一 String 去重：旧存档里 killed 可能是数字，indexOf(String) 会漏判 */
+      const dExists = state.killed.some(function(k) { return k != null && String(k) === dKey; });
+      if (!dExists) state.killed.push(dKey);
+
+      /* 1) 独立的默写错题本 / SRS 复习队列（元素都是 {id,...}，一律 String 比对） */
+      const notDict = function(r) { return !(r && String(r.id) === dKey); };
+      state.dictationWrong = (Array.isArray(state.dictationWrong) ? state.dictationWrong : []).filter(notDict);
+      state.dictationSrs   = (Array.isArray(state.dictationSrs)   ? state.dictationSrs   : []).filter(notDict);
+      /* 2) 当日默写队列：只清理「尚未消费」段，queueCursor 保持不变。
+            整段 filter 会让游标错位并白吞下一题（主队列踩过的同款坑）。 */
+      const dq = Array.isArray(state.dictationQueue) ? state.dictationQueue : [];
+      const dcur = Math.max(0, Math.min(Number(state.dictationQueueCursor) || 0, dq.length));
+      state.dictationQueue = dq.slice(0, dcur).concat(dq.slice(dcur).filter(notDict));
+
+      /* 3) 双写存档。先把 currentDictationId 置空，避免把「刚斩掉的题」写进
+            curId，刷新时 loadDictationData()/boot 又把它恢复上屏。 */
+      state.userActed = true;          /* 解除防覆盖闸门，保证 killed 立刻落盘 */
+      saveState();
+      state.currentDictationId = null;
+      saveDictationData();
+      try {
+        console.log('[斩题] 默写题已斩', {
+          id: dKey, killed: state.killed.slice(),
+          wrong: state.dictationWrong.length, srs: state.dictationSrs.length,
+          queue: state.dictationQueue.length, cursor: state.dictationQueueCursor
+        });
+      } catch (e) {}
+
+      renderWrong();                  /* bank 错题计数 */
+      renderDaily();                  /* ★ 刷新「默写错题」独立计数 */
+      renderKilledPanel();
+      wallTip('已斩该默写题', false);
+      goNext();                       /* 内含 currentTaskKilled() 重抽兜底，默写同样生效 */
+      saveDictationData();            /* 把 goNext 之后的新题 curId 写回，杜绝残留旧题 */
       return;
     }
     const item = currentItem();
@@ -4021,6 +4100,9 @@
       wallTip._t = setTimeout(function() { tip.className = 'save-tip'; tip._dshHold = false; }, 8000);
     } catch (e) {}
   }
+  /* ★ v1.5：把顶部提示函数以只读引用暴露给文件底部那个独立的 PWA 运行时 IIFE
+     （两个 IIFE 作用域互不相通）。仅新增这一行引用，wallTip 函数体一字未改。 */
+  window.wallTip = wallTip;
   /* 已废弃：壁纸图改由 IndexedDB 读取，保留定义以免外部引用报错 */
   function currentWallImage() {
     if (typeof state.wallImg === 'string' && state.wallImg) return state.wallImg;
@@ -4373,6 +4455,8 @@
     const seen = {};
     const pushId = function(id, reason) {
       if (id === undefined || id === null) return;
+      /* ★ v1.4：已斩默写题不得重建进队列（旧存档 / 恢复场景兜底） */
+      if (isKilledDictation(id)) return;
       const k = String(id);
       if (seen[k] || !dictationItem(id)) return;
       seen[k] = 1;
@@ -4389,7 +4473,8 @@
     let cur = Math.max(0, Math.min(Number(state.dictationQueueCursor) || 0, q.length));
     while (cur < q.length) {
       const x = q[cur];
-      if (!x || !dictationItem(x.id)) { cur += 1; state.dictationQueueCursor = cur; continue; }
+      /* ★ v1.4：队列里残留的已斩默写题直接跳过，游标同步前移 */
+      if (!x || !dictationItem(x.id) || isKilledDictation(x.id)) { cur += 1; state.dictationQueueCursor = cur; continue; }
       state.dictationQueueCursor = cur + 1;
       return x;
     }
@@ -4402,13 +4487,22 @@
     const list = currentDictation();
     buildDictationQueueIfNeeded();
     let task = preTask || null;
+    /* ★ v1.4：外部传入 / 存档恢复上来的已斩默写题一律作废，重新抽题 */
+    if (task && isKilledDictation(task.id)) task = null;
     if (!task) {
       const fromQ = nextDictationFromQueue();
       if (fromQ) {
         task = { id: fromQ.id, reason: fromQ.reason || '默写错题重练' };
-      } else if (list.length > 0) {
-        const ix = Math.floor(Math.random() * list.length);
-        task = { id: dictationIdOf(list[ix], ix), reason: '' };
+      } else {
+        /* ★ v1.4：随机池只保留未被斩的题，否则斩完立刻会被抽回屏幕 */
+        const live = [];
+        for (let i = 0; i < list.length; i += 1) {
+          const id = dictationIdOf(list[i], i);
+          if (!isKilledDictation(id)) live.push(id);
+        }
+        if (live.length > 0) {
+          task = { id: live[Math.floor(Math.random() * live.length)], reason: '' };
+        }
       }
     }
     state.currentDictationId = task ? task.id : null;
@@ -4417,7 +4511,9 @@
     if (!task) {
       state.currentTask = null;
       el.taskMeta.textContent = '';
-      el.taskQuestion.textContent = '（默写题库为空：请检查 data/dictation.js 是否加载）';
+      el.taskQuestion.textContent = liveDictationCount() === 0
+        ? '（默写题已全部斩除：可在「工具箱 → 已斩题目」点击恢复）'
+        : '（默写题库为空：请检查 data/dictation.js 是否加载）';
       el.dictationBox.style.display = 'none';
       return;
     }
@@ -4436,7 +4532,8 @@
     hideGroupBoxes();  /* ★ v0.5：pickTask 的 dictation 分支会绕过 renderTask 直调本函数，必须在这里清组题残留 */
     const list = currentDictation();
     const it = dictationItem(state.currentDictationId);
-    if (!it) { pickDictationTask(); return; }
+    /* ★ v1.4：存档恢复上来的已斩默写题不许渲染，立即改抽下一题 */
+    if (!it || isKilledDictation(state.currentDictationId)) { pickDictationTask(); return; }
     const total = list.length;
     const nWrong = state.dictationWrong.length;
     const nSrs = dictationSrsPendingCount();
@@ -4611,10 +4708,15 @@
     let o = null;
     try { o = JSON.parse(localStorage.getItem(DICT_STORE_KEY) || 'null'); } catch (e) { o = null; }
     if (o && typeof o === 'object') {
-      if (Array.isArray(o.wrong)) state.dictationWrong = o.wrong.filter(function(w) { return w && w.id !== undefined && w.id !== null; });
-      if (Array.isArray(o.srs)) state.dictationSrs = o.srs.filter(function(r) { return r && r.id !== undefined && r.id !== null; });
+      /* ★ v1.4：读盘时也按 killed 过滤。旧版存档 / 跨设备导入 / 上次写盘失败，
+         都可能把已斩默写题留在 wrong / srs 里，导致错题与复习计数虚高。
+         killed 若此刻还没从主存档恢复，boot 末尾还有第二道统一防线。 */
+      if (Array.isArray(o.wrong)) state.dictationWrong = o.wrong.filter(function(w) { return w && w.id !== undefined && w.id !== null && !isKilledDictation(w.id); });
+      if (Array.isArray(o.srs)) state.dictationSrs = o.srs.filter(function(r) { return r && r.id !== undefined && r.id !== null && !isKilledDictation(r.id); });
       if (o.mode === 'dictation') state.mode = 'dictation';   /* 恢复上次的默写开关 */
-      if (o.curId !== undefined && o.curId !== null && dictationItem(o.curId)) state.currentDictationId = o.curId;
+      /* ★ v1.4：被斩的默写题不恢复成当前题，否则刷新后复活上屏 */
+      if (o.curId !== undefined && o.curId !== null && dictationItem(o.curId) && !isKilledDictation(o.curId))
+        state.currentDictationId = o.curId;
     }
     dictLoaded = true;   /* 即使没有历史数据，也允许后续写盘 */
     if (el.modeDictation) el.modeDictation.checked = state.mode === 'dictation';
@@ -5265,6 +5367,14 @@
       return levelOf(lv) + ' · ' + short;
     };
     if (m) return describe(Number(m[1]), bankOf(Number(m[1]))[Number(m[2])], Number(m[2]));
+    /* ★ v1.4：默写题 key 是纯 id，反查默写题库显示提示语，避免只显示裸数字 */
+    const dlist = currentDictation();
+    for (let d = 0; d < dlist.length; d += 1) {
+      if (dlist[d] && String(dictationIdOf(dlist[d], d)) === k) {
+        const dq = String(dlist[d].q || '').replace(/\s+/g, ' ').trim();
+        return '默写 · ' + (dq ? (dq.length > 46 ? dq.slice(0, 46) + '…' : dq) : k);
+      }
+    }
     /* 组题 key 是 item.id：反查所属级别与题干（27 个大组，最多 377 项，开销可忽略） */
     for (let lv = 1; lv <= levels.length; lv += 1) {
       const arr = bankOf(lv);
@@ -5306,6 +5416,11 @@
     state.killed = [];
     state.userActed = true;   /* 解除防覆盖闸门，保证恢复结果立刻落盘 */
     saveState();
+    /* ★ v1.4：默写题被斩时已从「当日队列未消费段」剔除，若 queueBuilt 仍为 true，
+       恢复后 buildDictationQueueIfNeeded() 会直接 return，要等队列耗尽才抽得到。
+       这里让队列重建，保证点完「恢复」立刻能刷回来。 */
+    state.dictationQueueBuilt = false;
+    try { saveDictationData(); } catch (e) {}
     renderKilledPanel();
     alert('已恢复所有被斩题目' + (n ? '（共 ' + n + ' 题）' : '') + '，它们将重新出现在随机出题池');
   });
@@ -5414,6 +5529,32 @@
       goNext: goNext,
       setZone: setZone,
       makeDirty: function (id) { state.currentDictationId = id; return state.currentDictationId; },
+      /* ★ v1.4：默写斩题断言用的纯内存探针，不触碰持久化与判题逻辑 */
+      isKilledDictation: isKilledDictation,
+      liveDictationCount: liveDictationCount,
+      clearKilled: function () { state.killed = []; return state.killed.length; },
+      pickDictationTask: pickDictationTask,
+      killedLabel: killedLabel,
+      saveDictationData: saveDictationData,
+      loadDictationData: loadDictationData,
+      setDictation: function (id) { pickDictationTask({ id: id }); return state.currentDictationId; },
+      injectDict: function (o) {
+        if (!o) return false;
+        if (Array.isArray(o.wrong)) state.dictationWrong = o.wrong.slice();
+        if (Array.isArray(o.srs)) state.dictationSrs = o.srs.slice();
+        if (Array.isArray(o.queue)) state.dictationQueue = o.queue.slice();
+        if (o.cursor !== undefined) state.dictationQueueCursor = o.cursor;
+        if (o.built !== undefined) state.dictationQueueBuilt = o.built;
+        return true;
+      },
+      rebuildDictQueue: function () {
+        state.dictationQueueBuilt = false;
+        buildDictationQueueIfNeeded();
+        return (state.dictationQueue || []).slice();
+      },
+      dictStore: function () {
+        try { return JSON.parse(localStorage.getItem('de-dictation-extra') || 'null'); } catch (e) { return null; }
+      },
       snapshot: function () {
         return {
           killed: (state.killed || []).slice(),
@@ -5425,7 +5566,15 @@
           queueCursor: state.queueCursor,
           wrong: (state.wrong || []).slice(),
           srs: (state.srs || []).slice(),
-          dictationId: state.currentDictationId
+          dictationId: state.currentDictationId,
+          dictWrong: (state.dictationWrong || []).slice(),
+          dictSrs: (state.dictationSrs || []).slice(),
+          dictQueue: (state.dictationQueue || []).slice(),
+          dictCursor: state.dictationQueueCursor,
+          dictBuilt: state.dictationQueueBuilt,
+          liveDict: liveDictationCount(),
+          killBtnVisible: !!(el.killBtn && el.killBtn.style.display !== 'none'),
+          dictWrongCount: el.dictationWrongCount ? el.dictationWrongCount.textContent : ''
         };
       }
     };
@@ -5906,6 +6055,27 @@
       }
     } catch (e) {}
     state.locked = false;
+    /* ★ v1.4：第二道防线 —— loadDictationData() 可能先于主存档恢复（那时 killed 还是空），
+       这里在 state.killed 已确定后按它统一清理 curId / wrong / srs / 未消费队列，
+       杜绝「刷新复活」与「已斩题仍占着错题、复习计数」。只在真有残留时才写盘。 */
+    try {
+      var dkLive = function(r) { return !(r && isKilledDictation(r.id)); };
+      var dkW = Array.isArray(state.dictationWrong) ? state.dictationWrong : [];
+      var dkS = Array.isArray(state.dictationSrs) ? state.dictationSrs : [];
+      var dkQ = Array.isArray(state.dictationQueue) ? state.dictationQueue : [];
+      var dkC = Math.max(0, Math.min(Number(state.dictationQueueCursor) || 0, dkQ.length));
+      var dkNW = dkW.filter(dkLive), dkNS = dkS.filter(dkLive);
+      var dkNQ = dkQ.slice(0, dkC).concat(dkQ.slice(dkC).filter(dkLive));
+      var dkDirty = dkNW.length !== dkW.length || dkNS.length !== dkS.length || dkNQ.length !== dkQ.length;
+      if (currentKind() === 'dictation' && isKilledDictation(state.currentDictationId)) {
+        state.currentDictationId = null; dkDirty = true;
+      }
+      if (dkDirty) {
+        state.dictationWrong = dkNW; state.dictationSrs = dkNS; state.dictationQueue = dkNQ;
+        if (el.dictationWrongCount) el.dictationWrongCount.textContent = state.dictationWrong.length;
+        saveDictationData();
+      }
+    } catch (e) {}
     if (currentKind() === 'dictation') {
       if (dictationItem(state.currentDictationId)) renderDictationTask(); else pickDictationTask();
     /* ★ v0.9：存档里的 currentTask 若已被斩，不要把它重新渲染出来，直接抽下一题 */
@@ -7639,26 +7809,105 @@
 
 <!-- ==========================================================================
      v1.3 PWA 运行时（独立 IIFE，删除本段即可完全回退）
-     职责：① 注册 Service Worker；② offline / online 顶部轻提示。
+     职责：① 注册 Service Worker；② v1.5 新版本就绪检测与提示；③ offline / online 顶部轻提示。
      边界：不读不写 state / localStorage 进度键，不触碰任何业务函数；
            只在支持 SW 且为 http(s) 安全上下文时注册（file:// / 微信端静默跳过）；
            异常全部吞掉，绝不影响主程序。
-     为什么不用 #saveTip：saveState() 每 1.2s 会用「已自动保存」覆盖它，
-           离线提示需要常驻，故自建 #netTip（内联样式，零全局 CSS 污染，
-           配色直接取现有主题令牌，自动适配深色模式）。
+     为什么不用 #saveTip 承载常驻：saveState() 每 1.2s 会用「已自动保存」直接覆盖它，
+           wallTip() 自身 8s 也会隐藏；saveState / wallTip 都是红线函数，绝不能改。
+           故：wallTip 负责即时顶部提示，另自建 #netTip / #pwaUpdateTip 承载常驻，
+           内联样式零全局 CSS 污染，配色取现有主题令牌，自动适配深色模式。
      ========================================================================== -->
 <script>
 (function () {
   'use strict';
   try {
-    /* ---------- 1) Service Worker 注册 ---------- */
+    /* ---------- 1) Service Worker 注册 + 新版本就绪提示（v1.5） ---------- */
+    var UPDATE_TEXT = '发现新版本，点击此处刷新页面体验最新版本内容';
+    var updateTipShown = false;
+    /* file:// 下 navigator.serviceWorker 可能不存在，必须短路，否则会打断后面的离线提示 */
+    var hadController = !!(navigator.serviceWorker && navigator.serviceWorker.controller);
+    var doReload = function () { window.location.reload(); };
+    function reloadPage() {
+      try { doReload(); } catch (e) { window.location.reload(); }
+    }
+
+    function showUpdateTip() {
+      if (updateTipShown) return;             /* 多条触发路径只弹一次 */
+      updateTipShown = true;
+      /* ① 复用主程序现有的 wallTip() 弹顶部即时提示（经 window.wallTip 桥接）。 */
+      try {
+        if (typeof window.wallTip === 'function') window.wallTip(UPDATE_TEXT, false);
+        var st = document.getElementById('saveTip');
+        if (st) {
+          st.style.cursor = 'pointer';
+          setTimeout(function () { st.style.cursor = ''; }, 8000);
+          st.addEventListener('click', function () {
+            /* 文案被「已自动保存」覆盖后就不再响应，避免误刷新 */
+            if (st.textContent && st.textContent.indexOf(UPDATE_TEXT) > -1) reloadPage();
+          });
+        }
+      } catch (e) {}
+      /* ② 常驻可点击条：wallTip 会被 saveState 覆盖，只有它能稳定承载「点击刷新」。
+            放底部居中，避开顶部 #saveTip / #netTip，样式全部内联。 */
+      var t = document.createElement('div');
+      t.id = 'pwaUpdateTip';
+      t.setAttribute('role', 'button');
+      t.setAttribute('tabindex', '0');
+      t.setAttribute('aria-label', UPDATE_TEXT);
+      t.textContent = UPDATE_TEXT;
+      t.style.cssText = [
+        'position:fixed', 'left:50%', 'bottom:18px',
+        'transform:translateX(-50%)', 'z-index:10004',
+        'max-width:min(92vw,560px)', 'padding:12px 18px',
+        'border-radius:12px', 'font-size:13px', 'line-height:1.5',
+        'font-weight:600', 'text-align:center', 'cursor:pointer',
+        'box-shadow:0 8px 24px rgba(0,0,0,.18)',
+        'background:var(--hina-card,#fff)',
+        'color:var(--hina-text,#1E1B33)',
+        'border:1px solid var(--hina-border,#DCD2FA)',
+        'border-left:4px solid var(--hina-primary,#7C5CFF)'
+      ].join(';') + ';';
+      t.addEventListener('click', reloadPage);
+      t.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); reloadPage(); }
+      });
+      (document.body || document.documentElement).appendChild(t);
+    }
+
     if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
       var registerSw = function () {
-        navigator.serviceWorker.register('sw.js', { scope: './' }).catch(function () {});
+        navigator.serviceWorker.register('sw.js', { scope: './' }).then(function (reg) {
+          /* 兜底 A：上次打开已下载好新 SW 但用户没点刷新，启动时 reg.waiting 就在。 */
+          if (reg.waiting && navigator.serviceWorker.controller) showUpdateTip();
+          reg.addEventListener('updatefound', function () {
+            var newWorker = reg.installing;
+            if (!newWorker) return;
+            newWorker.addEventListener('statechange', function () {
+              /* 首装时 controller 为 null，不该弹「发现新版本」；只有旧页面被接管才弹。 */
+              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) showUpdateTip();
+            });
+          });
+        }).catch(function () {});
       };
+      /* 兜底 B：sw.js 里有 skipWaiting() + clients.claim()，新 SW 可能瞬间接管，
+         installed 态事件可能已过；首次安装（hadController=false）不提示。 */
+      navigator.serviceWorker.addEventListener('controllerchange', function () {
+        if (hadController) showUpdateTip();
+        hadController = true;
+      });
       if (document.readyState === 'complete') registerSw();
       else window.addEventListener('load', registerSw);
     }
+
+    /* 纯展示层调试入口：与既有 __KILL_DEBUG__ / __DICT_DEBUG__ 同性质，
+       不读存档、不碰判题；setReload 仅供本地断言注入，生产默认仍是 location.reload。 */
+    window.__PWA_DEBUG__ = {
+      text: UPDATE_TEXT,
+      showUpdateTip: showUpdateTip,
+      shown: function () { return updateTipShown; },
+      setReload: function (fn) { doReload = fn; }
+    };
 
     /* ---------- 2) 断网 / 联网轻提示 ---------- */
     var OFFLINE_TEXT = '当前处于离线模式，听力音频暂不可用，题库依然可以刷';

@@ -16,7 +16,7 @@
  * ========================================================================== */
 'use strict';
 
-const CACHE_NAME = 'de-trainer-shell-v1';
+const CACHE_NAME = 'de-trainer-shell-v3';   /* v1.5：上线 PWA 更新检测与提示，+1 强制所有老用户触发更新 */
 const SCOPE = self.registration.scope;
 
 /* 只列离线必需的外壳资源：HTML、4 个 data/*.js、manifest、UI 图片。
@@ -29,14 +29,13 @@ const PRECACHE = [
   './data/words.js',
   './data/dictation.js',
   './data/phonics.js',
-  './img/logo.png',
+  './img/hina-icon.png',
   './img/hina-face.png',
   './img/lv1.png',
   './img/lv2.png',
   './img/lv3.png',
   './img/lv4.png',
-  './img/lv5.png',
-  './app.png'
+  './img/lv5.png'
 ];
 
 function abs(u) { return new URL(u, SCOPE).href; }
