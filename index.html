@@ -146,6 +146,8 @@
   .ms-num { width: 62px; text-align: right; color: var(--hina-text-dim); font-size: 12px; }
   .wrong-item { border: 1px solid #e5e7eb; border-radius: 10px; padding: 10px; margin: 8px 0; font-size: 14px; }
   .wrong-item .ans { display: block; color: #16a34a; font-weight: 700; margin: 4px 0; }
+  /* v0.8：单题重做按钮独占一行，视觉上落在错题卡片底部 */
+  .wrong-item .retry-single-btn { display: block; margin: 8px 0 0; }
   /* 深色模式下颜色由 :root 令牌统一接管，这里只保留结构性覆盖 */
   @media (max-width: 640px) {
     body { padding: 12px; }
@@ -210,7 +212,8 @@
   /* ② 按钮组：与下方元素、以及两个按钮之间都拉开间距 */
   .answer-actions { margin-top: 16px; gap: 18px; }
   /* ③ 跳过按钮：幽灵化（透明底 + 细描边），视觉上退为次级操作 */
-  #skipBtn.ghost-btn {
+  #skipBtn.ghost-btn,
+  #killBtn.ghost-btn {
     background: transparent;
     color: var(--hina-text-dim);
     border: 1px solid var(--hina-border);
@@ -221,12 +224,20 @@
     font-weight: 500;
     min-width: 0;
   }
-  #skipBtn.ghost-btn:hover:not(:disabled) {
+  #skipBtn.ghost-btn:hover:not(:disabled),
+  #killBtn.ghost-btn:hover:not(:disabled) {
     color: var(--hina-text);
     border-color: var(--hina-primary-a45);
     background: var(--hina-primary-a25);
     filter: none;
   }
+  /* ★ v0.9：斩题是破坏性操作，hover 单独用警示色与「跳过」区分 */
+  #killBtn.ghost-btn:hover:not(:disabled) {
+    color: var(--hina-bad, #dc2626);
+    border-color: var(--hina-bad, #dc2626);
+    background: rgba(220, 38, 38, .08);
+  }
+  #killBtn .ico { stroke-width: 2.1; }
   /* ④ 次级按钮去掉整块靛蓝色块（任务 2「去掉大色块」）：
        深色模式下 --hina-indigo 与卡片底几乎同色，会糊成一团，故用主色描边幽灵按钮 */
   button.secondary:not(.wall-swatch):not(.grad-swatch) {
@@ -238,7 +249,8 @@
     background: var(--hina-primary-a25);
   }
   html[data-theme="dark"] button.secondary:not(.wall-swatch):not(.grad-swatch) { color: var(--hina-primary); }
-  html[data-theme="dark"] #skipBtn.ghost-btn { color: var(--hina-text-dim); border-color: var(--hina-border); }
+  html[data-theme="dark"] #skipBtn.ghost-btn,
+  html[data-theme="dark"] #killBtn.ghost-btn { color: var(--hina-text-dim); border-color: var(--hina-border); }
   /* ===== 本轮（任务 2）新增区块 结束 ===== */
 
   /* ---------- 壁纸 ---------- */
@@ -405,6 +417,11 @@
   /* ---- 1) 视图容器 ---- */
   .view[hidden] { display: none !important; }
   #viewToolbox .card:last-child { margin-bottom: 0; }
+  /* ★ v0.9：工具箱「已斩题目」列表 */
+  #killedList { margin: 8px 0 12px; max-height: 190px; overflow-y: auto; font-size: 13px; }
+  #killedList .killed-row { display: flex; gap: 10px; align-items: baseline; padding: 5px 0; border-top: 1px dashed rgba(100,116,139,.25); }
+  #killedList .killed-row:first-child { border-top: 0; }
+  #killedList .killed-key { flex: 0 0 auto; max-width: 42%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 12px; opacity: .65; }
 
   /* ---- 2) 顶部吸顶选项卡 ---- */
   .tabbar {
@@ -448,7 +465,7 @@
   .tab-btn:focus-visible { outline: 2px solid var(--hina-primary); outline-offset: -4px; }
   .tab-btn .tab-long { display: inline; }
   .tab-btn .tab-short { display: none; }
-
+#taskQuestion { white-space: pre-wrap; }
   /* ---- 3) 词汇库 ---- */
   .vocab-toolbar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
   .vocab-toolbar .vocab-count { margin-left: auto; }
@@ -633,7 +650,8 @@
     .answer-actions > button { width: auto; }
     .answer-actions #nextBtn { flex: 1 1 auto; padding: 14px 12px; font-size: 16px; }
     .answer-actions #dictationSpeakBtn { flex: 0 0 auto; padding: 14px 12px; font-size: 14px; }
-    .answer-actions #skipBtn { flex: 0 0 auto; padding: 14px 10px; font-size: 13px; }
+    .answer-actions #skipBtn,
+    .answer-actions #killBtn { flex: 0 0 auto; padding: 14px 10px; font-size: 13px; white-space: nowrap; }
     .answer-actions #skipBtn .skip-extra { display: none; }
   }
 
@@ -1382,6 +1400,48 @@
   @media (prefers-reduced-motion: reduce) {
     #deviceTip { transition: none; }
   }
+  /* ===== v0.5 ÖSD 大组题（材料 + 多子题）专用样式，仅新增，未改动任何既有规则 ===== */
+  #groupMaterialBox { margin: 12px 0 16px; padding: 14px 16px; border: 1px solid rgba(100,116,139,.22); border-radius: 12px; background: rgba(148,163,184,.07); }
+  #groupMaterialBox .row { margin-bottom: 8px; }
+  .group-passage { white-space: pre-wrap; word-break: break-word; font: inherit; line-height: 1.7; margin: 10px 0 0; max-height: 320px; overflow-y: auto; padding-right: 6px; }
+  #groupAudio { width: 100%; margin-top: 12px; }
+  #groupQuestionsBox { margin: 4px 0 8px; }
+  .group-q { padding: 12px 2px; border-top: 1px dashed rgba(100,116,139,.25); border-radius: 8px; }
+  .group-q:first-child { border-top: 0; }
+  .group-q-title { font-weight: 600; margin: 0 0 8px; line-height: 1.55; }
+  .group-q-opts { display: flex; flex-direction: column; gap: 6px; }
+  .group-q-opt { display: flex; align-items: flex-start; gap: 6px; padding: 8px 10px; border-radius: 9px; border: 1px solid rgba(100,116,139,.22); cursor: pointer; line-height: 1.5; }
+  .group-q-opt:hover { border-color: rgba(79,70,229,.45); }
+  .group-q-opt input { margin-top: 4px; flex: 0 0 auto; }
+  .group-q.is-right { background: rgba(22,163,74,.07); }
+  .group-q.is-wrong { background: rgba(220,38,38,.06); }
+  .group-q-answer { display: block; margin-top: 8px; font-size: 13px; font-weight: 700; color: #b91c1c; }
+  @media (max-width: 680px) { .group-passage { max-height: 240px; } }
+  /* ===== v0.9 阅读原文「双击查词」（纯新增，未改动任何既有规则） =====
+     .dict-word 默认不改变文字外观，只在 hover 时给一层极淡底色提示可点；
+     #dictTooltip 是 fixed 浮层，z-index 必须高于日奈助手 Modal(10001)。 */
+  .group-passage .dict-word { border-radius: 3px; cursor: pointer; transition: background-color .12s ease; }
+  .group-passage .dict-word:hover { background: rgba(124, 92, 255, .1); }
+  #dictTooltip {
+    position: fixed; left: 0; top: 0; display: none;
+    box-sizing: border-box; max-width: min(360px, calc(100vw - 24px));
+    max-height: 260px; overflow-y: auto;
+    padding: 10px 12px; border-radius: 10px;
+    background: rgba(24, 24, 32, .96); color: #fff;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .34);
+    font-size: 13px; line-height: 1.6; word-break: break-word;
+    z-index: 10002;
+  }
+  #dictTooltip .dict-tt-head { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  #dictTooltip .dict-tt-empty { color: #ececf5; }
+  #dictTooltip .dict-tt-src { display: block; margin-top: 5px; font-size: 11px; color: #a9a9bd; }
+  #dictTooltip .dict-tt-fav {
+    margin-top: 9px; padding: 5px 10px; border: 1px solid rgba(255, 255, 255, .28);
+    border-radius: 8px; background: rgba(255, 255, 255, .1); color: #fff;
+    font-size: 12px; cursor: pointer;
+  }
+  #dictTooltip .dict-tt-fav:hover { background: rgba(255, 255, 255, .2); }
+  #dictTooltip .dict-tt-fav[aria-pressed="true"] { color: #ffd76a; border-color: rgba(255, 215, 106, .6); }
 </style>
 </head>
 <body>
@@ -1415,6 +1475,9 @@
     <button class="tab-btn" type="button" role="tab" data-view="grammar" aria-selected="false">
       <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="4.6" r="1.5"/><path d="M11.2 6.2l-4.9 13.3M12.8 6.2l4.9 13.3"/><path d="M8.6 14.2h6.8"/></svg><span class="tab-long">语法库</span><span class="tab-short">语法</span>
     </button>
+    <button class="tab-btn" type="button" role="tab" data-view="wrong" aria-selected="false">
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.8l2.5 5.1 5.6.8-4 4 .9 5.6-5-2.7-5 2.7.9-5.6-4-4 5.6-.8z"/></svg><span class="tab-long">错题本</span><span class="tab-short">错题</span>
+    </button>
     <button class="tab-btn" type="button" role="tab" data-view="toolbox" aria-selected="false">
       <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h16v9a1.5 1.5 0 01-1.5 1.5h-13A1.5 1.5 0 014 18.5z"/><path d="M9 9.5V7a2 2 0 012-2h2a2 2 0 012 2v2.5"/><path d="M4 13.5h16"/></svg><span class="tab-long">工具箱</span><span class="tab-short">工具</span>
     </button>
@@ -1432,7 +1495,6 @@
       <span id="todayText" class="counter">0 / 10</span>
       <label class="inline">目标 <input type="number" id="goalInput" min="1" max="200" value="10" class="mini-input"> 题</label>
       <button id="resetTodayBtn" class="secondary small" type="button">重置今日</button>
-      <span class="hint">错题本 <span class="counter" id="wrongCount">0</span></span>
       <span class="hint">默写错题 <span class="counter" id="dictationWrongCount">0</span></span>
     </div>
     <div class="bar lg"><span id="todayBar" class="bar-fill"></span></div>
@@ -1476,6 +1538,18 @@
     <h2>3. 自适应任务</h2>
     <p id="taskMeta"></p>
     <p id="taskQuestion"></p>
+    <!-- ===== v0.5 新增：ÖSD 大组题专用区（原有单题 DOM 一行未动） ===== -->
+    <div id="groupMaterialBox" style="display:none">
+      <div class="row">
+        <span class="tag" id="groupMaterialTag"></span>
+        <span class="hint" id="groupMaterialMeta"></span>
+      </div>
+      <pre id="groupPassage" class="group-passage"></pre>
+      <audio id="groupAudio" controls preload="none" style="display:none"></audio>
+      <p class="hint" id="groupAudioNote" style="display:none"></p>
+    </div>
+    <div id="groupQuestionsBox" style="display:none"></div>
+    <!-- ===== /v0.5 ===== -->
     <div class="row">
       <button id="speakQBtn" class="mini" type="button"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 9.5h3.2l4.8-3.7v12.4l-4.8-3.7H4.5z"/><path d="M16.2 9.2a4.4 4.4 0 010 5.6"/><path d="M18.8 6.8a7.8 7.8 0 010 10.4"/></svg>朗读题干</button>
     </div>
@@ -1495,6 +1569,8 @@
       <button id="dictationSpeakBtn" class="action-audio" type="button" style="display:none"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.2 14.6v-2.4a6.8 6.8 0 0113.6 0v2.4"/><rect x="3.4" y="13.4" width="3.6" height="6.4" rx="1.5"/><rect x="17" y="13.4" width="3.6" height="6.4" rx="1.5"/></svg>听音</button>
       <button id="nextBtn" type="button">提交</button>
       <button id="skipBtn" class="ghost-btn" type="button">跳过<span class="skip-extra">（不计分）</span></button>
+      <!-- ★ v0.9 一键斩题：永久移出出题池（组题 = 整组一并斩掉），可在工具箱恢复 -->
+      <button id="killBtn" class="ghost-btn" type="button" title="不再出现此题"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>斩题</button>
     </div>
     <p id="taskMsg" style="display:none"></p>
   </section>
@@ -1550,7 +1626,23 @@
     </section>
   </section><!-- /视图 3：语法库 -->
 
-  <!-- ================= 视图 4：工具箱（收纳数据面板 / 学习记录 / 备份恢复 / 外设设置） ================= -->
+  <!-- ================= 视图 4：错题本（原工具箱内错题卡片整体迁入） ================= -->
+  <section class="view" id="viewWrong" data-view-panel="wrong" hidden>
+
+  <section class="card">
+    <h2>错题本</h2>
+    <p class="hint">当前的错题数为：<span id="wrongCount" class="counter">0</span> 题。连对两次后自动移出。</p>
+    <!-- ===== v0.8 新增：组卷重练控制区（纯 UI，不写存档） ===== -->
+    <div class="wrong-toolbar" style="display:flex; gap:10px; align-items:center; margin: 12px 0; flex-wrap: wrap;">
+      <label class="inline">重练题数 <input type="number" id="wrongRetryCount" min="1" class="mini-input" value="5"></label>
+      <button id="startWrongRetryBtn" class="secondary small" type="button">开始错题组卷重练</button>
+    </div>
+    <div id="wrongList"></div>
+  </section>
+
+  </section><!-- /视图 4：错题本 -->
+
+  <!-- ================= 视图 5：工具箱（收纳数据面板 / 学习记录 / 备份恢复 / 外设设置） ================= -->
   <section class="view" id="viewToolbox" data-view-panel="toolbox" hidden>
 
   <section class="card">
@@ -1563,8 +1655,6 @@
     <div id="levelStats"></div>
     <h3>最常出错的题型</h3>
     <div id="wrongTypes"></div>
-    <h3>错题本</h3>
-    <div id="wrongList"></div>
   </section>
 
   <section class="card">
@@ -1572,6 +1662,15 @@
     <div id="history"></div>
     <button id="resetBtn" class="danger">清空记录</button>
     <div class="row"><button id="exportBtn" class="secondary">导出进度</button><button id="importBtn" class="secondary">导入进度</button></div>
+  </section>
+
+  <!-- ===== v0.9 一键斩题：已斩列表 + 一键恢复 ===== -->
+  <section class="card" id="killedCard">
+    <h2>6. 已斩题目</h2>
+    <p class="hint" id="killedCount">已斩 0 题（不再进入出题池、错题本与复习队列）</p>
+    <div id="killedList"></div>
+    <button id="restoreKilledBtn" class="secondary" type="button"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.6 12a7.4 7.4 0 1 0 2.2-5.2"/><path d="M4.6 4.8v4.4H9"/></svg>恢复被斩题目</button>
+    <p class="hint">恢复后这些题会重新进入随机出题池；当日已消费的复习队列不会回放。</p>
   </section>
 
   <!-- ===== 以下两张卡片由原「设置页」剪切而来：元素与 ID 完全未改 ===== -->
@@ -1653,6 +1752,10 @@
 
 <script>
 (function() {
+  /* ★ v0.8：错题组卷重练的临时池子。刻意放在主脚本最顶部：
+     let 有 TDZ，若声明靠后，启动时的 pickTask() 会因 typeof 检查同样命中 TDZ 而抛错。
+     纯内存变量，不进 state、不写存档快照、刷新即清空。 */
+  let wrongRetryPool = [];
   const levels = ['A1', 'A2', 'B1', 'B2', 'C1'];
   /* 应用版本号：每次发布新版本请改这里，用于提示用户刷新页面获取最新版。
      注意与 VERSION / 存档格式版本是两回事，互不影响。 */
@@ -1694,6 +1797,27 @@
     return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
   }
   function itemKey(lv, ix) { return lv + ':' + ix; }
+  /* ==========================================================================
+   * v0.9 · 一键斩题（永久移出出题池）
+   * 唯一约定：单题 key = itemKey(lv, ix)（如 "3:12"）；组题 key = item.id
+   *          （如 "zb1_hoeren_teil1"，无 id 时回落 itemKey，与 judgeGroup 的 gid 口径一致）。
+   * 斩题只做「拦截」：把 key 从随机池 / 错题重练池 / 当日队列 / 错题本 / SRS 中屏蔽，
+   * 绝不触碰 srsUpdate() / dueSrs() / judge() / judgeGroup() 的任何进阶规则。
+   * ========================================================================== */
+  function killKeyFor(lv, ix) {
+    const it = bankOf(lv)[ix];
+    return (isGroupItem(it) && it.id) ? String(it.id) : itemKey(lv, ix);
+  }
+  function isKilledAt(lv, ix) {
+    const list = Array.isArray(state.killed) ? state.killed : [];
+    if (list.length === 0) return false;
+    /* 双查：组题按 id 斩，同时兼容按 lv:ix 记录的历史 / 导入存档 */
+    return list.indexOf(killKeyFor(lv, ix)) >= 0 || list.indexOf(itemKey(lv, ix)) >= 0;
+  }
+  function currentKillKey() {
+    const t = state.currentTask;
+    return t ? killKeyFor(t.level, t.index) : null;
+  }
   const SRS_STEPS = [1, 3, 7, 15];
 
   /* ---------- 朗读文本清洗 ----------
@@ -2235,6 +2359,10 @@
     mastered: [],                     // 答对过的题："级:序号"
     wrong: [],                        // 错题本：[{key, lv, ix, streak}]
     srs: [],                          // 间隔复习：[{key, lv, ix, stage, due}]
+    /* ★ v0.9 一键斩题：被永久移出出题池的题 key。
+       单题 = "级:序号"（itemKey），组题 = item.id（无 id 时回落 itemKey）。
+       只作为「抽题池黑名单」，不参与 SRS 进阶、不计入每日抽题。 */
+    killed: [],                       // 已斩题目：["3:12", "zb1_hoeren_teil1", ...]
     days: {},                         // 每日记录：{"2026-10-10":{count,correct}}
     streak: 0,                        // 连续打卡天数
     dailyGoal: 10,
@@ -2286,6 +2414,14 @@
     reportMsg: document.getElementById('reportMsg'),
     taskMeta: document.getElementById('taskMeta'),
     taskQuestion: document.getElementById('taskQuestion'),
+    /* ===== v0.5 新增：大组题 DOM 引用 ===== */
+    groupMaterialBox: document.getElementById('groupMaterialBox'),
+    groupMaterialTag: document.getElementById('groupMaterialTag'),
+    groupMaterialMeta: document.getElementById('groupMaterialMeta'),
+    groupPassage: document.getElementById('groupPassage'),
+    groupAudio: document.getElementById('groupAudio'),
+    groupAudioNote: document.getElementById('groupAudioNote'),
+    groupQuestionsBox: document.getElementById('groupQuestionsBox'),
     speakQBtn: document.getElementById('speakQBtn'),
     choices: document.getElementById('choices'),
     /* ===== v0.3 新增：默写模式 DOM 引用 ===== */
@@ -2300,6 +2436,10 @@
     answerLabel: document.getElementById('answerLabel'),
     nextBtn: document.getElementById('nextBtn'),
     skipBtn: document.getElementById('skipBtn'),
+    killBtn: document.getElementById('killBtn'),
+    killedCount: document.getElementById('killedCount'),
+    killedList: document.getElementById('killedList'),
+    restoreKilledBtn: document.getElementById('restoreKilledBtn'),
     taskMsg: document.getElementById('taskMsg'),
     masteredText: document.getElementById('masteredText'),
     masterBar: document.getElementById('masterBar'),
@@ -2325,8 +2465,9 @@
     let cur = Math.max(0, Math.min(Number(state.queueCursor) || 0, q.length));
     while (cur < q.length) {
       const it = q[cur];
-      /* 题目可能因题库调整而失效：跳过并标记为已消费 */
-      if (!it || !bankOf(it.lv)[it.ix]) { cur += 1; state.queueCursor = cur; continue; }
+      /* 题目可能因题库调整而失效、或已被斩：跳过并标记为已消费。
+         ★ v0.9 只在消费端做拦截，不改 state.srs / dueSrs 的进阶规则。 */
+      if (!it || !bankOf(it.lv)[it.ix] || isKilledAt(it.lv, it.ix)) { cur += 1; state.queueCursor = cur; continue; }
       state.queueCursor = cur + 1;
       return it;
     }
@@ -2375,7 +2516,8 @@
     let cur = Math.max(0, Math.min(Number(state.queueCursor) || 0, q.length));
     while (cur < q.length) {
       const it = q[cur];
-      if (it && bankOf(it.lv)[it.ix]) return it;
+      /* ★ v0.9：与 nextFromQueue() 口径一致，被斩题不参与「队列绝对优先」判定 */
+      if (it && bankOf(it.lv)[it.ix] && !isKilledAt(it.lv, it.ix)) return it;
       cur += 1;
     }
     return null;
@@ -2421,9 +2563,13 @@
     const b = el.nextBtn;
     if (!b) return;
     const judged = (state.locked === true);
-    b.textContent = judged ? '下一题' : '提交';
+    /* ★ v0.5：组题未判定时用「提交整组答案」；判定后统一「下一题」 */
+    const grouped = isGroupItem(currentItem());
+    b.textContent = judged ? '下一题' : (grouped ? '提交整组答案' : '提交');
     b.classList.toggle('is-next', judged);
-    b.setAttribute('aria-label', judged ? '进入下一题' : '提交答案');
+    b.setAttribute('aria-label', judged ? '进入下一题' : (grouped ? '提交整组答案' : '提交答案'));
+    /* ★ v0.9：默写题来自独立词库（无 lv:ix）、以及无有效题目时，隐藏斩题按钮 */
+    if (el.killBtn) el.killBtn.style.display = (currentKind() === 'dictation' || !currentItem()) ? 'none' : '';
   }
 
   /* ★ 本轮任务 1 新增：判定正确后统一延迟 1200ms 自动进入下一题。
@@ -2449,9 +2595,81 @@
     syncActionBtn();
   }
 
+  /* ★ v0.9：一键斩题 —— 把当前题（组题 = 整组）永久移出后续出题池。
+     只「清理现有记录 + 拦截抽题」，不改写任何 SRS 进阶规则；
+     SRS / 错题本 / 队列的算法函数本身一字未动，这里只是移除被斩的那一条数据。 */
+  function killCurrentTask() {
+    /* 默写题来自独立词库（没有 lv:ix），不在本次斩题的 key 体系内 */
+    if (currentKind() === 'dictation') {
+      show_msg('提示', '默写题暂不支持斩题，请使用词汇库收藏管理。', '');
+      return;
+    }
+    const t = state.currentTask;
+    const item = currentItem();
+    if (!t || !item) return;
+    const grouped = isGroupItem(item);
+    /* 与 judgeGroup() 的 gid 口径一致：组题用 item.id，单题用 "级:序号" */
+    const key = currentKillKey();
+    if (!key) return;
+    const lv = t.level, ix = t.index;
+
+    /* 1) 写入已斩列表（去重） */
+    if (!Array.isArray(state.killed)) state.killed = [];
+    if (state.killed.indexOf(key) < 0) state.killed.push(key);
+
+    /* 2) 错题本：单题按 key 精确删；组题按 groupId 或同 lv/ix 一并删掉全部子题明细 */
+    state.wrong = (state.wrong || []).filter(function(w) {
+      if (grouped) return !(w.groupId === key || (w.lv === lv && w.ix === ix));
+      return !(w.key === key || (w.lv === lv && w.ix === ix));
+    });
+    /* 3) SRS：只移除这一张复习卡，其它卡的 stage / due / 进阶规则完全不变 */
+    state.srs = (state.srs || []).filter(function(r) {
+      return !(r.key === key || (r.lv === lv && r.ix === ix));
+    });
+    /* 4) 当日队列：只清理「尚未消费」的部分，queueCursor 保持不变。
+          若连已消费项一起删，游标会错位并白吞掉下一题。 */
+    const q = Array.isArray(state.queue) ? state.queue : [];
+    const cur = Math.max(0, Math.min(Number(state.queueCursor) || 0, q.length));
+    state.queue = q.slice(0, cur).concat(q.slice(cur).filter(function(x) {
+      return !(x && x.lv === lv && x.ix === ix);
+    }));
+    /* 5) 错题组卷临时池（纯内存）同样过滤：大组多个子题可能重复进池 */
+    if (typeof wrongRetryPool !== 'undefined' && wrongRetryPool.length) {
+      wrongRetryPool = wrongRetryPool.filter(function(w) { return !(w && w.lv === lv && w.ix === ix); });
+    }
+
+    state.userActed = true;    /* 解除防覆盖闸门，保证斩题结果立刻落盘 */
+    saveState();
+    renderWrong();
+    renderKilledPanel();
+    wallTip(grouped ? '已斩整组，后续不再出现该大组' : '已斩本题，后续不再出现', false);
+    goNext();                 /* 统一入口：清定时器、复位判定锁、直接切下一题 */
+  }
+
   function pickTask() {
     /* ★ 本轮任务 1 新增：手动进入下一题时，一并取消还在等待中的自动跳转定时器 */
     if (state.autoNextTimer) { clearTimeout(state.autoNextTimer); state.autoNextTimer = null; }
+    /* ★ v0.8：临时组卷池拦截。刻意放在清定时器「之后」——若放第一行，
+       待触发的 autoNextTimer 会在 1.2s 后再次调用 pickTask()，吞掉池子里的一题。
+       只改抽题来源，不触碰 state.srs / state.queue / judge / judgeGroup。 */
+    if (typeof wrongRetryPool !== 'undefined' && wrongRetryPool.length > 0) {
+      let w = null;
+      /* ★ v0.9：逐条跳过已斩题（大组的多个子题错题可能重复进池，必须逐条过滤）；
+         顺带跳过题库调整后已失效的条目。全被斩光就自然落回下方常规出题。 */
+      while (wrongRetryPool.length > 0) {
+        const cand = wrongRetryPool.shift();
+        if (cand && bankOf(cand.lv)[cand.ix] && !isKilledAt(cand.lv, cand.ix)) { w = cand; break; }
+      }
+      if (w) {
+        const isGroup = isGroupItem(bankOf(w.lv)[w.ix]);
+        state.currentTask = { level: w.lv, index: w.ix, kind: isGroup ? 'group' : 'choice', reason: '错题组卷重练' };
+        state.currentDictationId = null;   /* ★ 防御：否则 currentKind() 仍判为默写题，重练会串进默写界面 */
+        state.locked = false;
+        saveState();
+        renderTask();
+        return;   /* 拦截后续的 SRS 抽题 */
+      }
+    }
     /* ★ v0.4：已无全局模式。每次「下一题」都重新随机 A/B/C 三类题源；
        错题 / 到期复习队列（主队列 + 默写队列）只要还有有效题，绝对优先。 */
     buildQueueIfNeeded();
@@ -2499,6 +2717,7 @@
     if (__kind === '') {
       state.locked = false;
       syncActionBtn();   /* ★ 本轮任务 2：无题可出时按钮也回到「提交」 */
+      hideGroupBoxes();  /* ★ v0.5：无题分支也直接操作 DOM，需清组题残留 */
       el.taskMeta.textContent = '';
       el.taskQuestion.textContent = '（当前没有可用题目：请检查 data/questions.js 与 data/dictation.js 是否加载）';
       el.dictationSpeakBtn.style.display = 'none';
@@ -2516,14 +2735,40 @@
     } else {
       const pool = bankOf(state.level);
       if (pool.length === 0) {
+        hideGroupBoxes();  /* ★ v0.5：本级无题分支同样需清组题残留 */
         el.taskQuestion.textContent = '（本级暂无题目）';
         el.dictationSpeakBtn.style.display = 'none';
         el.taskMeta.textContent = '';
         return;
       }
-      let idx = Math.floor(Math.random() * pool.length);
-      if (pool.length > 1 && idx === state.lastTaskIndex) {
-        idx = (idx + 1) % pool.length;
+      /* ★ v0.9：随机出题池过滤被斩题 —— 只在「可用下标」里抽，题库本身一字不动 */
+      const liveIdx = [];
+      for (let i = 0; i < pool.length; i += 1) {
+        if (!isKilledAt(state.level, i)) liveIdx.push(i);
+      }
+      if (liveIdx.length === 0) {
+        /* 本级题目已被全部斩光：明确提示，不再出题 */
+        state.currentTask = null;
+        state.currentDictationId = null;
+        state.locked = false;
+        hideGroupBoxes();  /* 清组题残留（含 taskQuestion / speakQBtn 显示态） */
+        el.taskMeta.textContent = '可在「工具箱 → 已斩题目」点击「恢复被斩题目」恢复';
+        el.taskQuestion.textContent = '（本级题库已被清空，请刷新重置）';
+        el.taskMsg.style.display = 'none';
+        el.taskMsg.textContent = '';
+        el.dictationSpeakBtn.style.display = 'none';
+        el.dictationBox.style.display = 'none';
+        el.choices.style.display = 'none';
+        el.choices.innerHTML = '';
+        el.answerLabel.style.display = 'none';
+        el.answerInput.value = '';
+        syncActionBtn();   /* currentItem() 为 null → 斩题按钮自动隐藏 */
+        return;
+      }
+      let idx = liveIdx[Math.floor(Math.random() * liveIdx.length)];
+      /* 避免连出同题：只在「可用下标」里顺移，绝不会顺移到被斩题上 */
+      if (liveIdx.length > 1 && idx === state.lastTaskIndex) {
+        idx = liveIdx[(liveIdx.indexOf(idx) + 1) % liveIdx.length];
       }
       state.lastTaskIndex = idx;
       state.currentTask = { level: state.level, index: idx, kind: bankKind };
@@ -2535,14 +2780,386 @@
     renderTask();
   }
 
+  /* ==========================================================================
+   * v0.5 · ÖSD 大组题（一个材料 + N 个子题）
+   * 隔离承诺：judge / addWrong / srsUpdate / tally / renderWrong / bank /
+   *          ALL_QUESTIONS / renderChoices / buildOptions 一行未动。
+   * 判题：judgeGroup() 独立分派，整组按 1 题计入 tally()；子题结果暂存于
+   *      groupLastResult（主脚本局部变量，不挂 window、不写存档）。
+   * ========================================================================== */
+  /* ==========================================================================
+   * v0.9 阅读原文「双击查词」：安全分词 + 事件委托 + 轻量浮层 + 一键收藏
+   * 边界：只接管 #groupPassage 的文本填充与浮层交互；
+   *       不碰 renderGroupTask 主干、不碰判题 / SRS / 存档 / 题库。
+   * 收藏：复用词汇库 IIFE 的 toggleFav（经 window.__VOCAB__ 桥），
+   *       该模块内有收藏状态内存副本，主脚本直写 localStorage 会两边不同步。
+   * ========================================================================== */
+  let dictIndex = null;      /* 懒建索引：norm(词条) -> 词条对象，首次双击才构建 */
+  let dictTip = null;        /* #dictTooltip，懒创建并挂到 body */
+
+  /* 1) 安全分词：用 DOM API 拼接，非单词部分（空格 / 标点 / 换行 / 中文 / < 等）
+        原样保留为文本节点 —— 既守住 <pre> 的 pre-wrap 排版，又天然免疫 HTML 注入。 */
+  function renderDictPassage(box, text) {
+    box.textContent = '';
+    if (!text) return;                          /* ★ passage 为空时不触发任何分词 */
+    const frag = document.createDocumentFragment();
+    const re = /([A-Za-zÄÖÜäöüß]+)/g;
+    let last = 0, m;
+    while ((m = re.exec(text)) !== null) {
+      if (m.index > last) frag.appendChild(document.createTextNode(text.slice(last, m.index)));
+      const sp = document.createElement('span');
+      sp.className = 'dict-word';
+      sp.setAttribute('data-word', m[1]);
+      sp.textContent = m[1];
+      frag.appendChild(sp);
+      last = m.index + m[0].length;
+    }
+    if (last < text.length) frag.appendChild(document.createTextNode(text.slice(last)));
+    box.appendChild(frag);
+  }
+
+  /* 2) 词库索引：复用主脚本 norm()（小写 / 去标点 / 冠词剥离 / äöüß 折叠）。
+        每个词条登记多个别名键，因此「das Haus」这类带冠词词条与用户点的 Haus 同键；
+        ab/bauen 另登记 abbauen 别名，可分动词连写也能查到。 */
+  function dictKey(s) { return norm(String(s == null ? '' : s)); }
+  function buildDictIndex() {
+    const idx = Object.create(null);
+    const all = window.ALL_WORDS || [];
+    for (let i = 0; i < all.length; i += 1) {
+      const it = all[i];
+      if (!it || !it.word) continue;
+      const w = String(it.word);
+      const aliases = [
+        dictKey(w),
+        dictKey(w.replace(/\//g, '')),
+        dictKey(w.replace(/^(der|die|das)\s+/i, ''))
+      ];
+      for (let j = 0; j < aliases.length; j += 1) {
+        const k = aliases[j];
+        if (k && !idx[k]) idx[k] = it;          /* 先到先得，结果稳定 */
+      }
+    }
+    return idx;
+  }
+  /* 保守词干候选：只削常见屈折词尾 / ge- 分词前缀，不做激进截断 */
+  function dictStems(key) {
+    const out = [];
+    const push = function (s) { if (s && s.length >= 3 && out.indexOf(s) < 0) out.push(s); };
+    if (/^ge.+?(t|en)$/.test(key) && key.length > 5) {
+      push(key.replace(/^ge/, '').replace(/(t|en)$/, ''));
+    }
+    const tails = ['ungen', 'ung', 'ern', 'est', 'ten', 'ter', 'end', 'ste',
+                   'en', 'em', 'er', 'es', 'te', 'st', 'et', 'e', 's', 'n', 't'];
+    for (let i = 0; i < tails.length; i += 1) {
+      const t = tails[i];
+      if (key.length - t.length >= 3 && key.slice(-t.length) === t) push(key.slice(0, -t.length));
+    }
+    return out;
+  }
+  /* 查词三级：精确 → 冠词形式（已并入 norm）→ 词干前缀。返回 {entry, via} */
+  function lookupDict(raw) {
+    if (!dictIndex) dictIndex = buildDictIndex();
+    const key = dictKey(String(raw || '').replace(/[^A-Za-zÄÖÜäöüß]/g, ''));
+    if (!key) return null;
+    if (dictIndex[key]) return { entry: dictIndex[key], via: '' };
+    const stems = dictStems(key);
+    const keys = Object.keys(dictIndex);
+    let best = null, bestGap = 99;
+    for (let i = 0; i < keys.length; i += 1) {
+      const k = keys[i];
+      for (let j = 0; j < stems.length; j += 1) {
+        const s = stems[j];
+        if (k.indexOf(s) !== 0) continue;
+        const gap = k.length - s.length;
+        if (gap > 3 || gap >= bestGap) continue;   /* 词尾差 ≤3 才认，防止乱命中 */
+        best = dictIndex[k]; bestGap = gap;
+      }
+    }
+    return best ? { entry: best, via: '词形推测' } : null;
+  }
+  /* 剥掉词典前导标注（⸚er / -en / + D/ + A ...），只留中文释义。
+     用码点判断 CJK，避免在源码里塞 Unicode 转义；前缀含中文则不剥离。 */
+  function dictTrans(s) {
+    const t = String(s == null ? '' : s).trim();
+    let first = -1;
+    for (let i = 0; i < t.length; i += 1) {
+      const c = t.charCodeAt(i);
+      if (c >= 0x4e00 && c <= 0x9fff) { first = i; break; }
+    }
+    if (first > 0 && first <= 24 && /\s$/.test(t.slice(0, first))) {
+      const head = t.slice(0, first);
+      let clean = true;
+      for (let j = 0; j < head.length; j += 1) {
+        const c2 = head.charCodeAt(j);
+        if (c2 >= 0x4e00 && c2 <= 0x9fff) { clean = false; break; }
+      }
+      if (clean) return t.slice(first);
+    }
+    return t || '（暂无释义）';
+  }
+
+  /* 3) 浮层：懒创建挂 body（不放 #viewPractice 内，切 Tab 不会被 hidden 卷走） */
+  function getDictTip() {
+    if (dictTip) return dictTip;
+    dictTip = document.getElementById('dictTooltip');
+    if (!dictTip) {
+      dictTip = document.createElement('div');
+      dictTip.id = 'dictTooltip';
+      document.body.appendChild(dictTip);
+    }
+    return dictTip;
+  }
+  function hideDictTooltip() { if (dictTip) dictTip.style.display = 'none'; }
+
+  function showDictTooltip(evt, raw) {
+    const tip = getDictTip();
+    const hit = lookupDict(raw);
+    tip.textContent = '';
+    if (!hit) {
+      const p = document.createElement('div');
+      p.className = 'dict-tt-empty';
+      p.textContent = '词库暂无该词，可尝试翻译';
+      tip.appendChild(p);
+    } else {
+      const it = hit.entry;
+      const word = String(it.word);
+      const head = document.createElement('div');
+      head.className = 'dict-tt-head';
+      head.textContent = '【' + word.replace(/\//g, '|') + '】 - ' + dictTrans(it.translation);
+      tip.appendChild(head);
+      if (hit.via || word !== String(raw)) {
+        const src = document.createElement('span');
+        src.className = 'dict-tt-src';
+        src.textContent = '查词：' + raw + (hit.via ? '（' + hit.via + ' → ' + word + '）' : '');
+        tip.appendChild(src);
+      }
+      /* 收藏 key 必须用词库真实词条 word，才能让词汇库卡片星标同步 */
+      const bridge = window.__VOCAB__;
+      const isFav = function (w) {
+        if (bridge && typeof bridge.isFav === 'function') return !!bridge.isFav(w);
+        try { return JSON.parse(localStorage.getItem('de-fav-words') || '[]').indexOf(w) >= 0; }
+        catch (e) { return false; }
+      };
+      const favBtn = document.createElement('button');
+      favBtn.type = 'button';
+      favBtn.className = 'dict-tt-fav';
+      const sync = function (on) {
+        favBtn.textContent = on ? '★ 已收藏' : '★ 收藏';
+        favBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      };
+      sync(isFav(word));
+      favBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        let on;
+        if (bridge && typeof bridge.favToggle === 'function') {
+          on = !!bridge.favToggle(word);
+        } else {
+          /* 兜底：桥未就绪时至少落盘，词汇库下次启动 loadFav() 会读到 */
+          try {
+            const arr = JSON.parse(localStorage.getItem('de-fav-words') || '[]');
+            const p = arr.indexOf(word);
+            if (p >= 0) { arr.splice(p, 1); on = false; } else { arr.push(word); on = true; }
+            localStorage.setItem('de-fav-words', JSON.stringify(arr));
+          } catch (err) { on = false; }
+        }
+        sync(on);
+      });
+      tip.appendChild(favBtn);
+    }
+    tip.style.display = 'block';
+    const r = tip.getBoundingClientRect();
+    const x = Math.max(8, Math.min(evt.clientX + 12, window.innerWidth - r.width - 8));
+    const y = Math.max(8, Math.min(evt.clientY + 14, window.innerHeight - r.height - 8));
+    tip.style.left = x + 'px';
+    tip.style.top = y + 'px';
+  }
+  function clearDictSelection() {
+    try { window.getSelection().removeAllRanges(); } catch (e) {}
+    setTimeout(function () { try { window.getSelection().removeAllRanges(); } catch (e) {} }, 0);
+  }
+
+  /* 4) 事件委托：只绑在 #groupPassage 容器上，几百个 span 零监听 */
+  if (el.groupPassage) {
+    el.groupPassage.addEventListener('dblclick', function (e) {
+      const sp = (e.target && e.target.closest) ? e.target.closest('.dict-word') : null;
+      if (!sp) return;
+      e.preventDefault();
+      e.stopPropagation();
+      clearDictSelection();
+      showDictTooltip(e, sp.getAttribute('data-word') || sp.textContent || '');
+    });
+  }
+  /* 点空白 / 切 Tab / Esc 关闭浮层 */
+  document.addEventListener('click', function (e) {
+    if (!dictTip || dictTip.style.display === 'none') return;
+    if (!dictTip.contains(e.target)) hideDictTooltip();
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') hideDictTooltip(); });
+
+  function isGroupItem(item) {
+    return !!(item && Array.isArray(item.questions) && item.questions.length > 0);
+  }
+  function hideGroupBoxes() {
+    if (!el.groupMaterialBox || !el.groupQuestionsBox) return;
+    if (el.groupAudio) {
+      try { el.groupAudio.pause(); } catch (e) {}
+      el.groupAudio.removeAttribute('src');
+      el.groupAudio.style.display = 'none';
+    }
+    el.groupMaterialBox.style.display = 'none';
+    el.groupQuestionsBox.style.display = 'none';
+    el.groupQuestionsBox.innerHTML = '';
+    el.groupPassage.textContent = '';
+    el.groupPassage.style.display = 'none';
+    hideDictTooltip();   /* ★ v0.9：切题 / 切视图时收起查词浮层，避免残留 */
+    el.groupAudioNote.textContent = '';
+    el.groupAudioNote.style.display = 'none';
+    el.taskQuestion.style.display = '';   /* 组题会隐藏题干，切回单题/默写必须恢复 */
+    el.speakQBtn.style.display = '';
+  }
+  function shuffleOpts(arr) {
+    for (let i = arr.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+    }
+    return arr;
+  }
+  let groupLastResult = null;   /* 子题级结果暂存；下一步打通 SRS / 错题本时使用 */
+
+  function renderGroupTask(item, t) {
+    const qs = item.questions;
+    /* 1) 原有三套单题答题区全部隐藏 */
+    el.taskQuestion.style.display = 'none';
+    el.choices.style.display = 'none';
+    el.choices.innerHTML = '';
+    el.answerLabel.style.display = 'none';
+    el.dictationBox.style.display = 'none';
+    el.dictationSpeakBtn.style.display = 'none';
+    el.speakQBtn.style.display = 'none';
+    el.answerInput.value = '';
+    el.answerInput.disabled = true;
+    /* 2) 反馈与题头复位 */
+    el.taskMsg.textContent = '';
+    el.taskMsg.className = '';
+    el.taskMsg.style.display = 'none';
+    /* ★ v0.6：来自复习队列的大组，提示整组重做（原文/音频完整保留） */
+    const reviewHint = t.reason
+      ? '<span class="hint" style="display:block;margin-top:6px;color:#b45309">' +
+        (t.reason === '错题重练' ? '本组包含你上次做错的题目，请认真重做' : '本组为到期复习，请完整重做') +
+        ' · 整组重练，原文与音频均已保留</span>'
+      : '';
+    el.taskMeta.innerHTML = '<span class="tag">' + levelOf(t.level) + '</span>' +
+      '<span class="tag">' + item.type + '</span>' +
+      (item.source ? '<span class="tag">' + item.source + '</span>' : '') +
+      (t.reason ? '<span class="tag reason">' + t.reason + '</span>' : '') +
+      '<span class="hint">共 ' + qs.length + ' 小题 · 本级 ' + bankOf(t.level).length +
+      ' 项 / 全站 ' + totalQuestions() + ' 项</span>' + reviewHint;
+    /* 3) 材料框：阅读 passage / 听力原生 audio（不碰 playAudio） */
+    el.groupMaterialBox.style.display = 'block';
+    el.groupMaterialTag.textContent = item.module || item.type || 'ÖSD';
+    el.groupMaterialMeta.textContent = (item.source || '') + ' · ' + qs.length + ' 小题';
+    if (item.passage) {
+      renderDictPassage(el.groupPassage, item.passage);   /* ★ v0.9 唯一改动：安全分词（空值由 if 守住） */
+      el.groupPassage.style.display = 'block';
+    }
+    if (item.audioUrl) {
+      el.groupAudio.src = item.audioUrl;
+      el.groupAudio.style.display = 'block';
+    }
+    if (item.audioNote) {
+      el.groupAudioNote.textContent = item.audioNote;
+      el.groupAudioNote.style.display = 'block';
+    }
+    /* 4) 子题：全部走 DOM API + textContent，不拼 HTML 字符串 */
+    el.groupQuestionsBox.style.display = 'block';
+    qs.forEach(function (sub, gi) {
+      const box = document.createElement('div');
+      box.className = 'group-q';
+      box.setAttribute('data-gi', String(gi));
+      const title = document.createElement('p');
+      title.className = 'group-q-title';
+      title.textContent = (gi + 1) + '. ' + sub.q;
+      box.appendChild(title);
+      const row = document.createElement('div');
+      row.className = 'group-q-opts';
+      shuffleOpts([].concat(sub.a || [], sub.distractors || [])).forEach(function (o, oi) {
+        const lab = document.createElement('label');
+        lab.className = 'group-q-opt';
+        const inp = document.createElement('input');
+        inp.type = 'radio';
+        inp.name = 'gq_' + gi;
+        inp.value = o;
+        lab.appendChild(inp);
+        lab.appendChild(document.createTextNode(' ' + String.fromCharCode(65 + oi) + '. ' + o));
+        row.appendChild(lab);
+      });
+      box.appendChild(row);
+      el.groupQuestionsBox.appendChild(box);
+    });
+  }
+
+  function judgeGroup() {
+    if (state.autoNextTimer) { clearTimeout(state.autoNextTimer); state.autoNextTimer = null; }
+    const item = currentItem();
+    if (!isGroupItem(item)) return;
+    const t = state.currentTask;
+    const qs = item.questions;
+    /* 组 key：优先用数据里的 id（如 zb1_hoeren_teil1），缺失时回落到 lv:ix */
+    const gid = String(item.id || (t.level + ':' + t.index));
+    let right = 0;
+    const rows = [];
+    qs.forEach(function (sub, gi) {
+      const subKey = gid + '_q' + gi;                       /* 子题唯一 ID：只用于错题本明细 */
+      const sel = el.groupQuestionsBox.querySelector('input[name="gq_' + gi + '"]:checked');
+      const ok = !!sel && matches(sel.value, sub.a || []);
+      if (ok) right += 1;
+      rows.push({ id: subKey, ok: ok, answer: (sub.a || [])[0] || '', picked: sel ? sel.value : '' });
+      /* ★ v0.6：错题本按子题记（含 groupId / subIndex 便于列表渲染）；SRS 不在这里写 */
+      if (ok) afterCorrect(item, subKey);
+      else addWrong(item, subKey, { groupId: gid, subIndex: gi });
+      /* 逐题 UI 反馈 */
+      const box = el.groupQuestionsBox.querySelector('.group-q[data-gi="' + gi + '"]');
+      if (box) {
+        box.classList.add(ok ? 'is-right' : 'is-wrong');
+        const tip = document.createElement('span');
+        tip.className = 'group-q-answer';
+        tip.textContent = ok ? '✓ 正确' : '✗ 正确答案：' + rows[gi].answer;
+        box.appendChild(tip);
+      }
+    });
+    const radios = el.groupQuestionsBox.querySelectorAll('input[type="radio"]');
+    for (let i = 0; i < radios.length; i += 1) radios[i].disabled = true;
+    state.userActed = true;
+    state.locked = true;
+    groupLastResult = { groupId: gid, at: new Date().toISOString(), right: right, total: qs.length, rows: rows };
+    const allOk = (right === qs.length);
+    el.taskMsg.style.display = 'block';
+    el.taskMsg.innerHTML = '<strong>' +
+      (allOk ? uiIcon('check') + ' 全对！' : uiIcon('cross') + ' 本组答对 ' + right + ' / ' + qs.length + ' 小题') +
+      '</strong><span class="tip">逐题正误与正确答案已标在上方 · 错题本按子题记录明细</span>' +
+      '<span class="tip">复习按整组重新出题（完整保留原文与音频） · 本组按 1 题计入今日进度 · 点「下一题」继续</span>';
+    el.taskMsg.className = allOk ? 'ok' : 'bad';   /* class 变化驱动日奈自动弹窗 */
+    /* ★ v0.6 任务 2：SRS 只按「组」聚合写一次，lv/ix 指向整个大组。
+       有任一子题答错 → false（整组进近期复习）；全对 → true（整组推进间隔）。
+       tally(allOk, true) 会跳过它内部那次 srsUpdate，避免同 lv/ix 双写；
+       state.mastered / 统计 / 存档仍由 tally 正常处理。单题 tally(ok) 行为不变。 */
+    if (allOk) srsUpdate(gid, t.level, t.index, true);
+    else srsUpdate(gid, t.level, t.index, false);
+    tally(allOk, true);
+    syncActionBtn();
+  }
+
   function renderTask() {
     syncActionBtn();   /* ★ 本轮任务 2：新题渲染前把主按钮复位成「提交」 */
+    hideGroupBoxes();  /* ★ v0.5：先清组题残留（含 taskQuestion / speakQBtn 显示态） */
     /* ★ v0.4：按当前题型分派（A 选项 / B 输入框 / C 听音默写），不再依赖全局模式开关。 */
     if (currentKind() === 'dictation') { renderDictationTask(); return; }   /* ★ 判据：当前题型 */
     const t = state.currentTask;
     if (!t) return;
     const item = bankOf(t.level)[t.index];
     if (!item) return;
+    if (isGroupItem(item)) { renderGroupTask(item, t); return; }   /* ★ v0.5 组题独立分支 */
     const kind = (t.kind === 'choice') ? 'choice' : 'input';   /* ★ A/B 由抽题时随机决定 */
     el.taskMeta.innerHTML = '<span class="tag">' + levelOf(t.level) + '</span>' +
       '<span class="tag">' + item.type + '</span>' +
@@ -2740,6 +3357,8 @@
     state.mastered = Array.isArray(p.mastered) ? p.mastered : [];
     state.wrong = Array.isArray(p.wrong) ? p.wrong : [];
     state.srs = Array.isArray(p.srs) ? p.srs : [];
+    /* ★ v0.9 向后兼容：旧存档没有 killed 字段时默认空数组，其余字段解析逐行不变 */
+    state.killed = Array.isArray(p.killed) ? p.killed : [];
     state.days = (p.days && typeof p.days === 'object') ? p.days : {};
     state.streak = Math.max(0, Number(p.streak) || 0);
     state.dailyGoal = Math.max(1, Number(p.dailyGoal) || 10);
@@ -2895,6 +3514,7 @@
       mastered: state.mastered,
       wrong: state.wrong,
       srs: state.srs,
+      killed: state.killed,     /* ★ v0.9：已斩题目随进度一起存档 / 导出 / 备份 */
       days: state.days,
       streak: state.streak,
       dailyGoal: state.dailyGoal,
@@ -3210,7 +3830,10 @@
   }
 
   /* ---------- 统计 ---------- */
-  function tally(ok) {
+  /* ★ v0.6：新增可选 skipSrs。单题 tally(ok) 时 undefined，下面两处 srsUpdate
+     照常执行，行为一字不变；大组题由 judgeGroup() 自行按「组 key」写 SRS 后
+     传 true，避免同一 lv/ix 写入两条记录导致复习队列重复出同一大组。 */
+  function tally(ok, skipSrs) {
     state.stats.done += 1;
     if (ok) state.stats.correct += 1;
     const item = currentItem();
@@ -3218,9 +3841,9 @@
       const key = itemKey(state.currentTask.level, state.currentTask.index);
       if (ok) {
         if (state.mastered.indexOf(key) < 0) state.mastered.push(key);
-        srsUpdate(key, state.currentTask.level, state.currentTask.index, true);
+        if (!skipSrs) srsUpdate(key, state.currentTask.level, state.currentTask.index, true);
       } else {
-        srsUpdate(key, state.currentTask.level, state.currentTask.index, false);
+        if (!skipSrs) srsUpdate(key, state.currentTask.level, state.currentTask.index, false);
       }
     }
     renderStats();
@@ -3465,6 +4088,7 @@
   }
   function renderDictationTask() {
     syncActionBtn();   /* ★ 本轮任务 2：默写题同样复位主按钮文案 */
+    hideGroupBoxes();  /* ★ v0.5：pickTask 的 dictation 分支会绕过 renderTask 直调本函数，必须在这里清组题残留 */
     const list = currentDictation();
     const it = dictationItem(state.currentDictationId);
     if (!it) { pickDictationTask(); return; }
@@ -3654,17 +4278,29 @@
     try { localStorage.removeItem(DICT_STORE_KEY); } catch (e) {}
   }
 
-  /* ---------- 错题本 ---------- */
-  function addWrong(item) {
-    const key = itemKey(state.currentTask.level, state.currentTask.index);
+  /* ---------- 错题本 ----------
+     ★ v0.6：addWrong / afterCorrect 新增可选 customKey，并允许附加 meta。
+       单题调用 addWrong(item) / afterCorrect(item) 时行为一字不变；
+       大组题传 customKey = '<groupId>_q<index>'，meta 标注 groupId / subIndex，
+       供错题本列表渲染子题明细（错题本按子题记，复习队列按整组出）。 */
+  function addWrong(item, customKey, meta) {
+    const t = state.currentTask;
+    const key = customKey || itemKey(t.level, t.index);
     const found = state.wrong.filter(function(w) { return w.key === key; })[0];
-    if (found) { found.streak = 0; }
-    else state.wrong.push({ key: key, lv: state.currentTask.level, ix: state.currentTask.index, streak: 0 });
+    if (found) {
+      found.streak = 0;
+      if (meta) { found.groupId = meta.groupId; found.subIndex = meta.subIndex; }
+    } else {
+      const rec = { key: key, lv: t.level, ix: t.index, streak: 0 };
+      if (meta) { rec.groupId = meta.groupId; rec.subIndex = meta.subIndex; }
+      state.wrong.push(rec);
+    }
     saveState();
     renderWrong();
   }
-  function afterCorrect(item) {
-    const key = itemKey(state.currentTask.level, state.currentTask.index);
+  function afterCorrect(item, customKey) {
+    const t = state.currentTask;
+    const key = customKey || itemKey(t.level, t.index);
     const found = state.wrong.filter(function(w) { return w.key === key; })[0];
     if (!found) return;
     found.streak = (found.streak || 0) + 1;
@@ -3676,6 +4312,17 @@
   }
   function renderWrong() {
     el.wrongCount.textContent = state.wrong.length;
+    /* ★ v0.8：组卷题数上限随错题数动态更新。
+       必须放在空态早返回「之前」，否则错题清空时不会回写 max；
+       当前值做下界 1 保护，避免空态把 value 写成 0 后以后再也长不回来。 */
+    const retryCountInput = document.getElementById('wrongRetryCount');
+    if (retryCountInput) {
+      const max = state.wrong.length;
+      const curRaw = parseInt(retryCountInput.value, 10);
+      const cur = Math.max(1, isNaN(curRaw) ? 1 : curRaw);
+      retryCountInput.max = max;
+      retryCountInput.value = Math.min(cur, max);
+    }
     if (state.wrong.length === 0) {
       el.wrongList.innerHTML = '<p class="hint">还没有错题，继续保持。</p>';
       return;
@@ -3683,12 +4330,58 @@
     el.wrongList.innerHTML = state.wrong.slice(-12).reverse().map(function(w) {
       const it = bankOf(w.lv)[w.ix];
       if (!it) return '';
-      return '<div class="wrong-item"><span class="tag">' + levelOf(w.lv) + '</span>' +
-        '<strong>' + it.q + '</strong>' +
-        '<span class="ans">' + it.a[0] + '</span>' +
-        '<span class="hint">连对 ' + (w.streak || 0) + '/2 移出</span></div>';
+      /* ★ v0.6：组题子题记录显示子题题干与答案，而非大组占位文本 */
+      let q = it.q;
+      let ans = (it.a || [])[0] || '';
+      let lead = '';
+      if (w.groupId && isGroupItem(it) && it.questions[w.subIndex]) {
+        const sub = it.questions[w.subIndex];
+        q = sub.q;
+        ans = (sub.a || [])[0] || '';
+        lead = '<span class="tag">' + (Number(w.subIndex) + 1) + '/' + it.questions.length + '</span>';
+      }
+      return '<div class="wrong-item"><span class="tag">' + levelOf(w.lv) + '</span>' + lead +
+        '<strong>' + q + '</strong>' +
+        '<span class="ans">' + ans + '</span>' +
+        '<span class="hint">连对 ' + (w.streak || 0) + '/2 移出</span>' +
+        '<button class="mini retry-single-btn" data-lv="' + w.lv + '" data-ix="' + w.ix + '">重做此题</button></div>';
     }).join('');
   }
+
+  /* ---------- v0.8：错题重练（临时池子；不改 judge / judgeGroup / SRS / 存档结构） ---------- */
+  /* 任务 2：事件委托，单题重做（组题自动整组重做，符合「大组不可拆子题」规则） */
+  el.wrongList.addEventListener('click', function(e) {
+    const btn = e.target && e.target.closest ? e.target.closest('.retry-single-btn') : null;
+    if (!btn || !el.wrongList.contains(btn)) return;
+    const lv = Number(btn.getAttribute('data-lv'));
+    const ix = Number(btn.getAttribute('data-ix'));
+    const item = bankOf(lv)[ix];
+    if (!item) return;
+    const isGroup = isGroupItem(item);
+    state.currentTask = { level: lv, index: ix, kind: isGroup ? 'group' : 'choice', reason: '错题重做' };
+    state.currentDictationId = null;   /* ★ 防御：不清会让 currentKind() 判成默写题，重做串进默写界面 */
+    state.locked = false;
+    switchView('practice');
+    renderTask();
+    const anchor = document.getElementById('taskMeta');
+    if (anchor && anchor.scrollIntoView) anchor.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+
+  /* 任务 3：组卷重练，带边界防呆 */
+  document.getElementById('startWrongRetryBtn').addEventListener('click', function() {
+    /* ★ v0.9：组卷池同样排除已斩题（斩题时已清理错题本，这里再兜一层） */
+    const liveWrong = state.wrong.filter(function(w) { return !isKilledAt(w.lv, w.ix); });
+    const totalWrong = liveWrong.length;
+    if (totalWrong === 0) { alert('错题本为空'); return; }
+    const input = document.getElementById('wrongRetryCount');
+    let count = parseInt(input.value, 10);
+    if (isNaN(count) || count < 1) count = 1;
+    if (count > totalWrong) { count = totalWrong; alert('已为您全部加入重练'); }
+    input.value = count;
+    wrongRetryPool = liveWrong.sort(() => Math.random() - 0.5).slice(0, count);
+    switchView('practice');
+    pickTask();
+  });
 
   /* ---------- 间隔复习 ---------- */
   function srsUpdate(key, lv, ix, ok) {
@@ -3717,8 +4410,18 @@
    * 队列取空后不再重建（queueBuilt 标记），否则答错的题会立刻重新入队、等于白排。*/
   function buildQueueIfNeeded() {
     if (state.queueBuilt) return;
-    const q = state.wrong.map(function(w) { return { lv: w.lv, ix: w.ix, reason: '错题重练' }; });
+    /* ★ v0.6：错题本按子题记录，但大组必须以「整组」为单元复习一次。
+       故按 lv:ix 去重，避免同一大组的 N 条子题错题重复入队；
+       单题错题的 lv:ix 本就唯一，去重对原有行为零影响。 */
+    const q = [];
+    state.wrong.forEach(function(w) {
+      /* ★ v0.9：被斩题不进当日错题/复习队列（不参与每日抽题） */
+      if (isKilledAt(w.lv, w.ix)) return;
+      if (q.some(function(x) { return x.lv === w.lv && x.ix === w.ix; })) return;
+      q.push({ lv: w.lv, ix: w.ix, reason: '错题重练' });
+    });
     dueSrs().forEach(function(r) {
+      if (isKilledAt(r.lv, r.ix)) return;
       if (!q.some(function(x) { return x.lv === r.lv && x.ix === r.ix; })) q.push({ lv: r.lv, ix: r.ix, reason: '到期复习' });
     });
     state.queue = q;
@@ -3742,7 +4445,8 @@
     if (opts.length < 4) {
       const pool = [];
       [lv, lv - 1, lv + 1].forEach(function(l) {
-        bankOf(l).forEach(function(it) { if (it.a && it.a[0]) pool.push(it.a[0]); });
+        /* ★ v0.5：大组题的 a[0] 是占位文本，绝不能被抽成普通选择题的干扰项 */
+        bankOf(l).forEach(function(it) { if (it.a && it.a[0] && !it.questions) pool.push(it.a[0]); });
       });
       const banned = item.a.map(norm);
       let guard = 0;
@@ -3974,6 +4678,7 @@
      选择按钮走 judge() 忽略 chosen；默写题走 dictationJudge()；其余走 judge()。 */
   el.nextBtn.addEventListener('click', function() {
     if (state.locked === true) { goNext(); return; }
+    if (isGroupItem(currentItem())) { judgeGroup(); return; }   /* ★ v0.5：组题独立判题，judge() 一行未动 */
     if (currentKind() === 'dictation') { dictationJudge(); return; }
     judge();
   });
@@ -4190,11 +4895,69 @@
   if (settingsBackEl) settingsBackEl.addEventListener('click', function() { toggleSettingsView(false); });
 
   /* ==========================================================================
+   * v0.9 · 工具箱「已斩题目」列表与一键恢复
+   * 纯展示 / 纯配置层：只读 state.killed，不参与出题、判题、SRS、存档指纹算法。
+   * ========================================================================== */
+  function killedLabel(key) {
+    const k = String(key == null ? '' : key);
+    const m = /^(\d+):(\d+)$/.exec(k);
+    const describe = function(lv, it, ix) {
+      const q = it ? String(it.q || '').replace(/\s+/g, ' ').trim() : '';
+      const short = q ? (q.length > 46 ? q.slice(0, 46) + '…' : q) : ('第 ' + (ix + 1) + ' 题');
+      return levelOf(lv) + ' · ' + short;
+    };
+    if (m) return describe(Number(m[1]), bankOf(Number(m[1]))[Number(m[2])], Number(m[2]));
+    /* 组题 key 是 item.id：反查所属级别与题干（27 个大组，最多 377 项，开销可忽略） */
+    for (let lv = 1; lv <= levels.length; lv += 1) {
+      const arr = bankOf(lv);
+      for (let ix = 0; ix < arr.length; ix += 1) {
+        if (arr[ix] && String(arr[ix].id || '') === k) return describe(lv, arr[ix], ix);
+      }
+    }
+    return k;
+  }
+  function renderKilledPanel() {
+    const box = el.killedList, cnt = el.killedCount;
+    if (!box || !cnt) return;
+    const list = Array.isArray(state.killed) ? state.killed : [];
+    cnt.textContent = '已斩 ' + list.length + ' 题（不再进入出题池、错题本与复习队列）';
+    box.textContent = '';
+    if (list.length === 0) { box.textContent = '还没有斩掉任何题目。'; return; }
+    const frag = document.createDocumentFragment();
+    list.slice(-30).reverse().forEach(function(k) {
+      const row = document.createElement('div');
+      row.className = 'killed-row';
+      const tag = document.createElement('span');
+      tag.className = 'killed-key';
+      tag.textContent = String(k);
+      const label = document.createElement('span');
+      label.textContent = killedLabel(k);   /* textContent：题库文本不参与 HTML 解析 */
+      row.appendChild(tag); row.appendChild(label);
+      frag.appendChild(row);
+    });
+    if (list.length > 30) {
+      const more = document.createElement('div');
+      more.className = 'killed-row';
+      more.textContent = '…仅显示最近 30 条，共 ' + list.length + ' 条';
+      frag.appendChild(more);
+    }
+    box.appendChild(frag);
+  }
+  if (el.restoreKilledBtn) el.restoreKilledBtn.addEventListener('click', function() {
+    const n = Array.isArray(state.killed) ? state.killed.length : 0;
+    state.killed = [];
+    state.userActed = true;   /* 解除防覆盖闸门，保证恢复结果立刻落盘 */
+    saveState();
+    renderKilledPanel();
+    alert('已恢复所有被斩题目' + (n ? '（共 ' + n + ' 题）' : '') + '，它们将重新出现在随机出题池');
+  });
+
+  /* ==========================================================================
    * 主框架重构 v0.3 · 顶部选项卡视图切换
    * 只切 .view 的 hidden 属性与 body.settings-open 类，DOM 原地复用、ID 全不变；
    * 不读存档、不调 saveState() —— 存档指纹（archiveHash）与旧存档格式零影响。
    * ========================================================================== */
-  var VIEW_TABS = ['practice', 'vocab', 'grammar', 'toolbox'];
+  var VIEW_TABS = ['practice', 'vocab', 'grammar', 'wrong', 'toolbox'];
   function switchView(name) {
     if (VIEW_TABS.indexOf(name) < 0) name = 'practice';
     /* 工具箱与旧的「设置页」状态互斥：切到工具箱时清掉 settings-open，避免空白屏 */
@@ -4215,8 +4978,12 @@
     if (name === 'vocab' && typeof window.__VOCAB__ === 'object' && window.__VOCAB__) {
       try { window.__VOCAB__.ensure(); } catch (e) {}
     }
+    if (name === 'wrong') {
+      renderWrong();
+    }
     if (name === 'toolbox') {
       try { renderWallPresets(); renderGradSwatches(); syncGradPickers(); syncWallInputs(); refreshSliders(); } catch (e) {}
+      try { renderKilledPanel(); } catch (e) {}   /* ★ v0.9：进入工具箱时刷新已斩列表 */
     }
   }
   window.__SWITCH_VIEW__ = switchView;   /* 只读入口：方便控制台/后续模块切视图 */
@@ -4259,6 +5026,9 @@
     /* ★ 本轮任务 2：改走统一入口（语义不变：仍然不计分、不写错题本，只是顺带清理待跳转定时器） */
     goNext();
   });
+  /* ★ v0.9：一键斩题（永久移出出题池；组题斩整组）。
+     刻意不绑定键盘快捷键 —— 破坏性操作必须显式点击，避免误触。 */
+  if (el.killBtn) el.killBtn.addEventListener('click', killCurrentTask);
   document.addEventListener('keydown', function(e) {
     if (document.body.classList.contains('settings-open')) {          // 设置页：Esc 返回，其余快捷键不干扰
       if (e.key === 'Escape') toggleSettingsView(false);
@@ -4676,6 +5446,7 @@
     el.goalInput.value = state.dailyGoal;
     updateLevelUI();
     renderDaily(); renderStats(); renderHistory(); renderWrong(); renderPanel();
+    try { renderKilledPanel(); } catch (e) {}   /* ★ v0.9：已斩列表随进度一起初始化 */
     /* 壁纸读取契约：先把图读完，再应用渲染（不阻塞其余 UI） */
     loadWallpaperThenRender();
     applySliderGrad();
@@ -4690,7 +5461,9 @@
     state.locked = false;
     if (currentKind() === 'dictation') {
       if (dictationItem(state.currentDictationId)) renderDictationTask(); else pickDictationTask();
-    } else if (state.currentTask && bankOf(state.currentTask.level)[state.currentTask.index]) renderTask();
+    /* ★ v0.9：存档里的 currentTask 若已被斩，不要把它重新渲染出来，直接抽下一题 */
+    } else if (state.currentTask && bankOf(state.currentTask.level)[state.currentTask.index]
+               && !isKilledAt(state.currentTask.level, state.currentTask.index)) renderTask();
     else pickTask();
     checkAppVersion();
     /* 多源恢复提示：放在最后显示，避免被"已自动保存"之类的提示覆盖 */
@@ -4799,6 +5572,7 @@
     function buildCard(item, no) {
       var card = document.createElement('div');
       card.className = 'vocab-card';
+      card.setAttribute('data-word', String(item.word || ''));   /* v0.9：供查词浮层同步星标 */
 
       var w = document.createElement('div');
       w.className = 'vocab-word';
@@ -5004,7 +5778,26 @@
         return list.length;
       },
       total: function() { return ALL.length; },
-      reload: function() { started = true; rebuild(); return list.length; }
+      reload: function() { started = true; rebuild(); return list.length; },
+      /* v0.9：供阅读原文「双击查词」浮层复用同一份收藏状态。
+         必须走本桥：主脚本直写 localStorage 不会更新本模块内存中的 favSet。 */
+      isFav: isFav,
+      favToggle: function(word) {
+        var on = toggleFav(word);
+        try {
+          var cards = grid.querySelectorAll('.vocab-card[data-word]');
+          for (var i = 0; i < cards.length; i += 1) {
+            if (cards[i].getAttribute('data-word') !== String(word)) continue;
+            var st = cards[i].querySelector('.vocab-star');
+            if (st) {
+              st.classList.toggle('on', on);
+              st.setAttribute('aria-pressed', on ? 'true' : 'false');
+            }
+          }
+        } catch (e) {}
+        if (favOnly) rebuild(); else updateStatus();   /* 只看收藏模式下筛选集变了才重绘 */
+        return on;
+      }
     };
 
     if (searchEl) searchEl.addEventListener('input', function() { started = true; rebuild(); });
@@ -5589,7 +6382,7 @@
         if (s && wrongTotal >= 5) {
           linesPool.push({
             text: d.text, action: '去清理', tone: 'warn',
-            run: function () { goView('toolbox'); }
+            run: function () { goView('wrong'); }
           });
         }
       } else if (d.id === 'streak') {
