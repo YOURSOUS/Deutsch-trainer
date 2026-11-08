@@ -2320,7 +2320,1541 @@ window.ALL_QUESTIONS = {
       { type: '改错', q: '改错：Das ist nicht nur teuer, aber auch langsam.', a: ['das ist nicht nur teuer, sondern auch langsam'] },
       { type: '改错', q: '改错：Wegen dem Regen blieben wir zu Hause.', a: ['wegen des regens blieben wir zu hause'] },
       { type: '改错', q: '改错：Er wurde fuer Diebstahl verurteilt.', a: ['er wurde wegen diebstahls verurteilt'] },
-      { type: '改错', q: '改错：Kaum er war angekommen, begann die Sitzung.', a: ['kaum war er angekommen, begann die sitzung'] }
+      { type: '改错', q: '改错：Kaum er war angekommen, begann die Sitzung.', a: ['kaum war er angekommen, begann die sitzung'] },
+      {
+        "id": "zb2_lesen_a1",
+        "type": "阅读选择",
+        "level": "B2",
+        "source": "ÖSD Zertifikat B2 / ZB2 Modellsatz",
+        "module": "Lesen Aufgabe 1",
+        "passage": "Lesen Sie zuerst den Text auf Blatt 1 und lösen Sie dann die 5 Aufgaben, indem Sie die richtige Antwort (A oder B oder C) markieren. Für jede Aufgabe (1–5) gibt es nur eine richtige Lösung.\n\n[Text / Blatt 1]\n\nStyling: Die Universität als Laufsteg der Eitelkeiten Zeig mir, was du trägst, ich sag dir, was du studierst Kleider machen bekanntlich Leute und sind eine beliebte Ausdrucksmöglichkeit der individuellen Persönlichkeit. Doch gerade weil Lebensstil und Interessen über die Kleidung nach außen transportiert werden, wirkt das Outfit oft wie uniformiert. „UniLive“ wollte wissen: Warum sehen eigentlich alle Jus*-Studierenden gleich aus? Warum denkt man beim Schlagwort Ethnologie an Rastafrisuren und bei Informatik automatisch an schwarze Jeans und weiße Socken? Kleidung fungiert als Code, in einer Art Zeichensprache signalisiert sie die Zugehörigkeit zu einer bestimmten Gruppe. Schon im Mittelalter galt Mode als Merkmal der Standeszugehörigkeit, auf den heimischen Universitäten signalisiert sie die Zugehörigkeit zu bestimmten Fakultäten: Vom Styling lässt sich also auf die Studienrichtung schließen. „Wirtschaftsstudierende tragen Timberlands oder hochhackige Schuhe, kombiniert mit engen Jeans oder einem kurzen Rock. Dazu tragen sie meist Blusen, möglichst in Pastellfarben, und darüber V-Ausschnitt-Pullover. Als Accessoires werden Perlenschmuck, eine Tasche von Longchamp und ein Pashmina-Schal getragen.“ Die österreichische Designerin Martina Rogy bedient sich bei ihrer Analyse nicht allein am Klischee, der beschriebene Wirtschaftler-Look fällt oft ins Auge. Anzug oder Wickelhose „Das Outfit ist eine Imagekomponente“, bringt es Stil- und Farbberaterin Ruth Glaser auf den Punkt. „Wirtschaftsstudierende haben eben im Kopf ‚Ich werde Bankdirektor‘ und kleiden sich dementsprechend gut.“ Aber auch auf anderen Fakultäten herrscht der Einheitslook, wobei es Geisteswissenschaftler:innen, so Rogy, prinzipiell nicht so wichtig ist, wie sie sich kleiden, weil „das Wissen im Vordergrund steht“. Die typischen Ethnologiestudierenden beschreibt sie dennoch detailliert: „Sie tragen Naturfasern, weite Wickelhosen, lange bunte Röcke und Leinenblusen, sie schauen immer sehr naturverbunden aus.“ Und weiter: „Als Accessoires werden Tücher verschieden kombiniert und die Schmuckstücke sind aus Holz oder selbst gemacht. Sie kaufen in Secondhand-Shops, auf Flohmärkten oder in Fairtrade-Geschäften ein.“ Martina Rogy pauschalisiert munter weiter: Jurist:innen tragen Anzug oder Kostüm, „manchmal kleiden sie sich aber auch legerer und sehen dann Wirtschaftsstudierenden ähnlich. Zu ihren Outfits kombinieren sie teuren Schmuck und Taschen von Gucci oder Louis Vuitton.“ Der Trick der Wahrsager Dass – nicht nur bei der Prüfung – der erste Eindruck zählt, ist allgemein bekannt. Kleidung erlaubt uns, Menschen einzuordnen, wir schließen vom Outfit auf die Gesinnung. „Viele Menschen drücken eine gewisse Gruppenzugehörigkeit aus, sei es ihre Vorliebe für eine bestimmte Musikrichtung, ihre politische Gesinnung oder ihren beruflichen Wirkungsbereich“, meint Rogy. „Auch wer sich nachlässig kleidet, sagt damit etwas aus“, so Ruth Glaser. „Und zwar: ,Schaut her, ich lege keinen Wert auf die Meinung anderer.‘“ Es sei erstaunlich, wie sehr sich von der Kleidung auf die Persönlichkeit des Trägers schließen lässt: „Das ist wahrscheinlich der Trick der Wahrsager.“ Und weiter: „Je mehr man darauf achtet, desto mehr lernt man, Details zu erkennen. Bei einem Workshop in einer Bank ist es mir beispielsweise einmal gelungen, jedem Mitarbeiter das richtige Auto am Firmenparkplatz zuzuordnen.“ Hauptsache glaubwürdig Die Wirkung, die unsere Kleidung auf das Gegenüber hat, lässt sich natürlich auch bewusst nutzen. Rogy: „Man kann sich als jemand ausgeben, der man eigentlich gar nicht ist.“ Der Haken: Nur wenn man sich nicht verkleidet, ist man auch „selbstsicherer, besser gelaunt und auch imstande, bessere Leistungen zu erbringen“. Es gilt also: Egal ob High Heels oder Converse, Chanel Nr. 5 oder Patchouli-Öl, wichtig ist allein, sich wohlzufühlen. Und: „Natürlich findet man auch in jeder Studienrichtung Leute, die anders aussehen und dem allgemeinen Trend nicht folgen“, beruhigt Rogy. Dabei handelt es sich wohl endlich um die viel zitierte Individualität. [aus einer österreichischen Wochenzeitung]",
+        "questions": [
+          {
+            "q": "Aufgabe 1: Die Zugehörigkeit zu einer bestimmten Gruppe",
+            "a": [
+              "wurde schon im Mittelalter durch Mode ausgedrückt."
+            ],
+            "distractors": [
+              "ist an der Universität besonders wichtig.",
+              "wird zusätzlich durch eine Zeichensprache betont."
+            ]
+          },
+          {
+            "q": "Aufgabe 2: Studierende an Wirtschaftsuniversitäten",
+            "a": [
+              "legen viel Wert auf gute Kleidung."
+            ],
+            "distractors": [
+              "kaufen ihre Kleidung bei österreichischen Designern.",
+              "tragen wie Juristen Anzug und Kostüm."
+            ]
+          },
+          {
+            "q": "Aufgabe 3: An geisteswissenschaftlichen Fakultäten",
+            "a": [
+              "spielt Kleidung keine besonders große Rolle."
+            ],
+            "distractors": [
+              "sind Studierende besonders leicht an ihrer Kleidung zu erkennen.",
+              "tragen Studierende gern teure Accessoires wie Tücher und Schmuck."
+            ]
+          },
+          {
+            "q": "Aufgabe 4: Ruth Glaser meint, dass",
+            "a": [
+              "auch nachlässige Kleidung etwas ausdrückt."
+            ],
+            "distractors": [
+              "in Workshops der Kleidungsstil von Mitarbeitern verbessert werden kann.",
+              "Kleidung vor allem die politische Einstellung zeigt."
+            ]
+          },
+          {
+            "q": "Aufgabe 5: Laut Martina Rogy",
+            "a": [
+              "muss man sich in seinen Kleidern wohlfühlen."
+            ],
+            "distractors": [
+              "können viele Menschen ihre Kleidung nicht bewusst nutzen.",
+              "sind Menschen, die Markenkleidung tragen, selbstsicherer."
+            ]
+          }
+        ],
+        "q": "ÖSD B2 · Lesen Aufgabe 1（5 小题）",
+        "a": [
+          "[大组题，请展开作答]"
+        ]
+      },
+      {
+        "id": "zb2_lesen_a2",
+        "type": "阅读配对",
+        "level": "B2",
+        "source": "ÖSD Zertifikat B2 / ZB2 Modellsatz",
+        "module": "Lesen Aufgabe 2",
+        "passage": "Lesen Sie die 10 Überschriften auf Blatt 1 und die 5 Texte auf Blatt 2. Suchen Sie dann zu jedem Text (1–5) die passende Überschrift (A–K). Pro Text gibt es nur eine richtige Lösung.\n\n[Überschrift A–K / 卷面原文]\nA – Nachwuchs weiterhin wichtiger als Top-Job\nB – Schnell essen macht dick\nC – Neue Broschüre: Studieren im Ausland\nD – Was tun nach der Schule? Neue Ausbildungsmöglichkeiten\nE – Initiative: Frauen für Männerberufe begeistern\nF – Immer mehr Frauen machen Karriere im technischen Bereich\nG – Experiment in Florida: Schlank in zwölf Stunden\nH – Ernährungstipps kostenlos per Telefon\nI – Schweizer Frauen kämpfen für mehr Rechte im Beruf\nK – Wissenschafter warnen: Immer mehr dicke Mädchen in Österreich!\n\n[Texte 1–5 / 卷面原文]\nText 1: Ein hochwertiger Schulabschluss gilt gemeinhin als Schlüssel zum Berufsein- und -aufstieg. Das ist aber nur bedingt richtig, denn sonst hätten die Frauen auf dem Arbeitsmarkt längst die Nase vorn: Mehr als die Hälfte aller Absolventen an höheren Schulen ist weiblich. Trotz besserer Qualifikation haben Frauen aber das Nachsehen. Zu diesem Schluss kommt eine Untersuchung des städtischen Frauenreferats zur Ausbildungssituation von Mädchen und Frauen in Frankfurt. Eine Erklärung für die schlechte Lage von weiblichen Arbeitskräften ist die Tatsache, dass Frauen nach wie vor für Familie und Kindererziehung auf Karriere verzichten. [aus einer deutschen Zeitung]\n\nText 2: Übergewicht könnte erblich durch Krankheiten, aber auch durch falsche Essgewohnheiten bedingt sein. Psychiater der Universität Florida haben jetzt das schnelle Essen als mögliche Ursache für Fettleibigkeit entdeckt. Die Wissenschaftler untersuchten, was genau im Hirn bei der Nahrungsaufnahme passiert. Zu diesem Zweck bekamen Testpersonen nach einer zwölfstündigen Fastenzeit eine Zuckerlösung zu trinken. Zuerst zeigte sich verstärkte Gehirntätigkeit, ausgelöst durch Schlucken, Geruch und Geschmack. Dann, zehn Minuten später, signalisierte das Gehirn, dass der Körper genug habe. Bei Menschen, die zu schnell essen, ist dieses Signal stark verzögert. Daher dürfte das Sprichwort „Iss langsam, Kind!“ tatsächlich eine Weisheit sein. [aus einer deutschen Zeitung]\n\nText 3: Wenn Sie mehr über richtige Ernährung und das ideale Gewicht wissen wollen, informieren Sie der „Fonds Gesundes Österreich“ und der Verein für Konsumenteninformation darüber. Unter der Nummer 0810 810 27 werden gratis firmenunabhängige, wissenschaftlich fundierte Informationen über ausgewogene und gesunde Ernährung angeboten. Die Verantwortlichen reagieren damit auf den erschreckenden Trend, dass die Zahl der dicken Menschen, darunter vor allem Kinder, immer mehr zunimmt. In den vergangenen 15 Jahren habe sich die Zahl übergewichtiger Kinder und Jugendlicher mehr als verdoppelt. Bewegungsmangel und fettes Essen seien die Hauptgründe dafür. [aus einer österreichischen Zeitschrift]\n\nText 4: Das Arbeitsamt Berlin hat seine beiden Informationshefte „Alternativen zum Studium“ neu aufgelegt. Auf 200 Seiten zeigt die Behörde neue Ausbildungsmöglichkeiten für junge Frauen und Männer nach der Schule außerhalb der Universitäten. Ein Heft befasst sich mit betriebswirtschaftlichen Ausbildungen bzw. fremdsprachlichen Angeboten im sozialen Bereich, das andere mit dem technisch-naturwissenschaftlichen Bereich. Mit diesen Broschüren geht auch eine Informationswoche einher, die die hohe ZahlanStudienbewerberninDeutschlandreduzieren helfen und andere Wege einer guten Berufsausbildung für junge Leute aufzeigen soll. [aus einer deutschen Broschüre]\n\nText 5: Junge Frauen in der Schweiz sollen nun mehr Chancen für eine offene Berufswahl haben. Mit einer Motivationskampagne wollen die Fachleute zum Umdenken anregen und neue Horizonte öffnen. «Von wem würden Sie lieber Ihr Auto reparieren lassen?» oder «Wem vertrauen Sie eher eine Herzoperation an?» heisst es unter jeweils zwei Porträts einer Frau und eines Mannes. Die Plakate sollen für den «kleinen Unterschied im Kopf» sensibilisieren, wonach Frauen nicht dasselbe zugetraut wird wie Männern. Immer noch ergreifen junge Frauen typische Frauenberufe wie Textilverkäuferin oder Sekretärin. Mit einem Internetwettbewerb soll das Thema «Frauen und Technik» fokussiert werden, im Speziellen der Informatiksektor, der in der Schweiz noch ganz in Männerhand ist. [aus einer Schweizer Zeitung]",
+        "questions": [
+          {
+            "q": "Text 1: Ein hochwertiger Schulabschluss gilt gemeinhin als Schlüssel zum Berufsein- und -aufstieg. Das ist aber nur bedingt richtig, denn sonst hätten die Frauen auf dem Arbeitsmarkt längst die Nase vorn: Mehr als die Hälfte aller Absolventen an höheren Schulen ist weiblich. Trotz besserer Qualifikation haben Frauen aber das Nachsehen. Zu diesem Schluss kommt eine Untersuchung des städtischen Frauenreferats zur Ausbildungssituation von Mädchen und Frauen in Frankfurt. Eine Erklärung für die schlechte Lage von weiblichen Arbeitskräften ist die Tatsache, dass Frauen nach wie vor für Familie und Kindererziehung auf Karriere verzichten. [aus einer deutschen Zeitung]  →  Welche Überschrift passt?",
+            "a": [
+              "A – Nachwuchs weiterhin wichtiger als Top-Job"
+            ],
+            "distractors": [
+              "B – Schnell essen macht dick",
+              "C – Neue Broschüre: Studieren im Ausland"
+            ]
+          },
+          {
+            "q": "Text 2: Übergewicht könnte erblich durch Krankheiten, aber auch durch falsche Essgewohnheiten bedingt sein. Psychiater der Universität Florida haben jetzt das schnelle Essen als mögliche Ursache für Fettleibigkeit entdeckt. Die Wissenschaftler untersuchten, was genau im Hirn bei der Nahrungsaufnahme passiert. Zu diesem Zweck bekamen Testpersonen nach einer zwölfstündigen Fastenzeit eine Zuckerlösung zu trinken. Zuerst zeigte sich verstärkte Gehirntätigkeit, ausgelöst durch Schlucken, Geruch und Geschmack. Dann, zehn Minuten später, signalisierte das Gehirn, dass der Körper genug habe. Bei Menschen, die zu schnell essen, ist dieses Signal stark verzögert. Daher dürfte das Sprichwort „Iss langsam, Kind!“ tatsächlich eine Weisheit sein. [aus einer deutschen Zeitung]  →  Welche Überschrift passt?",
+            "a": [
+              "B – Schnell essen macht dick"
+            ],
+            "distractors": [
+              "C – Neue Broschüre: Studieren im Ausland",
+              "D – Was tun nach der Schule? Neue Ausbildungsmöglichkeiten"
+            ]
+          },
+          {
+            "q": "Text 3: Wenn Sie mehr über richtige Ernährung und das ideale Gewicht wissen wollen, informieren Sie der „Fonds Gesundes Österreich“ und der Verein für Konsumenteninformation darüber. Unter der Nummer 0810 810 27 werden gratis firmenunabhängige, wissenschaftlich fundierte Informationen über ausgewogene und gesunde Ernährung angeboten. Die Verantwortlichen reagieren damit auf den erschreckenden Trend, dass die Zahl der dicken Menschen, darunter vor allem Kinder, immer mehr zunimmt. In den vergangenen 15 Jahren habe sich die Zahl übergewichtiger Kinder und Jugendlicher mehr als verdoppelt. Bewegungsmangel und fettes Essen seien die Hauptgründe dafür. [aus einer österreichischen Zeitschrift]  →  Welche Überschrift passt?",
+            "a": [
+              "H – Ernährungstipps kostenlos per Telefon"
+            ],
+            "distractors": [
+              "C – Neue Broschüre: Studieren im Ausland",
+              "D – Was tun nach der Schule? Neue Ausbildungsmöglichkeiten"
+            ]
+          },
+          {
+            "q": "Text 4: Das Arbeitsamt Berlin hat seine beiden Informationshefte „Alternativen zum Studium“ neu aufgelegt. Auf 200 Seiten zeigt die Behörde neue Ausbildungsmöglichkeiten für junge Frauen und Männer nach der Schule außerhalb der Universitäten. Ein Heft befasst sich mit betriebswirtschaftlichen Ausbildungen bzw. fremdsprachlichen Angeboten im sozialen Bereich, das andere mit dem technisch-naturwissenschaftlichen Bereich. Mit diesen Broschüren geht auch eine Informationswoche einher, die die hohe ZahlanStudienbewerberninDeutschlandreduzieren helfen und andere Wege einer guten Berufsausbildung für junge Leute aufzeigen soll. [aus einer deutschen Broschüre]  →  Welche Überschrift passt?",
+            "a": [
+              "D – Was tun nach der Schule? Neue Ausbildungsmöglichkeiten"
+            ],
+            "distractors": [
+              "E – Initiative: Frauen für Männerberufe begeistern",
+              "F – Immer mehr Frauen machen Karriere im technischen Bereich"
+            ]
+          },
+          {
+            "q": "Text 5: Junge Frauen in der Schweiz sollen nun mehr Chancen für eine offene Berufswahl haben. Mit einer Motivationskampagne wollen die Fachleute zum Umdenken anregen und neue Horizonte öffnen. «Von wem würden Sie lieber Ihr Auto reparieren lassen?» oder «Wem vertrauen Sie eher eine Herzoperation an?» heisst es unter jeweils zwei Porträts einer Frau und eines Mannes. Die Plakate sollen für den «kleinen Unterschied im Kopf» sensibilisieren, wonach Frauen nicht dasselbe zugetraut wird wie Männern. Immer noch ergreifen junge Frauen typische Frauenberufe wie Textilverkäuferin oder Sekretärin. Mit einem Internetwettbewerb soll das Thema «Frauen und Technik» fokussiert werden, im Speziellen der Informatiksektor, der in der Schweiz noch ganz in Männerhand ist. [aus einer Schweizer Zeitung]  →  Welche Überschrift passt?",
+            "a": [
+              "E – Initiative: Frauen für Männerberufe begeistern"
+            ],
+            "distractors": [
+              "F – Immer mehr Frauen machen Karriere im technischen Bereich",
+              "G – Experiment in Florida: Schlank in zwölf Stunden"
+            ]
+          }
+        ],
+        "q": "ÖSD B2 · Lesen Aufgabe 2（5 小题）",
+        "a": [
+          "[大组题，请展开作答]"
+        ]
+      },
+      {
+        "id": "zb2_hoeren_a1",
+        "type": "听力判断",
+        "level": "B2",
+        "source": "ÖSD Zertifikat B2 / ZB2 Modellsatz",
+        "module": "Hören Aufgabe 1",
+        "passage": "Lesen Sie Aufgabe 1 gut durch. Situation: Sie hören eine Radiosendung. Lesen Sie die folgenden Aussagen und kreuzen Sie jeweils Richtig (R) oder Falsch (F) an. Sie hören den Text zwei Mal. （原卷为 10 条 R/F 判断；此处按题号顺序逐条呈现）\n\n[Thema] Sport\n\n[卷面 10 条 Aussagen / 按题号顺序]\n 1. Eine Umfrage hat ergeben, dass sich vor allem junge Menschen immer mehr für Sport interessieren.\n 2. Laut Aussage von Otmar Weiss stärkt Sport das Selbstbewusstsein.\n 3. Sportliche Leistungen sind leichter und klarer sichtbar als Leistungen im Alltag.\n 4. Profisportler finden sich üblicherweise am Ende ihrer Karriere leicht im Alltag zurecht.\n 5. Die Gründe, warum Menschen Sport ausüben, werden immer vielfältiger.\n 6. Schwimmen, Radfahren und Skifahren sind die beliebtesten Sportarten in Österreich.\n 7. Sowohl Männer als auch Frauen betreiben Sport in erster Linie aus gesundheitlichen Gründen.\n 8. Männer sind beim Sporttreiben leistungsorientierter als Frauen.\n 9. Viele Menschen nutzen den Sport dazu, Freunde zu treffen.\n10. Warum sich manche Sportarten besser durchsetzen als andere, ist bis heute ungeklärt.",
+        "audioUrl": "data/audio/b2/ZB2_MS_A1_270917.mp3",
+        "audioFile": "ZB2_MS_A1_270917.mp3",
+        "audioUrls": [
+          "data/audio/b2/ZB2_MS_A1_270917.mp3"
+        ],
+        "audioText": "",
+        "audioTextNote": "Kandidatenblätter（考生卷）不含听力原文 Hörtexte；如需无障碍文本须另行获取 Prüferblätter 或人工转写。",
+        "audioNote": "原卷为 10 条 Richtig/Falsch 判断题；音频对应本卷 Hören Aufgabe 1。",
+        "questions": [
+          {
+            "q": "Aussage 1: „Eine Umfrage hat ergeben, dass sich vor allem junge Menschen immer mehr für Sport interessieren.“  →  Richtig oder Falsch?",
+            "a": [
+              "Falsch"
+            ],
+            "distractors": [
+              "Richtig"
+            ]
+          },
+          {
+            "q": "Aussage 2: „Laut Aussage von Otmar Weiss stärkt Sport das Selbstbewusstsein.“  →  Richtig oder Falsch?",
+            "a": [
+              "Richtig"
+            ],
+            "distractors": [
+              "Falsch"
+            ]
+          },
+          {
+            "q": "Aussage 3: „Sportliche Leistungen sind leichter und klarer sichtbar als Leistungen im Alltag.“  →  Richtig oder Falsch?",
+            "a": [
+              "Richtig"
+            ],
+            "distractors": [
+              "Falsch"
+            ]
+          },
+          {
+            "q": "Aussage 4: „Profisportler finden sich üblicherweise am Ende ihrer Karriere leicht im Alltag zurecht.“  →  Richtig oder Falsch?",
+            "a": [
+              "Falsch"
+            ],
+            "distractors": [
+              "Richtig"
+            ]
+          },
+          {
+            "q": "Aussage 5: „Die Gründe, warum Menschen Sport ausüben, werden immer vielfältiger.“  →  Richtig oder Falsch?",
+            "a": [
+              "Richtig"
+            ],
+            "distractors": [
+              "Falsch"
+            ]
+          },
+          {
+            "q": "Aussage 6: „Schwimmen, Radfahren und Skifahren sind die beliebtesten Sportarten in Österreich.“  →  Richtig oder Falsch?",
+            "a": [
+              "Richtig"
+            ],
+            "distractors": [
+              "Falsch"
+            ]
+          },
+          {
+            "q": "Aussage 7: „Sowohl Männer als auch Frauen betreiben Sport in erster Linie aus gesundheitlichen Gründen.“  →  Richtig oder Falsch?",
+            "a": [
+              "Falsch"
+            ],
+            "distractors": [
+              "Richtig"
+            ]
+          },
+          {
+            "q": "Aussage 8: „Männer sind beim Sporttreiben leistungsorientierter als Frauen.“  →  Richtig oder Falsch?",
+            "a": [
+              "Richtig"
+            ],
+            "distractors": [
+              "Falsch"
+            ]
+          },
+          {
+            "q": "Aussage 9: „Viele Menschen nutzen den Sport dazu, Freunde zu treffen.“  →  Richtig oder Falsch?",
+            "a": [
+              "Falsch"
+            ],
+            "distractors": [
+              "Richtig"
+            ]
+          },
+          {
+            "q": "Aussage 10: „Warum sich manche Sportarten besser durchsetzen als andere, ist bis heute ungeklärt.“  →  Richtig oder Falsch?",
+            "a": [
+              "Richtig"
+            ],
+            "distractors": [
+              "Falsch"
+            ]
+          }
+        ],
+        "q": "ÖSD B2 · Hören Aufgabe 1（10 小题）",
+        "a": [
+          "[大组题，请展开作答]"
+        ]
+      },
+      {
+        "id": "zb2_hoeren_a2",
+        "type": "听力判断",
+        "level": "B2",
+        "source": "ÖSD Zertifikat B2 / ZB2 Modellsatz",
+        "module": "Hören Aufgabe 2",
+        "passage": "Lesen Sie Aufgabe 2 gut durch. Sie haben 90 Sekunden Zeit. Situation: Sie hören ein Gespräch zwischen zwei Personen, die Informationen austauschen. Ergänzen Sie die fehlenden Informationen oder kreuzen Sie die entsprechenden Kästchen an. Sie hören den Text ein Mal. （原卷为 Notizblatt 打叉网格；此处按 A2 既定方案把每个打叉格忠实展开为 JA/NEIN 判断题，JA = 答案卡该格子打了 X。开放式填空行无给定选项，不纳入判断题）\n\nThema: Bibliotheken\n\n[卷面 Notizblatt 结构：3 列比较对象]\n列: Universitätsbibliothek (Hauptbibliothek) | ZB (Zentralbibliothek) | Literaturarchiv\n\n[卷面打叉行（各选项需按对应列勾选）]\nSchwerpunkt：□ allgemein / □ Fachliteratur\nArten der Buchausleihe außer vor Ort：□ Postversand / □ Fernleihe\nBei der Anmeldung nötig：□ amtlicher Ausweis / □ Adressnachweis\nServiceleistungen：□ Lesungen / □ Cafeteria / □ Leselounge\nZusätzliches Angebot：□ WLAN / □ Führungen\n\n[卷面另有开放式填空行，无给定选项，不纳入判断题]\nKosten Jahresausweis / Ermäßigung für Studierende / Ausleihdauer / Maximale Ausleihe / Öffnungszeiten\n\n说明: 下列判断题的 JA 表示答案卡上「该列 × 该行 × 该选项」的格子打了 X，NEIN 表示留空。听完一遍音轨完成整组。",
+        "audioUrl": "data/audio/b2/ZB2_MS_A2_270917.mp3",
+        "audioFile": "ZB2_MS_A2_270917.mp3",
+        "audioUrls": [
+          "data/audio/b2/ZB2_MS_A2_270917.mp3"
+        ],
+        "audioText": "",
+        "audioTextNote": "Kandidatenblätter（考生卷）不含听力原文 Hörtexte；如需无障碍文本须另行获取 Prüferblätter 或人工转写。",
+        "audioNote": "原卷为 Notizblatt 打叉网格，按 A2 方案忠实展开为 33 道 JA/NEIN 判断题；开放式填空行不纳入。音频对应本卷 Hören Aufgabe 2。",
+        "questions": [
+          {
+            "q": "Aufgabe 2 / Universitätsbibliothek (Hauptbibliothek) × „allgemein“（Schwerpunkt）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Universitätsbibliothek (Hauptbibliothek) × „Fachliteratur“（Schwerpunkt）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / ZB (Zentralbibliothek) × „allgemein“（Schwerpunkt）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / ZB (Zentralbibliothek) × „Fachliteratur“（Schwerpunkt）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Literaturarchiv × „allgemein“（Schwerpunkt）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "NEIN"
+            ],
+            "distractors": [
+              "JA"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Literaturarchiv × „Fachliteratur“（Schwerpunkt）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Universitätsbibliothek (Hauptbibliothek) × „Postversand“（Arten der Buchausleihe außer vor Ort）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Universitätsbibliothek (Hauptbibliothek) × „Fernleihe“（Arten der Buchausleihe außer vor Ort）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / ZB (Zentralbibliothek) × „Postversand“（Arten der Buchausleihe außer vor Ort）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / ZB (Zentralbibliothek) × „Fernleihe“（Arten der Buchausleihe außer vor Ort）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Literaturarchiv × „Postversand“（Arten der Buchausleihe außer vor Ort）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "NEIN"
+            ],
+            "distractors": [
+              "JA"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Literaturarchiv × „Fernleihe“（Arten der Buchausleihe außer vor Ort）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "NEIN"
+            ],
+            "distractors": [
+              "JA"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Universitätsbibliothek (Hauptbibliothek) × „amtlicher Ausweis“（Bei der Anmeldung nötig）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Universitätsbibliothek (Hauptbibliothek) × „Adressnachweis“（Bei der Anmeldung nötig）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "NEIN"
+            ],
+            "distractors": [
+              "JA"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / ZB (Zentralbibliothek) × „amtlicher Ausweis“（Bei der Anmeldung nötig）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / ZB (Zentralbibliothek) × „Adressnachweis“（Bei der Anmeldung nötig）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "NEIN"
+            ],
+            "distractors": [
+              "JA"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Literaturarchiv × „amtlicher Ausweis“（Bei der Anmeldung nötig）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Literaturarchiv × „Adressnachweis“（Bei der Anmeldung nötig）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Universitätsbibliothek (Hauptbibliothek) × „Lesungen“（Serviceleistungen）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Universitätsbibliothek (Hauptbibliothek) × „Cafeteria“（Serviceleistungen）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "NEIN"
+            ],
+            "distractors": [
+              "JA"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Universitätsbibliothek (Hauptbibliothek) × „Leselounge“（Serviceleistungen）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / ZB (Zentralbibliothek) × „Lesungen“（Serviceleistungen）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / ZB (Zentralbibliothek) × „Cafeteria“（Serviceleistungen）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / ZB (Zentralbibliothek) × „Leselounge“（Serviceleistungen）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "NEIN"
+            ],
+            "distractors": [
+              "JA"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Literaturarchiv × „Lesungen“（Serviceleistungen）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Literaturarchiv × „Cafeteria“（Serviceleistungen）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Literaturarchiv × „Leselounge“（Serviceleistungen）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "NEIN"
+            ],
+            "distractors": [
+              "JA"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Universitätsbibliothek (Hauptbibliothek) × „WLAN“（Zusätzliches Angebot）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Universitätsbibliothek (Hauptbibliothek) × „Führungen“（Zusätzliches Angebot）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / ZB (Zentralbibliothek) × „WLAN“（Zusätzliches Angebot）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / ZB (Zentralbibliothek) × „Führungen“（Zusätzliches Angebot）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Literaturarchiv × „WLAN“（Zusätzliches Angebot）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Literaturarchiv × „Führungen“（Zusätzliches Angebot）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "NEIN"
+            ],
+            "distractors": [
+              "JA"
+            ]
+          }
+        ],
+        "q": "ÖSD B2 · Hören Aufgabe 2（33 小题）",
+        "a": [
+          "[大组题，请展开作答]"
+        ]
+      },
+      {
+        "id": "zb2j_lesen_a1",
+        "type": "阅读选择",
+        "level": "B2",
+        "source": "ÖSD Zertifikat B2/Jugendliche / ZB2 J Modellsatz",
+        "module": "Lesen Aufgabe 1",
+        "passage": "Lesen Sie zuerst den Text auf Blatt 1 und lösen Sie dann die 5 Aufgaben, indem Sie die richtige Antwort (A oder B oder C) markieren. Für jede Aufgabe (1–5) gibt es nur eine richtige Lösung.\n\n[Text / Blatt 1]\n\n„Unsere eigene Firma“ Schüler:innen testen ihren Unternehmergeist „Lernen, leben, lachen“ ist das Motto an der PaulGerhardt-Schule im bayerischen Kahl. Um die 500 Schüler:innen in 23 Klassen besuchen die Grund-, Mittel- oder Wirtschaftsschule. An jedem Schultag während der großen Mittagspause von 13:15 bis 13:45 Uhr hat das Bistro PAULA geöffnet. Geführt wird das Bistro von 20 Schüler:innen. Ihr Ziel ist es, den Kunden gutes und gesundes Essen anzubieten. „Komm vorbei! Wir sind preiswert, freundlich und unsere Speisen und Getränke sind immer lecker! Im Angebot haben wir u. a. Apfelschorle, Wasser, verschiedene Kaffeesorten, Joghurt, Balisto, Knusperriegel und Leberkäse im Vollkornbrötchen“, verspricht die Werbung. Das Bistro ist das einzige Schulprojekt an der PaulGerhardt-Schule, bei dem Mittel- und Wirtschaftsschule zusammenarbeiten. Die Mittelschüler:innen können als Arbeitsgruppe im Bistro mitarbeiten, die Wirtschaftsschüler:innen dagegen können sich ab der neunten Klasse zwischen Mathematik und BWÜ (Betriebswirtschaftliche Übungen) entscheiden. Das Unterrichtsfach BWÜ soll die Schüler:innen auf das spätere Arbeitsleben vorbereiten. Dazu gehören dann außer den Bilanzen und „Marktanalysen“ auch essenzielle Dinge wie der freundliche Umgang mit Kunden und ein verantwortlicher Umgang mit Lebensmitteln. Die 15-jährige Stella engagiert sich nun schon seit einiger Zeit in der Schülerfirma. Sie besucht die 9. Klasse und hilft im Rahmen ihres Wahlpflichtfachs BWÜ im Bistro PAULA mit. „Es macht Spaß, in unserer eigenen Firma Getränke und Snacks an Schüler, Eltern oder Lehrer zu verkaufen“, erzählt Stella, die jeden Montag im Bistro mitarbeitet. „Kurz bevor wir öffnen, bauen wir die Kasse auf und legen die Zutaten zurecht, aus denen wir für unsere Kunden belegte Brötchen und Sandwiches zubereiten. Es ist lustig und nicht so anstrengend wie andere Unterrichtsfächer.“ Während der Öffnungszeiten sind die Aufgaben im PAULA klar verteilt: „Eine Person ist an der Kasse, zwei arbeiten in der Küche. Die vierte Person leitet die Bestellungen an die Küchenmitarbeiter weiter und holt das fertige Essen aus der Küche“, erklärt Stella. Bevor die Schüler:innen nach dem Bistro- dienst nach Hause oder zum Nachmittagsunterricht gehen, räumen sie auf, putzen Küche und Gastraum und kontrollieren den Bestand an Lebensmitteln. Reichen die Vorräte für den folgenden Tag nicht mehr aus, geben die Jugendlichen ihren drei Betreuungslehrkräften Bescheid, denn diese erledigen den Einkauf. Einnahmen und Ausgaben überwachen Im wöchentlichen BWÜ-Unterricht plant Stella gemeinsam mit ihren Klassenkamerad:innen die nächsten Verkaufstage. Im Unterricht überlegen sie auch, ob neue Produkte verkauft oder bestehende Angebote aus der Speisekarte gestrichen werden sollen. „Außerdem legen wir gemeinsam die Preise für unsere Waren fest, erledigen die Abrechnung und rechnen unsere Einnahmen aus“, fügt Stella hinzu. Die Schülerfirma macht sogar Gewinn: In den letzten Schuljahren haben Stella und ihre Mitschüler:innen immer 500 bis 600 Euro erwirtschaftet. Das Geld investieren sie in ihren kleinen Betrieb: „Wir haben Sofas und neue Küchengeräte gekauft und unsere Kaffeemaschine reparieren lassen“, sagt Stella. Ein Plus für die Bewerbung Die Arbeit im Café und vor allem die geschäftlichen Tätigkeiten gefallen Stella gut. Auch ihre Stärken konnte sie ausbauen: „Durch die Mitarbeit habe ich vor allem meine Teamfähigkeit verbessert, weil wir hier eng zusammenarbeiten und uns gut absprechen müssen“, findet die Schülerin. Nach ihrem mittleren Bildungsabschluss will sie eine Ausbildung im kaufmännischen Bereich absolvieren. Sobald sie einen passenden Beruf für sich gefunden hat, wird sie sich bewerben. „In der Bewerbung gebe ich meine Erfahrungen in der Schülerfirma an. Dadurch zeige ich, dass ich einsatzbereit bin und schon in einem Geschäft gearbeitet habe. Das kommt bei den Ausbildungsbetrieben bestimmt gut an.“ Das Bistro PAULA wird gefördert durch das Bayerische Staatsministerium für Umwelt, Gesundheit und Verbraucherschutz. Mehr Infos zu Schülerprojekten findest du auf: www.planet-beruf.de. [aus einer deutschen Jugendzeitschrift]",
+        "questions": [
+          {
+            "q": "Aufgabe 1: An der Paul-Gerhardt-Schule",
+            "a": [
+              "gibt es die Möglichkeit, das Unterrichtsfach BWÜ zu wählen."
+            ],
+            "distractors": [
+              "können Schüler:innen verschiedene Berufe ausprobieren.",
+              "organisieren Mittel- und Wirtschaftsschüler:innen viele Projekte gemeinsam."
+            ]
+          },
+          {
+            "q": "Aufgabe 2: Die 15-jährige Stella",
+            "a": [
+              "bedient sowohl Jugendliche als auch erwachsene Gäste."
+            ],
+            "distractors": [
+              "arbeitet erst seit Kurzem im Bistro PAULA.",
+              "koordiniert die Arbeit des Bistro-Teams."
+            ]
+          },
+          {
+            "q": "Aufgabe 3: Die Mitarbeiter des Bistros PAULA",
+            "a": [
+              "machen die Räumlichkeiten selber sauber."
+            ],
+            "distractors": [
+              "sind für das Besorgen der Lebensmittel verantwortlich.",
+              "sind von den Unterrichtsstunden am Nachmittag befreit."
+            ]
+          },
+          {
+            "q": "Aufgabe 4: Die Einnahmen des Bistros",
+            "a": [
+              "kontrollieren die Schüler:innen genau."
+            ],
+            "distractors": [
+              "sind in den letzten Jahren gestiegen.",
+              "verwenden die Schüler:innen teilweise für private Zwecke."
+            ]
+          },
+          {
+            "q": "Aufgabe 5: Stella",
+            "a": [
+              "denkt, dass ihr die Tätigkeit später nützen wird."
+            ],
+            "distractors": [
+              "bewirbt sich gerade bei unterschiedlichen Firmen.",
+              "ist sich unsicher, was sie nach dem Schulabschluss machen wird."
+            ]
+          }
+        ],
+        "q": "ÖSD B2 · Lesen Aufgabe 1（5 小题）",
+        "a": [
+          "[大组题，请展开作答]"
+        ]
+      },
+      {
+        "id": "zb2j_lesen_a2",
+        "type": "阅读配对",
+        "level": "B2",
+        "source": "ÖSD Zertifikat B2/Jugendliche / ZB2 J Modellsatz",
+        "module": "Lesen Aufgabe 2",
+        "passage": "Lesen Sie die 10 Überschriften auf Blatt 1 und die 5 Texte auf Blatt 2. Suchen Sie dann zu jedem Text (1–5) die passende Überschrift (A–K). Pro Text gibt es nur eine richtige Lösung.\n\n[Überschrift A–K / 卷面原文]\nA – Jahr für Jahr mehr Jugendliche kaufsüchtig\nB – Zu laut ist schlecht\nC – Die richtige Musik zum Laufen\nD – Intelligenter durch Sport und Musik\nE – Kaufrausch – speziell Jugendliche betroffen\nF – Kinder lernen schneller\nG – Größerer Schrank, besserer Überblick\nH – Tipp für mehr Ordnung im Kleiderschrank\nI – Training mit Musik erhöht die Leistung\nK – Klassische Musik beruhigt\n\n[Texte 1–5 / 卷面原文]\nText 1: Im Kleiderschrank stapeln sich ungetragene Tops und Jeans, trotzdem führt der Weg am nächsten freien Tag schon wieder ins Shoppingcenter. Und auch diesmal verlassen die Jugendlichen die Geschäfte mit vollen Taschen. Eine Studie der Arbeiterkammer zeigt: 28 % der Österreicher tendieren zu kaufsüchtigem Verhalten. Besonders gefährdet sind Jugendliche im Alter zwischen 14und24Jahren.Werbung,Internetkauf,Billiglädenund neue Kultmarken verführen dazu, Geld auszugeben, das eigentlich gar nicht da ist. Viele Jugendliche kaufen, um Frust oder Leid zu kompensieren. Doch das Einkaufen befriedigt nur für kurze Zeit, die innere Leere lässt nicht lange auf sich warten – und schon beginnt der Teufelskreis von vorne. [aus einem österreichischen Magazin]\n\nText 2: Ob beim Joggen, Spazieren oder zu Hause: Beim Musikhören mit dem MP3-Player warnen Lärmforscher davor, ihn bis zum Anschlag aufzudrehen. Sechs von zehn Balken auf der Lautstärke-Skala eines Abspielgeräts seien hingegen unbedenklich. Wie stark Musik das Gehör beeinträchtigen kann, hängt auch von der Musikart ab: Zu laut abgespielte Charts mit Pop- und Rocksongs sind für das Ohr deutlich schädlicher als Oldies und Jazz. Denn aktuelle Popstücke hätten kaum ruhige Sequenzen, und der Lärmpegel in einem Song sei fast durchgängig hoch. Am wenigsten belaste Klassik das Gehör, denn in Beethovens und Mozarts Stücken seien auch ruhigere Abschnitte enthalten. [aus einer deutschen Online-Zeitung]\n\nText 3: Die Aussage „Ich habe gar nichts anzuziehen“ ist mehr als ein bloßes Klischee. Oft stehen Menschen vor dem Kleiderschrank und finden sich im eigenen Chaos nicht zurecht. Man hängt an diesem oder jenem Kleidungsstück, weil man schöne Erinnerungen damit verbindet, und irgendwann könnte es ja wieder passen. Einer Studie zufolge sind es in erster Linie Gefühle, die Menschen davon abhalten, ihren Schrank aufzuräumen. Wer an bestimmten Kleidungsstücken hängt, sollte sie an einem besonderen Ort aufbewahren. So bekommt die Erinnerung einen schönen Platz und im Kleiderschrank gibt es kein Durcheinander. Mehr Ideen auf www.globus.de. [von einem deutschen Online-Portal]\n\nText 4: Viele Jogger und Joggerinnen laufen gerne mit Musik. Es gibt Menschen, die können mit fast jeder Musik, andere nur mit korrektem Beat laufen. Das bedeutet, dass der Musikrhythmus (Beat) mit der Schrittgeschwindigkeit übereinstimmt. Solche Musikstücke zu finden, die einem noch dazu gefallen, ist nicht einfach. Es gibt heute zum Glück schon kostenlose Musikprogramme, mit denen man selber Stücke mischen, kürzen, verlängern, schneller oder langsamer machen kann. Ein Lauftraining mit Musik bringt aber auch Gefahren mit sich: So kann man z. B. andere Verkehrsteilnehmer nicht rechtzeitig bemerken. Am sichersten läuft es sich mit Musik deshalb auf dem Laufband zu Hause. [von einem Schweizer Online-Portal]\n\nText 5: Kinder lernen bei allem, was sie tun. Ein Bereich, der sie stark prägt, sind Hobbys wie z. B. Sport oder Musik. Durch Sport wird die Sauerstoffversorgung des Gehirns intensiver, was es Kindern leichter macht, sich den gelernten Stoff zu merken. Turnen, Tanzen oder Inlineskaten schulen den Gleichgewichtssinn und verbessern die Konzentration. Studien zeigen, dass Kinder mit gutem Gleichgewichtssinn in der Regel intelligenter sind als andere. Auch Musik macht nicht nur Spaß, sondern unterstützt die kindliche Sprachentwicklung. Durch Singen können Liedtexte sehr gut gelernt werden, außerdem können durch musikalische Erziehung die Begabungen entwickelt und wiederum die Intelligenz gesteigert werden. [von einem deutschen Online-Portal]",
+        "questions": [
+          {
+            "q": "Text 1: Im Kleiderschrank stapeln sich ungetragene Tops und Jeans, trotzdem führt der Weg am nächsten freien Tag schon wieder ins Shoppingcenter. Und auch diesmal verlassen die Jugendlichen die Geschäfte mit vollen Taschen. Eine Studie der Arbeiterkammer zeigt: 28 % der Österreicher tendieren zu kaufsüchtigem Verhalten. Besonders gefährdet sind Jugendliche im Alter zwischen 14und24Jahren.Werbung,Internetkauf,Billiglädenund neue Kultmarken verführen dazu, Geld auszugeben, das eigentlich gar nicht da ist. Viele Jugendliche kaufen, um Frust oder Leid zu kompensieren. Doch das Einkaufen befriedigt nur für kurze Zeit, die innere Leere lässt nicht lange auf sich warten – und schon beginnt der Teufelskreis von vorne. [aus einem österreichischen Magazin]  →  Welche Überschrift passt?",
+            "a": [
+              "E – Kaufrausch – speziell Jugendliche betroffen"
+            ],
+            "distractors": [
+              "A – Jahr für Jahr mehr Jugendliche kaufsüchtig",
+              "B – Zu laut ist schlecht"
+            ]
+          },
+          {
+            "q": "Text 2: Ob beim Joggen, Spazieren oder zu Hause: Beim Musikhören mit dem MP3-Player warnen Lärmforscher davor, ihn bis zum Anschlag aufzudrehen. Sechs von zehn Balken auf der Lautstärke-Skala eines Abspielgeräts seien hingegen unbedenklich. Wie stark Musik das Gehör beeinträchtigen kann, hängt auch von der Musikart ab: Zu laut abgespielte Charts mit Pop- und Rocksongs sind für das Ohr deutlich schädlicher als Oldies und Jazz. Denn aktuelle Popstücke hätten kaum ruhige Sequenzen, und der Lärmpegel in einem Song sei fast durchgängig hoch. Am wenigsten belaste Klassik das Gehör, denn in Beethovens und Mozarts Stücken seien auch ruhigere Abschnitte enthalten. [aus einer deutschen Online-Zeitung]  →  Welche Überschrift passt?",
+            "a": [
+              "B – Zu laut ist schlecht"
+            ],
+            "distractors": [
+              "C – Die richtige Musik zum Laufen",
+              "D – Intelligenter durch Sport und Musik"
+            ]
+          },
+          {
+            "q": "Text 3: Die Aussage „Ich habe gar nichts anzuziehen“ ist mehr als ein bloßes Klischee. Oft stehen Menschen vor dem Kleiderschrank und finden sich im eigenen Chaos nicht zurecht. Man hängt an diesem oder jenem Kleidungsstück, weil man schöne Erinnerungen damit verbindet, und irgendwann könnte es ja wieder passen. Einer Studie zufolge sind es in erster Linie Gefühle, die Menschen davon abhalten, ihren Schrank aufzuräumen. Wer an bestimmten Kleidungsstücken hängt, sollte sie an einem besonderen Ort aufbewahren. So bekommt die Erinnerung einen schönen Platz und im Kleiderschrank gibt es kein Durcheinander. Mehr Ideen auf www.globus.de. [von einem deutschen Online-Portal]  →  Welche Überschrift passt?",
+            "a": [
+              "H – Tipp für mehr Ordnung im Kleiderschrank"
+            ],
+            "distractors": [
+              "C – Die richtige Musik zum Laufen",
+              "D – Intelligenter durch Sport und Musik"
+            ]
+          },
+          {
+            "q": "Text 4: Viele Jogger und Joggerinnen laufen gerne mit Musik. Es gibt Menschen, die können mit fast jeder Musik, andere nur mit korrektem Beat laufen. Das bedeutet, dass der Musikrhythmus (Beat) mit der Schrittgeschwindigkeit übereinstimmt. Solche Musikstücke zu finden, die einem noch dazu gefallen, ist nicht einfach. Es gibt heute zum Glück schon kostenlose Musikprogramme, mit denen man selber Stücke mischen, kürzen, verlängern, schneller oder langsamer machen kann. Ein Lauftraining mit Musik bringt aber auch Gefahren mit sich: So kann man z. B. andere Verkehrsteilnehmer nicht rechtzeitig bemerken. Am sichersten läuft es sich mit Musik deshalb auf dem Laufband zu Hause. [von einem Schweizer Online-Portal]  →  Welche Überschrift passt?",
+            "a": [
+              "C – Die richtige Musik zum Laufen"
+            ],
+            "distractors": [
+              "E – Kaufrausch – speziell Jugendliche betroffen",
+              "F – Kinder lernen schneller"
+            ]
+          },
+          {
+            "q": "Text 5: Kinder lernen bei allem, was sie tun. Ein Bereich, der sie stark prägt, sind Hobbys wie z. B. Sport oder Musik. Durch Sport wird die Sauerstoffversorgung des Gehirns intensiver, was es Kindern leichter macht, sich den gelernten Stoff zu merken. Turnen, Tanzen oder Inlineskaten schulen den Gleichgewichtssinn und verbessern die Konzentration. Studien zeigen, dass Kinder mit gutem Gleichgewichtssinn in der Regel intelligenter sind als andere. Auch Musik macht nicht nur Spaß, sondern unterstützt die kindliche Sprachentwicklung. Durch Singen können Liedtexte sehr gut gelernt werden, außerdem können durch musikalische Erziehung die Begabungen entwickelt und wiederum die Intelligenz gesteigert werden. [von einem deutschen Online-Portal]  →  Welche Überschrift passt?",
+            "a": [
+              "D – Intelligenter durch Sport und Musik"
+            ],
+            "distractors": [
+              "F – Kinder lernen schneller",
+              "G – Größerer Schrank, besserer Überblick"
+            ]
+          }
+        ],
+        "q": "ÖSD B2 · Lesen Aufgabe 2（5 小题）",
+        "a": [
+          "[大组题，请展开作答]"
+        ]
+      },
+      {
+        "id": "zb2j_hoeren_a1",
+        "type": "听力判断",
+        "level": "B2",
+        "source": "ÖSD Zertifikat B2/Jugendliche / ZB2 J Modellsatz",
+        "module": "Hören Aufgabe 1",
+        "passage": "Lesen Sie Aufgabe 1 gut durch. Situation: Sie hören eine Radiosendung. Lesen Sie die folgenden Aussagen und kreuzen Sie jeweils Richtig (R) oder Falsch (F) an. Sie hören den Text zwei Mal. （原卷为 10 条 R/F 判断；此处按题号顺序逐条呈现）\n\n[Thema] Meine Oma fährt im Hühnerstall Motorrad\n\n[卷面 10 条 Aussagen / 按题号顺序]\n 1. Für Julia und Philipp ist die künstlerische Beschäftigung ihrer Oma ein Gewinn.\n 2. Die Oma von Julia und Philipp denkt, dass sie sich an der Erziehung ihrer Enkel beteiligen sollte.\n 3. Die Moderatorin findet, dass man den Eingangsbereich des Altersheims wohnlicher gestalten könnte.\n 4. Ihre Mahlzeiten nehmen die Heimbewohner in ihren Zimmern ein.\n 5. Die Enkelkinder haben Opa Böhm einige Fotos mitgebracht.\n 6. Christopher besucht seinen Opa so oft, weil dieser früher viel für ihn da war.\n 7. Die Großeltern Eser fühlen sich mit der Sorge um die Enkelkinder langsam überfordert.\n 8. Dr. Fuchs erklärt, dass zu viel Bewegung im Alter den Körper belasten kann.\n 9. Julias Oma hält aus heutiger Sicht die Strenge ihrer eigenen Großmutter für angemessen.\n10. Abschließend stellen die Kinder fest, dass sie viele Vorteile beim Älterwerden sehen.",
+        "audioUrl": "data/audio/b2/ZB2_J_MS_A1.mp3",
+        "audioFile": "ZB2_J_MS_A1.mp3",
+        "audioUrls": [
+          "data/audio/b2/ZB2_J_MS_A1.mp3"
+        ],
+        "audioText": "",
+        "audioTextNote": "Kandidatenblätter（考生卷）不含听力原文 Hörtexte；如需无障碍文本须另行获取 Prüferblätter 或人工转写。",
+        "audioNote": "原卷为 10 条 Richtig/Falsch 判断题；音频对应本卷 Hören Aufgabe 1。",
+        "questions": [
+          {
+            "q": "Aussage 1: „Für Julia und Philipp ist die künstlerische Beschäftigung ihrer Oma ein Gewinn.“  →  Richtig oder Falsch?",
+            "a": [
+              "Richtig"
+            ],
+            "distractors": [
+              "Falsch"
+            ]
+          },
+          {
+            "q": "Aussage 2: „Die Oma von Julia und Philipp denkt, dass sie sich an der Erziehung ihrer Enkel beteiligen sollte.“  →  Richtig oder Falsch?",
+            "a": [
+              "Falsch"
+            ],
+            "distractors": [
+              "Richtig"
+            ]
+          },
+          {
+            "q": "Aussage 3: „Die Moderatorin findet, dass man den Eingangsbereich des Altersheims wohnlicher gestalten könnte.“  →  Richtig oder Falsch?",
+            "a": [
+              "Falsch"
+            ],
+            "distractors": [
+              "Richtig"
+            ]
+          },
+          {
+            "q": "Aussage 4: „Ihre Mahlzeiten nehmen die Heimbewohner in ihren Zimmern ein.“  →  Richtig oder Falsch?",
+            "a": [
+              "Falsch"
+            ],
+            "distractors": [
+              "Richtig"
+            ]
+          },
+          {
+            "q": "Aussage 5: „Die Enkelkinder haben Opa Böhm einige Fotos mitgebracht.“  →  Richtig oder Falsch?",
+            "a": [
+              "Falsch"
+            ],
+            "distractors": [
+              "Richtig"
+            ]
+          },
+          {
+            "q": "Aussage 6: „Christopher besucht seinen Opa so oft, weil dieser früher viel für ihn da war.“  →  Richtig oder Falsch?",
+            "a": [
+              "Richtig"
+            ],
+            "distractors": [
+              "Falsch"
+            ]
+          },
+          {
+            "q": "Aussage 7: „Die Großeltern Eser fühlen sich mit der Sorge um die Enkelkinder langsam überfordert.“  →  Richtig oder Falsch?",
+            "a": [
+              "Falsch"
+            ],
+            "distractors": [
+              "Richtig"
+            ]
+          },
+          {
+            "q": "Aussage 8: „Dr. Fuchs erklärt, dass zu viel Bewegung im Alter den Körper belasten kann.“  →  Richtig oder Falsch?",
+            "a": [
+              "Falsch"
+            ],
+            "distractors": [
+              "Richtig"
+            ]
+          },
+          {
+            "q": "Aussage 9: „Julias Oma hält aus heutiger Sicht die Strenge ihrer eigenen Großmutter für angemessen.“  →  Richtig oder Falsch?",
+            "a": [
+              "Richtig"
+            ],
+            "distractors": [
+              "Falsch"
+            ]
+          },
+          {
+            "q": "Aussage 10: „Abschließend stellen die Kinder fest, dass sie viele Vorteile beim Älterwerden sehen.“  →  Richtig oder Falsch?",
+            "a": [
+              "Richtig"
+            ],
+            "distractors": [
+              "Falsch"
+            ]
+          }
+        ],
+        "q": "ÖSD B2 · Hören Aufgabe 1（10 小题）",
+        "a": [
+          "[大组题，请展开作答]"
+        ]
+      },
+      {
+        "id": "zb2j_hoeren_a2",
+        "type": "听力判断",
+        "level": "B2",
+        "source": "ÖSD Zertifikat B2/Jugendliche / ZB2 J Modellsatz",
+        "module": "Hören Aufgabe 2",
+        "passage": "Lesen Sie Aufgabe 2 gut durch. Sie haben 90 Sekunden Zeit. Situation: Sie hören ein Gespräch zwischen zwei Personen, die Informationen austauschen. Ergänzen Sie die fehlenden Informationen oder kreuzen Sie die entsprechenden Kästchen an. Sie hören den Text ein Mal. （原卷为 Notizblatt 打叉网格；此处按 A2 既定方案把每个打叉格忠实展开为 JA/NEIN 判断题，JA = 答案卡该格子打了 X。开放式填空行无给定选项，不纳入判断题）\n\nThema: Motorrollerkauf\n\n[卷面 Notizblatt 结构：3 列比较对象]\n列: Vespa | Honda | Aprilia\n\n[卷面打叉行（各选项需按对应列勾选）]\nExtras：□ Helm / □ Schloss / □ Spezialfarbe\nAusstattung：□ Gepäckfach / □ Ledersitz / □ Windschutz\nZahlung：□ Teilzahlung möglich / □ Rabatt bei Barzahlung\nGarantie：□ Ersatzteile / □ Arbeitskosten\nÖffnungszeiten：□ abends / □ mittags / □ samstags\n\n[卷面另有开放式填空行，无给定选项，不纳入判断题]\nPreis / Kilometerstand / Baujahr / Entfernung / Telefonnummer\n\n说明: 下列判断题的 JA 表示答案卡上「该列 × 该行 × 该选项」的格子打了 X，NEIN 表示留空。听完一遍音轨完成整组。",
+        "audioUrl": "data/audio/b2/ZB2_J_MS_A2.mp3",
+        "audioFile": "ZB2_J_MS_A2.mp3",
+        "audioUrls": [
+          "data/audio/b2/ZB2_J_MS_A2.mp3"
+        ],
+        "audioText": "",
+        "audioTextNote": "Kandidatenblätter（考生卷）不含听力原文 Hörtexte；如需无障碍文本须另行获取 Prüferblätter 或人工转写。",
+        "audioNote": "原卷为 Notizblatt 打叉网格，按 A2 方案忠实展开为 39 道 JA/NEIN 判断题；开放式填空行不纳入。音频对应本卷 Hören Aufgabe 2。",
+        "questions": [
+          {
+            "q": "Aufgabe 2 / Vespa × „Helm“（Extras）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "NEIN"
+            ],
+            "distractors": [
+              "JA"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Vespa × „Schloss“（Extras）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Vespa × „Spezialfarbe“（Extras）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "NEIN"
+            ],
+            "distractors": [
+              "JA"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Honda × „Helm“（Extras）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Honda × „Schloss“（Extras）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "NEIN"
+            ],
+            "distractors": [
+              "JA"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Honda × „Spezialfarbe“（Extras）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "NEIN"
+            ],
+            "distractors": [
+              "JA"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Aprilia × „Helm“（Extras）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "NEIN"
+            ],
+            "distractors": [
+              "JA"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Aprilia × „Schloss“（Extras）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Aprilia × „Spezialfarbe“（Extras）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Vespa × „Gepäckfach“（Ausstattung）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Vespa × „Ledersitz“（Ausstattung）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "NEIN"
+            ],
+            "distractors": [
+              "JA"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Vespa × „Windschutz“（Ausstattung）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Honda × „Gepäckfach“（Ausstattung）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Honda × „Ledersitz“（Ausstattung）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Honda × „Windschutz“（Ausstattung）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "NEIN"
+            ],
+            "distractors": [
+              "JA"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Aprilia × „Gepäckfach“（Ausstattung）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Aprilia × „Ledersitz“（Ausstattung）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "NEIN"
+            ],
+            "distractors": [
+              "JA"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Aprilia × „Windschutz“（Ausstattung）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Vespa × „Teilzahlung möglich“（Zahlung）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Vespa × „Rabatt bei Barzahlung“（Zahlung）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "NEIN"
+            ],
+            "distractors": [
+              "JA"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Honda × „Teilzahlung möglich“（Zahlung）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Honda × „Rabatt bei Barzahlung“（Zahlung）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Aprilia × „Teilzahlung möglich“（Zahlung）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "NEIN"
+            ],
+            "distractors": [
+              "JA"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Aprilia × „Rabatt bei Barzahlung“（Zahlung）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Vespa × „Ersatzteile“（Garantie）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Vespa × „Arbeitskosten“（Garantie）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "NEIN"
+            ],
+            "distractors": [
+              "JA"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Honda × „Ersatzteile“（Garantie）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Honda × „Arbeitskosten“（Garantie）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Aprilia × „Ersatzteile“（Garantie）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Aprilia × „Arbeitskosten“（Garantie）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "NEIN"
+            ],
+            "distractors": [
+              "JA"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Vespa × „abends“（Öffnungszeiten）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "NEIN"
+            ],
+            "distractors": [
+              "JA"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Vespa × „mittags“（Öffnungszeiten）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Vespa × „samstags“（Öffnungszeiten）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Honda × „abends“（Öffnungszeiten）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Honda × „mittags“（Öffnungszeiten）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "NEIN"
+            ],
+            "distractors": [
+              "JA"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Honda × „samstags“（Öffnungszeiten）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Aprilia × „abends“（Öffnungszeiten）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Aprilia × „mittags“（Öffnungszeiten）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "JA"
+            ],
+            "distractors": [
+              "NEIN"
+            ]
+          },
+          {
+            "q": "Aufgabe 2 / Aprilia × „samstags“（Öffnungszeiten）：录音中是否应勾选此项？（JA = 应勾选）",
+            "a": [
+              "NEIN"
+            ],
+            "distractors": [
+              "JA"
+            ]
+          }
+        ],
+        "q": "ÖSD B2 · Hören Aufgabe 2（39 小题）",
+        "a": [
+          "[大组题，请展开作答]"
+        ]
+      },
+      {
+        "id": "zb2pmb_lesen_a1",
+        "type": "阅读选择",
+        "level": "B2",
+        "source": "ÖSD Zertifikat B2/PMB / ZB2 PMB Modellsatz",
+        "module": "Lesen Aufgabe 1",
+        "passage": "Lesen Sie zuerst den Text auf Blatt 1 und lösen Sie dann die 5 Aufgaben, indem Sie die richtige Antwort (A oder B oder C) markieren. Für jede Aufgabe (1–5) gibt es nur eine richtige Lösung.\n\n[Text / Blatt 1]\n\nWenn der Darm reizt Am Marien-Klinikum findet bereits seit drei Jahren jeden Dienstagvormittag die Reizdarm-Sprechstunde unter Leitung eines interdisziplinären Teams aus Internisten, Psychiatern und Experten für psychosomatische Medizin statt. Es handelt sich um ein Angebot für ambulante Patienten, die an funktionellen Beschwerden des Darmtraktes – landläufig als Reizdarm bezeichnet – leiden. Um einen Termin zu erhalten, sind eine Überweisung von niedergelassenen Medizinern sowie eine vorangehende Koloskopie und Sonografie erforderlich. Es wird außerdem darum gebeten, die Arztbriefe der erfolgten Untersuchungen nicht per E-Mail zu senden, sondern diese persönlich zur Sprechstunde mitzubringen. Die Voruntersuchungen bei Fachärzten sind wichtig, damit schwerwiegendere Erkrankungen wie Krebs oder Morbus Crohn schon im Vorhinein ausgeschlossen werden können. Die für Reizdarm typischen Anzeichen wie Bauchschmerzen, Probleme bei der Stuhlentleerung und Blähungen können nämlich auch bei anderen Erkrankungen auftreten. Während der Reizdarm-Sprechstunde beschränkt man sich ausschließlich auf Beratung und Therapie. Das Reizdarmsyndrom umfasst eine Vielzahl an Symptomen, die von Patient zu Patient abweichen können. Deshalb ist es von großem Interesse, dass die ReizdarmPatienten Informationen über ihre Beschwerden für wissenschaftliche Erhebungen und Untersuchungen zur Verfügung stellen. Bis daraus allerdings neue therapeutische Ansätze entwickelt werden, müssen Ärzte und Betroffene aber noch Geduld haben. Historisch gesehen handelt es sich beim Reizdarmsyndrom um ein Phänomen, das erstmals 1909 beschrieben wurde. Lange Zeit wurden die damit verbundenen Symptome vor allem den sogenannten „nervösen“ Frauen zugeordnet und unterstützten so das damals vorherrschende Geschlechterbild. Auch heutzutage wird das Reizdarmsyndrom öfter bei Frauen als bei Männern diagnostiziert. Das ist jedoch darauf zurückzuführen, dass Männer die damit einhergehenden Beschwerden als weniger störend wahrnehmen und auch seltener darüber sprechen. Umfragen haben allerdings ergeben, dass sowohl Frauen als auch Männer mit Reizdarmsymptomen oft auf den Gang zum Mediziner verzichten und stattdessen versuchen, die Symptome zum Beispiel durch Anwendung von Hausmitteln zu lindern. Wenn die Diagnose Reizdarmsyndrom in der Reizdarm-Sprechstunde erst einmal feststeht, können die zuständigen Ärzte des Marien-Klinikums eine Zuweisung in die Reizdarmklinik ausstellen, wo die Beschwerden ganzheitlich stationär behandelt werden. In Kleingruppen erhalten die Patienten ein multimodales Angebot, bei dem die Zugänge unterschiedlich sind. So spielen Bewegung und Sport sowie die Auseinandersetzung mit den eigenen Essgewohnheiten eine Rolle. Entgegen der verbreiteten Meinung gibt es jedoch keine Diäten, die strikt befolgt werden müssen. Ein Schwerpunkt im Klinikalltag liegt auf der Vermittlung von Strategien, wie man Stress vermeidet oder Ängste abbaut, denn vielfach ist es die emotionale und mentale Verfassung der Betroffenen, die zur Entwicklung eines Reizdarmsyndroms beiträgt. Je nachdem, wie akut die Beschwerden der Patienten sind, werden Medikamente aus der Schulmedizin oder Hausmittel verordnet. Zusätzlich bietet die Klinik alternative Heilmethoden wie Massagen an. Akupunktur wird allerdings nicht eingesetzt, da noch nicht nachgewiesen ist, ob sie tatsächlich gegen das Reizdarmsyndrom wirkt. Auch für die Behandlung des psychischen Ungleichgewichts gibt es eine Vielzahl an kreativen Aktivitäten. So können Betroffene vor Ort beispielsweise durch Malen, Zeichnen und Bastelarbeiten ihre Unruhe und Nervosität abbauen. Eine Chance auf vollständige Genesung am Ende des Aufenthalts verspricht das Team der Reizdarmklinik jedoch nicht. Die Erfahrung zeigt aber, dass die Betroffenen dies gar nicht erwarten, sondern sich Tipps und Anregungen erhoffen, wie sie mit ihren Symptomen im Alltag leichter zurechtkommen. [aus einem österreichischen Fachmagazin]",
+        "questions": [
+          {
+            "q": "Aufgabe 1: Wer zur Reizdarm-Sprechstunde kommen möchte, muss schon vorher",
+            "a": [
+              "relevante Darm-Untersuchungen gemacht haben."
+            ],
+            "distractors": [
+              "eine vorgeschriebene Ambulanzgebühr überweisen.",
+              "wichtige Befunde an das Klinikum schicken."
+            ]
+          },
+          {
+            "q": "Aufgabe 2: Im Rahmen der Reizdarm-Sprechstunde werden",
+            "a": [
+              "wichtige Daten für medizinische Studien gesammelt."
+            ],
+            "distractors": [
+              "auch andere Krankheiten des Darmtrakts behandelt.",
+              "vorwiegend neue Behandlungsmethoden eingesetzt."
+            ]
+          },
+          {
+            "q": "Aufgabe 3: Das Reizdarmsyndrom",
+            "a": [
+              "wurde früher als typisch weibliches Leiden betrachtet."
+            ],
+            "distractors": [
+              "empfinden Männer als wesentlich unangenehmer als Frauen.",
+              "macht für Erkrankte sofort einen Arztbesuch notwendig."
+            ]
+          },
+          {
+            "q": "Aufgabe 4: Während des Aufenthaltes in der Reizdarmklinik",
+            "a": [
+              "beschäftigen sich die Patienten mit ihrem psychischen Zustand."
+            ],
+            "distractors": [
+              "müssen die Betroffenen Ernährungsvorschriften einhalten.",
+              "werden die Erkrankten einzeln in Therapiesitzungen betreut."
+            ]
+          },
+          {
+            "q": "Aufgabe 5: In der Reizdarmklinik",
+            "a": [
+              "erlernen die Betroffenen den Umgang mit ihrer Krankheit."
+            ],
+            "distractors": [
+              "gehen die Ärzte von völliger Heilung der Erkrankung aus.",
+              "wird ganz auf medikamentöse Behandlung verzichtet."
+            ]
+          }
+        ],
+        "q": "ÖSD B2 · Lesen Aufgabe 1（5 小题）",
+        "a": [
+          "[大组题，请展开作答]"
+        ]
+      },
+      {
+        "id": "zb2pmb_lesen_a2",
+        "type": "阅读配对",
+        "level": "B2",
+        "source": "ÖSD Zertifikat B2/PMB / ZB2 PMB Modellsatz",
+        "module": "Lesen Aufgabe 2",
+        "passage": "Lesen Sie die 10 Betreffzeilen auf Blatt 1 und die 5 E-Mails auf Blatt 2 und 3. Suchen Sie dann zu jedem E-Mail (1–5) die passende Betreffzeile (A–K). Pro E-Mail gibt es nur eine richtige Lösung.\n\n[Betreffzeile A–K / 卷面原文]\nA – Erinnerung: Zur Informationsveranstaltung anmelden\nB – Verpflegung der Bewohner am Wochenende\nC – Immer mehr Müll im Personalraum!\nD – Neuübernahme des Gastronomiebereichs\nE – Lieferservice stellt Mahlzeiten zu\nF – Regelungen bezüglich Essen und Trinken im Dienst\nG – Vortrag über Appetitförderung\nH – Umbauarbeiten im Schnellrestaurant früher fertig\nI – Gekühlte Getränke zur freien Entnahme für das Personal\nK – Vergünstigte Heißgetränke für Angestellte\n\n[Texte 1–5 / 卷面原文]\nE-Mail 1: Liebe Kolleginnen und Kollegen, wie angekündigt wurde der Antrag auf die Modernisierung der Großküche in unserer Pflegeeinrichtung bewilligt. Daher werden am Freitag, den 3.10. ab 8:00 Uhr sämtliche Elektroherde und Spülmaschinen durch energieeffizientere Modelle ersetzt. Außerdem bekommen die Küchenwände am Nachmittag einen Anstrich mit einer fettabweisenden Spezialfarbe. Da diese länger zum Trocknen braucht, versorgen wir unsere Pflegebedürftigen am Samstag und Sonntag mit Speisen aus dem örtlichen Krankenhaus. Unser Küchenpersonal holt sie dort ab und bringt sie zu den üblichen Essenszeiten auf alle Etagen. Bitte denkt daran, die leeren Transportboxen anschließend wieder für den Rücktransport einzusammeln. Freundliche Grüße Magda Schell Pflegedienstleitung\n\nE-Mail 2: Liebes Pflegeteam, wie ihr wisst, haben wir Probleme mit den Verpflegungsautomaten im Besprechungszimmer. Die Plastikbecher werden nur halb gefüllt und es gibt Fehlermeldungen beim Kauf von Süßigkeiten. Ein Angestellter der Firma Kaffeopaia hat die Geräte heute mit einem Software-Update aktualisiert – jetzt sollten sie wieder einwandfrei funktionieren. Anstelle der Wegwerfbecher stellt uns die Firma übrigens ab sofort wiederverwendbare Becher zur Verfügung. Damit tragen wir aktiv zum Umweltschutz bei, weil nicht mehr so viel Abfall entsteht. Als Entschuldigung und kleines Entgegenkommen von Kaffeopaia erhält unser Team außerdem Kaffee und Tee vorübergehend um die Hälfte des regulären Preises. Einen schönen Dienst und liebe Grüße Artem\n\nE-Mail 3: Werte Kolleginnen und Kollegen! Erneut möchte ich Sie gern darauf aufmerksam machen, dass heute bei uns die Pflegeforscherin Irène Mathieu über ihre Erfahrungen im Anreichen von Speisen spricht. Frau Mathieu beschäftigt sich speziell mit Pflegebedürftigen, die kein Hungergefühl verspüren oder Nahrung aus anderen Gründen ablehnen, und unterstützt sie bei der selbstständigen Nahrungsaufnahme. Im Zuge der Präsentation von 19 bis 21 Uhr wird Frau Mathieu auch ein Kapitel aus ihrem Buch „Gefüttert werden nur Tiere“ vorlesen. Eine Registrierung für die Präsentation ist dieses Mal nicht erforderlich, weil sie im Festsaal stattfindet – dort gibt es genügend Sitzgelegenheiten. Ich freue mich auf zahlreiches Erscheinen! Mag.a Gerlinde Kapellari Stv. Leitung, Tagespflegezentrum Gut Rauthbrunn\n\nE-Mail 4: Geschätzte Kolleginnen und Kollegen, aufgrund vermehrter Krankenstände im Team leisten Sie derzeit viele Überstunden und wir möchten uns ausdrücklich für Ihre Mühe und Ihren Einsatz bedanken! Es ist uns bewusst, dass es für Sie deswegen unmöglich ist, die Pausen planmäßig einzuhalten. Dennoch müssen wir Sie darauf hinweisen, dass es aufgrund der Hygienevorschriften strengstens untersagt ist, Imbisse einzunehmen, während die Kranken in den Behandlungsräumen versorgt werden. Wir ersuchen Sie, öfters kürzere Pausen einzulegen sowie Snacks lediglich im Aufenthaltsraum zu konsumieren. Diesbezüglich erinnern wir Sie auch daran, dass die Mineralwasser- und Fruchtsaftflaschen im Kühlschrank der Stationsküche ausschließlich für Patienten bestimmt sind. Nutzen Sie für Erfrischungsgetränke bitte die Automaten im Erdgeschoss. Wir danken für Ihr Verständnis! Mit freundlichen Grüßen Die Stationsleitung\n\nE-Mail 5: Liebe Mitarbeiter:innen, nach Rücksprache mit der Hausleitung möchten wir Sie gern über die Renovierung unserer Cafeteria sowie Änderungen bei der Wiederaufnahme ihres Betriebs informieren. Natürlich bleibt das Selbstbedienungskonzept erhalten, und zukünftig gibt es sogar zwei Kassen. Auch werden weiterhin warme Menüs erhältlich sein. Frau Akoto, die unsere Cafeteria über 25 Jahre lang vorbildlich betrieben hat, geht jedoch am 15. Mai vorzeitig in den wohlverdienten Ruhestand. Nach der Renovierung wird deshalb Herr Gsodam die Cafeteria führen. Diese können Sie dann, wie vorgesehen, ab dem 27. Juni wieder besuchen. Bis dahin erhalten Sie Snacks beim Buffet im ersten Stock. Mit freundlichen Grüßen Jósef Gorski, BA Verwaltung, Privatklinikum Katharinenhöhe",
+        "questions": [
+          {
+            "q": "E-Mail 1: Liebe Kolleginnen und Kollegen, wie angekündigt wurde der Antrag auf die Modernisierung der Großküche in unserer Pflegeeinrichtung bewilligt. Daher werden am Freitag, den 3.10. ab 8:00 Uhr sämtliche Elektroherde und Spülmaschinen durch energieeffizientere Modelle ersetzt. Außerdem bekommen die Küchenwände am Nachmittag einen Anstrich mit einer fettabweisenden Spezialfarbe. Da diese länger zum Trocknen braucht, versorgen wir unsere Pflegebedürftigen am Samstag und Sonntag mit Speisen aus dem örtlichen Krankenhaus. Unser Küchenpersonal holt sie dort ab und bringt sie zu den üblichen Essenszeiten auf alle Etagen. Bitte denkt daran, die leeren Transportboxen anschließend wieder für den Rücktransport einzusammeln. Freundliche Grüße Magda Schell Pflegedienstleitung  →  Welche Betreffzeile passt?",
+            "a": [
+              "B – Verpflegung der Bewohner am Wochenende"
+            ],
+            "distractors": [
+              "A – Erinnerung: Zur Informationsveranstaltung anmelden",
+              "C – Immer mehr Müll im Personalraum!"
+            ]
+          },
+          {
+            "q": "E-Mail 2: Liebes Pflegeteam, wie ihr wisst, haben wir Probleme mit den Verpflegungsautomaten im Besprechungszimmer. Die Plastikbecher werden nur halb gefüllt und es gibt Fehlermeldungen beim Kauf von Süßigkeiten. Ein Angestellter der Firma Kaffeopaia hat die Geräte heute mit einem Software-Update aktualisiert – jetzt sollten sie wieder einwandfrei funktionieren. Anstelle der Wegwerfbecher stellt uns die Firma übrigens ab sofort wiederverwendbare Becher zur Verfügung. Damit tragen wir aktiv zum Umweltschutz bei, weil nicht mehr so viel Abfall entsteht. Als Entschuldigung und kleines Entgegenkommen von Kaffeopaia erhält unser Team außerdem Kaffee und Tee vorübergehend um die Hälfte des regulären Preises. Einen schönen Dienst und liebe Grüße Artem  →  Welche Betreffzeile passt?",
+            "a": [
+              "K – Vergünstigte Heißgetränke für Angestellte"
+            ],
+            "distractors": [
+              "B – Verpflegung der Bewohner am Wochenende",
+              "C – Immer mehr Müll im Personalraum!"
+            ]
+          },
+          {
+            "q": "E-Mail 3: Werte Kolleginnen und Kollegen! Erneut möchte ich Sie gern darauf aufmerksam machen, dass heute bei uns die Pflegeforscherin Irène Mathieu über ihre Erfahrungen im Anreichen von Speisen spricht. Frau Mathieu beschäftigt sich speziell mit Pflegebedürftigen, die kein Hungergefühl verspüren oder Nahrung aus anderen Gründen ablehnen, und unterstützt sie bei der selbstständigen Nahrungsaufnahme. Im Zuge der Präsentation von 19 bis 21 Uhr wird Frau Mathieu auch ein Kapitel aus ihrem Buch „Gefüttert werden nur Tiere“ vorlesen. Eine Registrierung für die Präsentation ist dieses Mal nicht erforderlich, weil sie im Festsaal stattfindet – dort gibt es genügend Sitzgelegenheiten. Ich freue mich auf zahlreiches Erscheinen! Mag.a Gerlinde Kapellari Stv. Leitung, Tagespflegezentrum Gut Rauthbrunn  →  Welche Betreffzeile passt?",
+            "a": [
+              "G – Vortrag über Appetitförderung"
+            ],
+            "distractors": [
+              "C – Immer mehr Müll im Personalraum!",
+              "D – Neuübernahme des Gastronomiebereichs"
+            ]
+          },
+          {
+            "q": "E-Mail 4: Geschätzte Kolleginnen und Kollegen, aufgrund vermehrter Krankenstände im Team leisten Sie derzeit viele Überstunden und wir möchten uns ausdrücklich für Ihre Mühe und Ihren Einsatz bedanken! Es ist uns bewusst, dass es für Sie deswegen unmöglich ist, die Pausen planmäßig einzuhalten. Dennoch müssen wir Sie darauf hinweisen, dass es aufgrund der Hygienevorschriften strengstens untersagt ist, Imbisse einzunehmen, während die Kranken in den Behandlungsräumen versorgt werden. Wir ersuchen Sie, öfters kürzere Pausen einzulegen sowie Snacks lediglich im Aufenthaltsraum zu konsumieren. Diesbezüglich erinnern wir Sie auch daran, dass die Mineralwasser- und Fruchtsaftflaschen im Kühlschrank der Stationsküche ausschließlich für Patienten bestimmt sind. Nutzen Sie für Erfrischungsgetränke bitte die Automaten im Erdgeschoss. Wir danken für Ihr Verständnis! Mit freundlichen Grüßen Die Stationsleitung  →  Welche Betreffzeile passt?",
+            "a": [
+              "F – Regelungen bezüglich Essen und Trinken im Dienst"
+            ],
+            "distractors": [
+              "D – Neuübernahme des Gastronomiebereichs",
+              "E – Lieferservice stellt Mahlzeiten zu"
+            ]
+          },
+          {
+            "q": "E-Mail 5: Liebe Mitarbeiter:innen, nach Rücksprache mit der Hausleitung möchten wir Sie gern über die Renovierung unserer Cafeteria sowie Änderungen bei der Wiederaufnahme ihres Betriebs informieren. Natürlich bleibt das Selbstbedienungskonzept erhalten, und zukünftig gibt es sogar zwei Kassen. Auch werden weiterhin warme Menüs erhältlich sein. Frau Akoto, die unsere Cafeteria über 25 Jahre lang vorbildlich betrieben hat, geht jedoch am 15. Mai vorzeitig in den wohlverdienten Ruhestand. Nach der Renovierung wird deshalb Herr Gsodam die Cafeteria führen. Diese können Sie dann, wie vorgesehen, ab dem 27. Juni wieder besuchen. Bis dahin erhalten Sie Snacks beim Buffet im ersten Stock. Mit freundlichen Grüßen Jósef Gorski, BA Verwaltung, Privatklinikum Katharinenhöhe  →  Welche Betreffzeile passt?",
+            "a": [
+              "D – Neuübernahme des Gastronomiebereichs"
+            ],
+            "distractors": [
+              "F – Regelungen bezüglich Essen und Trinken im Dienst",
+              "G – Vortrag über Appetitförderung"
+            ]
+          }
+        ],
+        "q": "ÖSD B2 · Lesen Aufgabe 2（5 小题）",
+        "a": [
+          "[大组题，请展开作答]"
+        ]
+      },
+      {
+        "id": "zb2pmb_hoeren_a1",
+        "type": "听力选择",
+        "level": "B2",
+        "source": "ÖSD Zertifikat B2/PMB / ZB2 PMB Modellsatz",
+        "module": "Hören Aufgabe 1",
+        "passage": "Lesen Sie die Aufgabe gut durch. Situation: Sie hören jetzt fünf Texte. Zu jedem Text gibt es zwei Aufgaben: eine Richtig/Falsch-Aussage und eine A/B/C-Aufgabe. Wählen Sie bei jeder Aufgabe die richtige Lösung. Sie hören jeden Text zwei Mal.\n\n[卷面 5 段 Text/Dialog × 2 Aufgaben]\n\nText 1\n  R/F-Aussage: Valerie soll wegen eines Notfalls sofort zu Herrn Thannhauser kommen.\n  A/B/C-Stem: Der Klient hat sich beim Sturz\n    A die Beine gebrochen.\n    B den Ellenbogen gebrochen.\n    C nicht verletzt.\n\nText 2\n  R/F-Aussage: Frau Meiningers Zustand hat sich gebessert.\n  A/B/C-Stem: Frau Meininger\n    A darf in den nächsten Stunden nichts essen.\n    B muss noch länger im Krankenhaus bleiben.\n    C soll heute noch mit dem Arzt reden.\n\nText 3\n  R/F-Aussage: Im Text geht es um eine hilfreiche Methode im Pflegebereich.\n  A/B/C-Stem: Der Einsatz von Düften/Aromen in der Kranken- und Altenpflege\n    A bewirkt eine längere Aufenthaltsdauer von Besuchern.\n    B kann bei älteren Menschen auch Unruhe auslösen.\n    C wird vom Pflegepersonal als störend empfunden.\n\nText 4\n  R/F-Aussage: Herr Martini wirkt sehr müde und verwirrt.\n  A/B/C-Stem: Für die weitere Behandlung des Patienten rät die Ärztin\n    A zu einer Umstellung auf ein anderes Schmerzmittel.\n    B zum kompletten Absetzen von Schmerzmitteln.\n    C zur Einnahme eines magenschonenden Medikaments.\n\nText 5\n  R/F-Aussage: Auf der Messe kann man sich auch über verschiedene Möglichkeiten von Pflegeausbildungen informieren.\n  A/B/C-Stem: Bestimmte Veranstaltungen auf der Fachmesse\n    A erfordern eine Anmeldung im Eingangsbereich.\n    B kann man sich als Weiterbildung anrechnen lassen.\n    C richten sich nur an Personen mit abgeschlossener Ausbildung.",
+        "audioUrl": "data/audio/b2/ZB2_PMB_MS_A1_271223-converted.mp3",
+        "audioFile": "ZB2_PMB_MS_A1_271223-converted.mp3",
+        "audioUrls": [
+          "data/audio/b2/ZB2_PMB_MS_A1_271223-converted.mp3"
+        ],
+        "audioText": "",
+        "audioTextNote": "Kandidatenblätter（考生卷）不含听力原文 Hörtexte；如需无障碍文本须另行获取 Prüferblätter 或人工转写。",
+        "audioNote": "原卷每 Text/Dialog 含 1 条 R/F 判断 + 1 道 A/B/C 选择；共 10 小题。",
+        "questions": [
+          {
+            "q": "Text 1 / Richtig oder Falsch? „Valerie soll wegen eines Notfalls sofort zu Herrn Thannhauser kommen.“",
+            "a": [
+              "Falsch"
+            ],
+            "distractors": [
+              "Richtig"
+            ]
+          },
+          {
+            "q": "Text 1 / Der Klient hat sich beim Sturz",
+            "a": [
+              "den Ellenbogen gebrochen."
+            ],
+            "distractors": [
+              "die Beine gebrochen.",
+              "nicht verletzt."
+            ]
+          },
+          {
+            "q": "Text 2 / Richtig oder Falsch? „Frau Meiningers Zustand hat sich gebessert.“",
+            "a": [
+              "Richtig"
+            ],
+            "distractors": [
+              "Falsch"
+            ]
+          },
+          {
+            "q": "Text 2 / Frau Meininger",
+            "a": [
+              "soll heute noch mit dem Arzt reden."
+            ],
+            "distractors": [
+              "darf in den nächsten Stunden nichts essen.",
+              "muss noch länger im Krankenhaus bleiben."
+            ]
+          },
+          {
+            "q": "Text 3 / Richtig oder Falsch? „Im Text geht es um eine hilfreiche Methode im Pflegebereich.“",
+            "a": [
+              "Richtig"
+            ],
+            "distractors": [
+              "Falsch"
+            ]
+          },
+          {
+            "q": "Text 3 / Der Einsatz von Düften/Aromen in der Kranken- und Altenpflege",
+            "a": [
+              "bewirkt eine längere Aufenthaltsdauer von Besuchern."
+            ],
+            "distractors": [
+              "kann bei älteren Menschen auch Unruhe auslösen.",
+              "wird vom Pflegepersonal als störend empfunden."
+            ]
+          },
+          {
+            "q": "Text 4 / Richtig oder Falsch? „Herr Martini wirkt sehr müde und verwirrt.“",
+            "a": [
+              "Falsch"
+            ],
+            "distractors": [
+              "Richtig"
+            ]
+          },
+          {
+            "q": "Text 4 / Für die weitere Behandlung des Patienten rät die Ärztin",
+            "a": [
+              "zur Einnahme eines magenschonenden Medikaments."
+            ],
+            "distractors": [
+              "zu einer Umstellung auf ein anderes Schmerzmittel.",
+              "zum kompletten Absetzen von Schmerzmitteln."
+            ]
+          },
+          {
+            "q": "Text 5 / Richtig oder Falsch? „Auf der Messe kann man sich auch über verschiedene Möglichkeiten von Pflegeausbildungen informieren.“",
+            "a": [
+              "Richtig"
+            ],
+            "distractors": [
+              "Falsch"
+            ]
+          },
+          {
+            "q": "Text 5 / Bestimmte Veranstaltungen auf der Fachmesse",
+            "a": [
+              "kann man sich als Weiterbildung anrechnen lassen."
+            ],
+            "distractors": [
+              "erfordern eine Anmeldung im Eingangsbereich.",
+              "richten sich nur an Personen mit abgeschlossener Ausbildung."
+            ]
+          }
+        ],
+        "q": "ÖSD B2 · Hören Aufgabe 1（10 小题）",
+        "a": [
+          "[大组题，请展开作答]"
+        ]
+      },
+      {
+        "id": "zb2pmb_hoeren_a2",
+        "type": "听力选择",
+        "level": "B2",
+        "source": "ÖSD Zertifikat B2/PMB / ZB2 PMB Modellsatz",
+        "module": "Hören Aufgabe 2",
+        "passage": "Lesen Sie die Aufgabe gut durch. Situation: Sie hören jetzt fünf Texte. Zu jedem Text gibt es zwei Aufgaben: eine Richtig/Falsch-Aussage und eine A/B/C-Aufgabe. Wählen Sie bei jeder Aufgabe die richtige Lösung. Sie hören jeden Text zwei Mal.\n\n[卷面 5 段 Text/Dialog × 2 Aufgaben]\n\nDialog 1\n  R/F-Aussage: Herrn Grankvists Tante zieht in ein Pflegeheim in einer ländlichen Gegend.\n  A/B/C-Stem: Beim Aufnahmegespräch erklärt die Leiterin Herrn Grankvist, dass\n    A derzeit alle Einzelzimmer im Pflegeheim belegt sind.\n    B fehlende Dokumente vorbeigebracht werden müssen.\n    C seine Verwandte eigene Möbelstücke mitbringen kann.\n\nDialog 2\n  R/F-Aussage: Laut Herrn Bak sind die Herzbeschwerden auf Medikamente zurückzuführen.\n  A/B/C-Stem: Nach der Auswertung eines Elektrokardiogramms\n    A äußert Herr Bak Bedenken über die Zukunft.\n    B hat der Klient Probleme mit dem Atmen.\n    C verständigt die Pflegerin einen Krankenwagen.\n\nDialog 3\n  R/F-Aussage: Herr Urtl litt unter einer Mandelentzündung und hat mehrere Personen angesteckt.\n  A/B/C-Stem: Die Therapie von Herrn Urtl\n    A erforderte einen Medikamentenwechsel.\n    B verursachte heftige Nebenwirkungen.\n    C wurde zunächst von ihm verweigert.\n\nDialog 4\n  R/F-Aussage: Jahrzehntelanger Alkoholmissbrauch hat zur Bettlägerigkeit von Frau Thalmann geführt.\n  A/B/C-Stem: Bei der heutigen Dekubitusprophylaxe werden bei Frau Thalmann\n    A die oberen Extremitäten mit einer Pflegesalbe versorgt.\n    B mehrere Körperstellen aufgrund von Rötungen behandelt.\n    C Reste eines Körperpflegeproduktes von der Haut entfernt.\n\nDialog 5\n  R/F-Aussage: Herr Becker muss während seines Urlaubs ein Krankenhaus aufsuchen.\n  A/B/C-Stem: Vor der Katheterisierung\n    A bemängelt Herr Becker die medizinische Behandlung auf der Station.\n    B erklärt die Pflegerin dem Patienten die Vorgehensweise genau.\n    C wird der Patient auf eine beginnende Infektion aufmerksam gemacht.",
+        "audioUrl": "data/audio/b2/ZB2_PMB_MS_A2_110124-converted.mp3",
+        "audioFile": "ZB2_PMB_MS_A2_110124-converted.mp3",
+        "audioUrls": [
+          "data/audio/b2/ZB2_PMB_MS_A2_110124-converted.mp3"
+        ],
+        "audioText": "",
+        "audioTextNote": "Kandidatenblätter（考生卷）不含听力原文 Hörtexte；如需无障碍文本须另行获取 Prüferblätter 或人工转写。",
+        "audioNote": "原卷每 Text/Dialog 含 1 条 R/F 判断 + 1 道 A/B/C 选择；共 10 小题。",
+        "questions": [
+          {
+            "q": "Dialog 1 / Richtig oder Falsch? „Herrn Grankvists Tante zieht in ein Pflegeheim in einer ländlichen Gegend.“",
+            "a": [
+              "Richtig"
+            ],
+            "distractors": [
+              "Falsch"
+            ]
+          },
+          {
+            "q": "Dialog 1 / Beim Aufnahmegespräch erklärt die Leiterin Herrn Grankvist, dass",
+            "a": [
+              "seine Verwandte eigene Möbelstücke mitbringen kann."
+            ],
+            "distractors": [
+              "derzeit alle Einzelzimmer im Pflegeheim belegt sind.",
+              "fehlende Dokumente vorbeigebracht werden müssen."
+            ]
+          },
+          {
+            "q": "Dialog 2 / Richtig oder Falsch? „Laut Herrn Bak sind die Herzbeschwerden auf Medikamente zurückzuführen.“",
+            "a": [
+              "Falsch"
+            ],
+            "distractors": [
+              "Richtig"
+            ]
+          },
+          {
+            "q": "Dialog 2 / Nach der Auswertung eines Elektrokardiogramms",
+            "a": [
+              "äußert Herr Bak Bedenken über die Zukunft."
+            ],
+            "distractors": [
+              "hat der Klient Probleme mit dem Atmen.",
+              "verständigt die Pflegerin einen Krankenwagen."
+            ]
+          },
+          {
+            "q": "Dialog 3 / Richtig oder Falsch? „Herr Urtl litt unter einer Mandelentzündung und hat mehrere Personen angesteckt.“",
+            "a": [
+              "Richtig"
+            ],
+            "distractors": [
+              "Falsch"
+            ]
+          },
+          {
+            "q": "Dialog 3 / Die Therapie von Herrn Urtl",
+            "a": [
+              "erforderte einen Medikamentenwechsel."
+            ],
+            "distractors": [
+              "verursachte heftige Nebenwirkungen.",
+              "wurde zunächst von ihm verweigert."
+            ]
+          },
+          {
+            "q": "Dialog 4 / Richtig oder Falsch? „Jahrzehntelanger Alkoholmissbrauch hat zur Bettlägerigkeit von Frau Thalmann geführt.“",
+            "a": [
+              "Falsch"
+            ],
+            "distractors": [
+              "Richtig"
+            ]
+          },
+          {
+            "q": "Dialog 4 / Bei der heutigen Dekubitusprophylaxe werden bei Frau Thalmann",
+            "a": [
+              "Reste eines Körperpflegeproduktes von der Haut entfernt."
+            ],
+            "distractors": [
+              "die oberen Extremitäten mit einer Pflegesalbe versorgt.",
+              "mehrere Körperstellen aufgrund von Rötungen behandelt."
+            ]
+          },
+          {
+            "q": "Dialog 5 / Richtig oder Falsch? „Herr Becker muss während seines Urlaubs ein Krankenhaus aufsuchen.“",
+            "a": [
+              "Richtig"
+            ],
+            "distractors": [
+              "Falsch"
+            ]
+          },
+          {
+            "q": "Dialog 5 / Vor der Katheterisierung",
+            "a": [
+              "bemängelt Herr Becker die medizinische Behandlung auf der Station."
+            ],
+            "distractors": [
+              "erklärt die Pflegerin dem Patienten die Vorgehensweise genau.",
+              "wird der Patient auf eine beginnende Infektion aufmerksam gemacht."
+            ]
+          }
+        ],
+        "q": "ÖSD B2 · Hören Aufgabe 2（10 小题）",
+        "a": [
+          "[大组题，请展开作答]"
+        ]
+      }
     ],
     5: [
       { type: '语法填空', q: 'Er tat so, ___ er nichts wuesste.（als ob 省略形式）', a: ['als'] },

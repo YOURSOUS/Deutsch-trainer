@@ -51,3 +51,10 @@ data/audio/a2/ZA2_MS_A2.mp3
 data/audio/a2/ZA2_Oe_MS_A2_111017.mp3
 # 兜底：将来新增的儿童版音轨一律不进仓库
 data/audio/**/KID_*.mp3
+
+# ===== ÖSD B2 听力音频：6 条全部上线（约 131.26MB）=====
+# 3 套卷各含 Hören Aufgabe 1 / 2 两条音轨。
+# v0.10 起 ZB2 / ZB2_J 的 Hören Aufgabe 2 打叉网格已按 A2 方案忠实展开为
+# JA/NEIN 判断题（33 + 39 格），对应音轨重新被题目引用，故取消此前对
+# ZB2_MS_A2_270917.mp3 / ZB2_J_MS_A2.mp3 的排除，避免线上听力组无声。
+# （Hören 2 的开放式数值填空行仍不纳入题库，但卷面结构已写进 passage。）
